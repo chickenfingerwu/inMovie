@@ -9,6 +9,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // API keys
+        buildConfigField('String', "OMDb_API_key", inMovie_OMDbAPIkey)
+        buildConfigField('String', "TheTVDB_API_key", inMovie_TheTVDBapiKey)
+        buildConfigField('String', "TheTVDB_user_key", inMovie_TheTVDBuserKey)
+        buildConfigField('String', "TheTVDB_username", inMovie_TheTVDBusername)
+        buildConfigField('String', "TMDb_API_key", inMovie_TMDbAPIkey)
     }
     compileOptions {
         targetCompatibility = "8"
