@@ -1,7 +1,5 @@
 package com.inmovie.inmovie.model.api;
 
-import com.inmovie.inmovie.BuildConfig;
-
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -15,9 +13,10 @@ public class OMDb {
 
     /**
      * Initialize OMDb API
+     * @param key API key
      */
-    public OMDb() {
-        apiKey = BuildConfig.OMDb_API_key;
+    public OMDb(String key) {
+        apiKey = key;
         baseURL = "http://www.omdbapi.com/?apikey=" + apiKey + "&";
     }
 
