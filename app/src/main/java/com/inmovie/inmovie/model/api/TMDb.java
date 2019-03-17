@@ -2,17 +2,16 @@ package com.inmovie.inmovie.model.api;
 
 import com.inmovie.inmovie.BuildConfig;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.concurrent.ExecutionException;
 
 public class TMDb {
     private String apiKey;
+    private String baseURL; // For getting image
 
     /**
      * Initialize and assign API key
@@ -21,27 +20,70 @@ public class TMDb {
         this.apiKey = BuildConfig.TMDb_API_key;
     }
 
-    /**
-     * Return movies list based on name provided
-     * @param name
-     * @return List of movies in JSONObject
-     */
-    public JSONObject searchMoviesByName(String name) {
-        JSONObject result = null;
+    private JSONObject query(String url) {
+        JSONObject result;
+
+        String res = "";
+
         try {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-                    .url("https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&query=" + URLEncoder.encode(name, "UTF-8") + "&language=en-US&api_key=" + apiKey)
-                    .get()
-                    .build();
-
-            Response response = client.newCall(request).execute();
-            result = JSON.parseStringToJSON(response.body().string());
+            res = new OkHttp3Get().execute(url).get();
         }
-        catch (IOException e) {
+        catch (ExecutionException e) {
             e.printStackTrace();
         }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (res.equals("")) {
+            return null;
+        }
+
+        result = JSON.parseStringToJSON(res);
+
+        return result;
+    }
+
+    /**
+     * Return movies list based on name provided
+     * @param name Movie name
+     * @return List of movies in JSONObject
+     */
+    public JSONArray searchMoviesByName(String name) {
+        String url = null;
+        try {
+            url = "https://api.themoviedb.org/3/search/movie?query=" + URLEncoder.encode(name, "UTF-8") + "&api_key=" + apiKey;
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject respondResult = query(url);
+
+        if (respondResult == null) { // In case something goes wrong, return null
+            return null;
+        }
+
+        JSONArray result = (JSONArray) respondResult.get("results");
+
+        long total_pages = (long) respondResult.get("total_pages");
+        for (int page = 2; page <= total_pages; page++) {
+            try {
+                url = "https://api.themoviedb.org/3/search/movie?query=" + URLEncoder.encode(name, "UTF-8") + "&page=2&api_key=" + apiKey;
+                respondResult = query(url);
+            }
+            catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            JSONArray temp_result = (JSONArray) respondResult.get("results");
+            for (int i = 0; i < temp_result.size(); i++) {
+                result.add(temp_result.get(i));
+            }
+        }
+
+        System.out.println(result.size());
+
         return result;
     }
 }

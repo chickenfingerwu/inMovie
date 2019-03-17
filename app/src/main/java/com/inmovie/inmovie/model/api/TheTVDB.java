@@ -1,5 +1,7 @@
 package com.inmovie.inmovie.model.api;
 
+import android.os.AsyncTask;
+
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.model.Poster;
 

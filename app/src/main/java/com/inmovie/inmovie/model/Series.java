@@ -35,7 +35,7 @@ public class Series implements Serializable {
         overview = (String) seriesInfo.get("overview");
         rating = (String) seriesInfo.get("rating");
         imdbId = (String) seriesInfo.get("imdbId");
-        imdbRating = new OMDb(BuildConfig.OMDb_API_key).getIMDbRating(imdbId);
+        imdbRating = new OMDb().getIMDbRating(imdbId);
         genre = new String[((JSONArray) seriesInfo.get("genre")).size()];
         for (int i = 0; i < genre.length; i++) {
             genre[i] = (String) ((JSONArray) seriesInfo.get("genre")).get(i);
