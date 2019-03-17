@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 
 public class TMDb {
     private String apiKey;
-    private String baseURL; // For getting image
 
     /**
      * Initialize and assign API key
@@ -66,6 +65,7 @@ public class TMDb {
 
         JSONArray result = (JSONArray) respondResult.get("results");
 
+        // Check for additional page
         long total_pages = (long) respondResult.get("total_pages");
         for (int page = 2; page <= total_pages; page++) {
             try {
@@ -81,8 +81,6 @@ public class TMDb {
                 result.add(temp_result.get(i));
             }
         }
-
-        System.out.println(result.size());
 
         return result;
     }

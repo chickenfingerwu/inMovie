@@ -4,10 +4,7 @@ import com.inmovie.inmovie.BuildConfig;
 
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class OMDb {
     private String apiKey;
@@ -26,29 +23,28 @@ public class OMDb {
      * @param url URL to get data
      * @return JSON data from server
      */
-    private JSONObject query(URL url) {
-        HttpURLConnection connection = null;
-        JSONObject jsonObject = null;
+    private JSONObject query(String url) {
+        JSONObject result;
+
+        String res = "";
 
         try {
-            // Initialize connection and set its properties
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET"); // Set method to GET
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-
-            // Get and parse response to JSON
-            jsonObject = JSON.parseStringToJSON(TheTVDB.getResponse(connection));
+            res = new OkHttp3Get().execute(url).get();
         }
-        catch (IOException e) {
+        catch (ExecutionException e) {
             e.printStackTrace();
         }
-        finally {
-            if (connection != null) {
-                connection.disconnect(); // Disconnect connection
-            }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return jsonObject;
+
+        if (res.equals("")) {
+            return null;
+        }
+
+        result = JSON.parseStringToJSON(res);
+
+        return result;
     }
 
     /**
@@ -59,14 +55,18 @@ public class OMDb {
     public double getIMDbRating(String imdbId) {
         double rating = 0;
 
-        try {
-            JSONObject data = query(new URL(baseURL + "i=" + imdbId));
-            rating = Double.valueOf((String) data.get("imdbRating"));
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        JSONObject data = query(baseURL + "i=" + imdbId);
+        rating = Double.valueOf((String) data.get("imdbRating"));
 
         return rating;
+    }
+
+    public String getDirector(String imdbId) {
+        String director = "";
+
+        JSONObject data = query(baseURL + "i=" + imdbId);
+        director = (String) data.get("Director");
+
+        return director;
     }
 }

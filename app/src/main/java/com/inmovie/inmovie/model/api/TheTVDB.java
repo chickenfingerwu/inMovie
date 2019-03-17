@@ -1,26 +1,18 @@
 package com.inmovie.inmovie.model.api;
 
-import android.os.AsyncTask;
-
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.model.Poster;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -108,34 +100,19 @@ public class TheTVDB {
      * @param url query URL
      * @return response from server as JSON
      */
-    private JSONObject query(URL url) {
-        HttpsURLConnection connection = null;
-        JSONObject jsonObject = null;
+    private JSONObject query(String url) {
+        JSONObject result = null;
 
+        String[] strings = new String[2];
+        strings[0] = url;
+        strings[1] = "{\"Authorization\":\"Bearer " + token + "\"}";
         try {
-            // Initialize connection and set its properties
-            connection = (HttpsURLConnection) url.openConnection();
-            connection.setRequestMethod("GET"); // Set method to GET
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Authorization", "Bearer " + token);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-
-            // Get and parse response to JSON
-            jsonObject = (JSONObject) new JSONParser().parse(getResponse(connection));
+            result = JSON.parseStringToJSON(new OkHttp3Get().execute(strings).get());
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (connection != null) {
-                connection.disconnect(); // Disconnect connection
-            }
-        }
-        return jsonObject;
+        return result;
     }
 
     /**
@@ -151,13 +128,15 @@ public class TheTVDB {
      */
     private String getToken() {
         String _token = "";
-        URL url;
+        String url = "https://api.thetvdb.com/login";
+        String[] strings = new String[2];
+        strings[0] = url;
+        strings[1] = auth.toJSONString();
         try {
-            url = new URL("https://api.thetvdb.com/login");
-            _token = (String) postJSON(url, auth).get("token");
-
+            String response = new OkHttp3Post().execute(strings).get();
+            _token = (String) JSON.parseStringToJSON(response).get("token");
         }
-        catch (MalformedURLException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
         return _token;
@@ -169,24 +148,17 @@ public class TheTVDB {
      * @return JSON of TV series
      */
     public JSONArray searchByName(String name) {
-        JSONObject result = null;
-        String converted = null;
+        JSONObject result;
+        String queryURL = "";
 
         try {
-            converted = URLEncoder.encode(name, "UTF-8");
+            queryURL = "https://api.thetvdb.com/search/series?name=" + URLEncoder.encode(name, "UTF-8");
         }
         catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String queryURL = "https://api.thetvdb.com/search/series?name=" + converted;
-        URL url;
-        try {
-            url = new URL(queryURL);
-            result = query(url);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
+        result = query(queryURL);
 
         return (JSONArray) result.get("data");
     }
@@ -198,16 +170,8 @@ public class TheTVDB {
      */
     public JSONObject seriesInfoByID(int id) {
         JSONObject result = null;
-
-        String requestURL = "https://api.thetvdb.com/series/" + Integer.toString(id);
-        URL url;
-        try {
-            url = new URL(requestURL);
-            result = query(url);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        String requestURL = "https://api.thetvdb.com/series/" + id;
+        result = query(requestURL);
 
         return (JSONObject) result.get("data");
     }
@@ -219,16 +183,8 @@ public class TheTVDB {
      */
     public JSONArray actorsInfoByID(int id) {
         JSONObject result = null;
-
         String requestURL = "https://api.thetvdb.com/series/" + id + "/actors";
-        URL url;
-        try {
-            url = new URL(requestURL);
-            result = query(url);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        result = query(requestURL);
 
         return (JSONArray) result.get("data");
     }
@@ -243,28 +199,14 @@ public class TheTVDB {
         JSONArray res = null;
 
         String requestURL = "https://api.thetvdb.com/series/" + id + "/episodes";
-        URL url;
-        try {
-            url = new URL(requestURL);
-            result = query(url);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
+        result = query(requestURL);
         res = (JSONArray) result.get("data");
 
         // Check if there are any other page
         long pages = (long) ((JSONObject) result.get("links")).get("last");
         for (long page = 2; page <= pages; page++) {
             JSONArray pageRes = null;
-            try {
-                url = new URL(requestURL + "?page=" + page);
-                result = query(url);
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            result = query(requestURL + "?page=" + page);
             pageRes = (JSONArray) result.get("data");
             for (int i = 0; i < pageRes.size(); i++) {
                 res.add(pageRes.get(i));
@@ -285,14 +227,7 @@ public class TheTVDB {
         ArrayList<Poster> posters = new ArrayList<>();
 
         String requestURL = "https://api.thetvdb.com/series/" + id + "/images/query?keyType=poster";
-        URL url;
-        try {
-            url = new URL(requestURL);
-            result = query(url);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        result = query(requestURL);
 
         res = (JSONArray) result.get("data");
         for (int i = 0; i < res.size(); i++) {
@@ -300,42 +235,5 @@ public class TheTVDB {
         }
 
         return posters;
-    }
-
-    public File getFile(URL url) {
-        File f = new File("test.jpg");
-
-        HttpsURLConnection connection = null;
-        JSONObject jsonObject = null;
-
-        try {
-            // Initialize connection and set its properties
-            connection = (HttpsURLConnection) url.openConnection();
-            connection.setRequestMethod("GET"); // Set method to GET
-            connection.setRequestProperty("Authorization", "Bearer " + token);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-
-            InputStream inputStream = connection.getInputStream();
-            byte[] buffer = new byte[4096];
-            int n;
-            OutputStream out = new FileOutputStream(f);
-
-            while ((n = inputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, n);
-            }
-            out.close();
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (connection != null) {
-                connection.disconnect(); // Disconnect connection
-            }
-        }
-
-        return f;
     }
 }

@@ -1,6 +1,5 @@
 package com.inmovie.inmovie.model;
 
-import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.model.api.OMDb;
 
 import org.json.simple.JSONArray;
@@ -28,7 +27,7 @@ public class Series implements Serializable {
     public Series(JSONObject seriesInfo, JSONArray actorsInfo, ArrayList<Poster> posters) {
         id = (long) seriesInfo.get("id");
         seriesName = (String) seriesInfo.get("seriesName");
-        banner = "https://www.thetvdb.com/banners/" + (String) seriesInfo.get("banner");
+        banner = "https://www.thetvdb.com/banners/" + seriesInfo.get("banner");
         status = (String) seriesInfo.get("status");
         firstAired = (String) seriesInfo.get("firstAired");
         runtime = (String) seriesInfo.get("runtime");
