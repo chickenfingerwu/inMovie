@@ -20,13 +20,21 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 public class TheTVDB {
+    private static TheTVDB instance;
     private JSONObject auth;
     private String token;
+
+    public static TheTVDB getInstance() {
+        if (instance == null) {
+            instance = new TheTVDB();
+        }
+        return instance;
+    }
 
     /**
      * Initialize TheTVDB api. Set API key, user key and username.
      */
-    public TheTVDB() {
+    private TheTVDB() {
         auth = new JSONObject();
         auth.put("apikey", BuildConfig.TheTVDB_API_key);
         auth.put("userkey", BuildConfig.TheTVDB_user_key);
@@ -53,46 +61,6 @@ public class TheTVDB {
             e.printStackTrace();
         }
         return response.toString();
-    }
-
-    /**
-     * Post JSON data to TheTVDB server and get response.
-     * @param url URL to send data
-     * @param json JSON data to send
-     * @return response from server as JSON
-     */
-    private JSONObject postJSON(URL url, JSONObject json) {
-        HttpsURLConnection connection = null;
-        String data = json.toString();
-        JSONObject jsonObject = null;
-
-        try {
-            // Initialize connection and set its properties
-            connection = (HttpsURLConnection) url.openConnection();
-            connection.setRequestMethod("POST"); // Set method to POST
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-
-            // Send data
-            DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.writeBytes(data);
-            dataOutputStream.flush();
-            dataOutputStream.close();
-
-            // Get and parse response to JSON
-            jsonObject = JSON.parseStringToJSON(getResponse(connection));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (connection != null) {
-                connection.disconnect(); // Disconnect connection
-            }
-        }
-        return jsonObject;
     }
 
     /**

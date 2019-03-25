@@ -7,15 +7,23 @@ import org.json.simple.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 public class OMDb {
+    private static OMDb instance;
     private String apiKey;
     private String baseURL;
+
+    public static OMDb getInstance() {
+        if (instance == null) {
+            instance = new OMDb();
+        }
+        return instance;
+    }
 
     /**
      * Initialize OMDb API
      */
-    public OMDb() {
+    private OMDb() {
         apiKey = BuildConfig.OMDb_API_key;
-        baseURL = "http://www.omdbapi.com/?apikey=" + apiKey + "&";
+        baseURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&";
     }
 
     /**
@@ -30,6 +38,7 @@ public class OMDb {
 
         try {
             res = new OkHttp3Get().execute(url).get();
+            System.out.println(res);
         }
         catch (ExecutionException e) {
             e.printStackTrace();

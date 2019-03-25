@@ -1,6 +1,7 @@
 package com.inmovie.inmovie.model;
 
 import com.inmovie.inmovie.model.api.OMDb;
+import com.inmovie.inmovie.model.api.TheTVDB;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -34,7 +35,7 @@ public class Series implements Serializable {
         overview = (String) seriesInfo.get("overview");
         rating = (String) seriesInfo.get("rating");
         imdbId = (String) seriesInfo.get("imdbId");
-        imdbRating = new OMDb().getIMDbRating(imdbId);
+        imdbRating = OMDb.getInstance().getIMDbRating(imdbId);
         genre = new String[((JSONArray) seriesInfo.get("genre")).size()];
         for (int i = 0; i < genre.length; i++) {
             genre[i] = (String) ((JSONArray) seriesInfo.get("genre")).get(i);
@@ -46,6 +47,12 @@ public class Series implements Serializable {
         }
         Collections.sort(posters);
         this.poster = posters.get(0).toString();
+    }
+
+    public Series(int theTVDBid) {
+        this(   TheTVDB.getInstance().seriesInfoByID(theTVDBid),
+                TheTVDB.getInstance().actorsInfoByID(theTVDBid),
+                TheTVDB.getInstance().getPostersByID(theTVDBid));
     }
 
     @Override
