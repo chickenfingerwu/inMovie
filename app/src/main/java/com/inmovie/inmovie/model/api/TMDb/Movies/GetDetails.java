@@ -3,6 +3,7 @@ package com.inmovie.inmovie.model.api.TMDb.Movies;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -31,15 +33,17 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView genres;
     private TextView releaseDate;
     private TextView runtime;
+    private TextView rating;
 
-    public GetDetails(TextView movieName, TextView movieOverview, ImageView moviePoster, ImageView movieBackdrop, TextView movieGenres, TextView movieReleaseDate, TextView movieRuntime) {
-        name = movieName;
-        overview = movieOverview;
-        backdrop = movieBackdrop;
-        poster = moviePoster;
-        genres = movieGenres;
-        releaseDate = movieReleaseDate;
-        runtime = movieRuntime;
+    public GetDetails(ArrayList<View> views) {
+        name = (TextView) views.get(0);
+        overview = (TextView)  views.get(1);
+        backdrop = (ImageView) views.get(2);
+        poster = (ImageView) views.get(3);
+        genres = (TextView) views.get(4);
+        releaseDate = (TextView) views.get(5);
+        runtime = (TextView) views.get(6);
+        rating = (TextView) views.get(7);
     }
 
     @Override
