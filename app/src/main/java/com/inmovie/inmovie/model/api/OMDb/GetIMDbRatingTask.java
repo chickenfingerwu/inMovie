@@ -54,6 +54,7 @@ public class GetIMDbRatingTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        ratingView.setText(s);
+        if (ratingView != null)
+            ratingView.setText(s);
     }
 }

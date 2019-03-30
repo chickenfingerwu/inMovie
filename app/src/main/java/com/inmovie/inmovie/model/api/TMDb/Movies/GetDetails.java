@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
+import com.inmovie.inmovie.model.api.OMDb.GetIMDbRatingTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,14 +37,14 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView rating;
 
     public GetDetails(ArrayList<View> views) {
-        name = (TextView) views.get(0);
-        overview = (TextView)  views.get(1);
-        backdrop = (ImageView) views.get(2);
-        poster = (ImageView) views.get(3);
-        genres = (TextView) views.get(4);
-        releaseDate = (TextView) views.get(5);
-        runtime = (TextView) views.get(6);
-        rating = (TextView) views.get(7);
+        name = views.get(0) == null?null:(TextView) views.get(0);
+        overview = views.get(1) == null?null:(TextView)  views.get(1);
+        backdrop = views.get(2) == null?null:(ImageView) views.get(2);
+        poster = views.get(3) == null?null:(ImageView) views.get(3);
+        genres = views.get(4) == null?null:(TextView) views.get(4);
+        releaseDate = views.get(5) == null?null:(TextView) views.get(5);
+        runtime = views.get(6) == null?null:(TextView) views.get(6);
+        rating = views.get(7) == null?null:(TextView) views.get(7);
     }
 
     @Override
@@ -115,7 +116,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        name.setText(_title);
+        if (name != null)
+            name.setText(_title);
 
         // Set movie's plot overview
         String _overview = "";
@@ -125,7 +127,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        overview.setText(_overview);
+        if (overview != null)
+            overview.setText(_overview);
 
         // Set movie's release date
         String _releaseDate = "";
@@ -135,7 +138,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        releaseDate.setText("Release Date: " + _releaseDate);
+        if (releaseDate != null)
+            releaseDate.setText("Release Date: " + _releaseDate);
 
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
@@ -148,7 +152,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        genres.setText(_genres.toString());
+        if (genres != null)
+            genres.setText(_genres.toString());
 
         // Set movie's runtime
         int _runtime = -1;
@@ -160,21 +165,30 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (_runtime == -1) {
-            runtime.setText("Runtime: Unknown");
-        }
-        else {
-            runtime.setText("Runtime: " + _runtime + " minutes");
+        if (runtime != null) {
+            if (_runtime == -1) {
+                runtime.setText("Runtime: Unknown");
+            } else {
+                runtime.setText("Runtime: " + _runtime + " minutes");
+            }
         }
 
         // Set movie's backdrop image
-        if (_backdrop != null) {
-            backdrop.setImageBitmap(_backdrop);
+        if (backdrop != null) {
+            if (_backdrop != null) {
+                backdrop.setImageBitmap(_backdrop);
+            }
         }
 
         // Set movie's poster
-        if (_poster != null) {
-            poster.setImageBitmap(_poster);
+        if (poster != null) {
+            if (_poster != null) {
+                poster.setImageBitmap(_poster);
+            }
         }
+
+        // Set movie's rating
+        if (rating != null)
+            new GetIMDbRatingTask(rating).execute();
     }
 }
