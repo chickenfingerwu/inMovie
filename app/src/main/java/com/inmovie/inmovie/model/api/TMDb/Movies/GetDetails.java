@@ -3,12 +3,12 @@ package com.inmovie.inmovie.model.api.TMDb.Movies;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -29,16 +28,18 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private ImageView poster;
     private Bitmap _backdrop;
     private Bitmap _poster;
+    private TextView genres;
+    private TextView releaseDate;
+    private TextView runtime;
 
-    public GetDetails(ArrayList<View> views) {
-        // views[0]: movie's name
-        // views[1]: movie's overview (a.k.a plot summary)
-        // views[2]: backdrop (or banner)
-        // views[3]: poster
-        name = (TextView) views.get(0);
-        overview = (TextView) views.get(1);
-        backdrop = (ImageView) views.get(2);
-        poster = (ImageView) views.get(3);
+    public GetDetails(TextView movieName, TextView movieOverview, ImageView moviePoster, ImageView movieBackdrop, TextView movieGenres, TextView movieReleaseDate, TextView movieRuntime) {
+        name = movieName;
+        overview = movieOverview;
+        backdrop = movieBackdrop;
+        poster = moviePoster;
+        genres = movieGenres;
+        releaseDate = movieReleaseDate;
+        runtime = movieRuntime;
     }
 
     @Override
@@ -102,18 +103,74 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        String _title = "UNDEFINED";
-        String _overview = "UNDEFINED";
+        // Set movie's title
+        String _title = "";
         try {
             _title = jsonObject.getString("title");
-            _overview = jsonObject.getString("overview");
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         name.setText(_title);
+
+        // Set movie's plot overview
+        String _overview = "";
+        try {
+            _overview = jsonObject.getString("overview");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
         overview.setText(_overview);
-        backdrop.setImageBitmap(_backdrop);
-        poster.setImageBitmap(_poster);
+
+        // Set movie's release date
+        String _releaseDate = "";
+        try {
+            _releaseDate = jsonObject.getString("release_date");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        releaseDate.setText("Release Date: " + _releaseDate);
+
+        // Set movie's genres
+        StringBuilder _genres = new StringBuilder("Genres: ");
+        try {
+            JSONArray genre = jsonObject.getJSONArray("genres");
+            for (int i = 0; i < genre.length(); i++) {
+                _genres.append(genre.getJSONObject(i).getString("name") + (i == genre.length() - 1?"":", "));
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        genres.setText(_genres.toString());
+
+        // Set movie's runtime
+        int _runtime = -1;
+        try {
+            if (jsonObject.get("runtime") != null) {
+                _runtime = jsonObject.getInt("runtime");
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (_runtime == -1) {
+            runtime.setText("Runtime: Unknown");
+        }
+        else {
+            runtime.setText("Runtime: " + _runtime + " minutes");
+        }
+
+        // Set movie's backdrop image
+        if (_backdrop != null) {
+            backdrop.setImageBitmap(_backdrop);
+        }
+
+        // Set movie's poster
+        if (_poster != null) {
+            poster.setImageBitmap(_poster);
+        }
     }
 }
