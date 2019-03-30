@@ -188,7 +188,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         // Set movie's rating
-        if (rating != null)
-            new GetIMDbRatingTask(rating).execute();
+        if (rating != null) {
+            try {
+                new GetIMDbRatingTask(rating).execute(jsonObject.getString("imdb_id"));
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
