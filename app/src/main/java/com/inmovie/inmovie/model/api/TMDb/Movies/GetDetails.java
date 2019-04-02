@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -100,6 +101,14 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
         }
         catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject rating = GetIMDbRatingTask.getRating(result.getString("imdb_id"));
+            result.put("imdbRating", rating.getDouble("score"));
+            result.put("imdbVotes", rating.getInt("votes"));
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -184,16 +193,6 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         if (poster != null) {
             if (_poster != null) {
                 poster.setImageBitmap(_poster);
-            }
-        }
-
-        // Set movie's rating
-        if (rating != null) {
-            try {
-                new GetIMDbRatingTask(rating).execute(jsonObject.getString("imdb_id"));
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
             }
         }
     }

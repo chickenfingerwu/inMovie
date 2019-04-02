@@ -1,8 +1,5 @@
 package com.inmovie.inmovie.model.api.OMDb;
 
-import android.os.AsyncTask;
-import android.widget.TextView;
-
 import com.inmovie.inmovie.BuildConfig;
 
 import org.json.JSONException;
@@ -17,20 +14,12 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class GetIMDbRatingTask extends AsyncTask<String, Void, String> {
-    private TextView ratingView;
+public class GetIMDbRatingTask{
+    public static JSONObject getRating(String imdb) {
+        JSONObject res = new JSONObject();
 
-    public GetIMDbRatingTask(TextView ratingView) {
-        this.ratingView = ratingView;
-    }
-
-    @Override
-    protected String doInBackground(String... strings) {
-        String res = "";
-
-        // strings[0]: IMDb id
         try {
-            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&i=" + strings[0]);
+            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&i=" + imdb);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
@@ -43,18 +32,16 @@ public class GetIMDbRatingTask extends AsyncTask<String, Void, String> {
             }
 
             JSONObject topLevel = new JSONObject(builder.toString());
-            res = topLevel.getString("imdbRating") + " (" + topLevel.getString("imdbVotes") + ")";
+
+            res.put("score", Double.parseDouble(topLevel.getString("imdbRating")));
+            String votes = topLevel.getString("imdbVotes");
+            votes = votes.replace(",", "");
+            res.put("votes", Integer.parseInt(votes));
         }
         catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
         return res;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        if (ratingView != null)
-            ratingView.setText(s);
     }
 }
