@@ -2,5 +2,10 @@
     <string name="app_name">inMovie</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
+    <string name="tmdb_apikey">e197a435f5d020247a13e78e71f11a5c</string>
+    <string name="omdb_apikey">901f9d1b</string>
+    <string name="thetvdb_apikey">FZO5HGUZXBPJMYZB</string>
+    <string name="thetvdb_userkey">848108396D7AA374</string>
+    <string name="thetvdb_username">vinhtq115</string>
     <string name="checkPop"><u>"See what's popular"</u></string>
 </resources>

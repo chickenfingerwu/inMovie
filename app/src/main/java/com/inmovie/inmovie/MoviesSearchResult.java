@@ -7,7 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
 
-import com.inmovie.inmovie.model.api.TMDb.Movies.SearchContent;
+import com.inmovie.inmovie.model.api.TMDb.Search.Movies;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,17 +50,17 @@ public class MoviesSearchResult extends AppCompatActivity {
         recyclerView.setAdapter(imageAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        ArrayList<Movies> movies = new ArrayList<>();
+        ArrayList<com.inmovie.inmovie.Movies> movies = new ArrayList<>();
         JSONArray jsonArray = null;
         try {
-            jsonArray = new SearchContent().execute(searchToken).get();
+            jsonArray = new Movies().execute(searchToken).get();
         }
         catch (Exception e){
             e.printStackTrace();
         }
         if(jsonArray!=null) {
             for (int i = 0; i < jsonArray.length(); i++) {
-                Movies movies1 = new Movies();
+                com.inmovie.inmovie.Movies movies1 = new com.inmovie.inmovie.Movies();
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     int id = jsonObject.getInt("id");
@@ -80,32 +80,32 @@ public class MoviesSearchResult extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                    ArrayList<Movies> moviesArrayList = new ArrayList<>();
-                    JSONArray jsonArray1 = null;
-                    try {
-                        jsonArray1 = new SearchContent().execute(query).get();
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    if(jsonArray1!=null) {
-                        for (int i = 0; i < jsonArray1.length(); i++) {
-                            Movies movieCandidate = new Movies();
-                            try {
-                                JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                                int id = jsonObject.getInt("id");
-                                String poster_path = jsonObject.getString("poster_path");
-                                movieCandidate.setPoster(poster_path);
-                                movieCandidate.setId(id);
-                                moviesArrayList.add(movieCandidate);
-                            }
-                            catch (Exception e){
-                                e.printStackTrace();
-                            }
+                ArrayList<com.inmovie.inmovie.Movies> moviesArrayList = new ArrayList<>();
+                JSONArray jsonArray1 = null;
+                try {
+                    jsonArray1 = new Movies().execute(query).get();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(jsonArray1!=null) {
+                    for (int i = 0; i < jsonArray1.length(); i++) {
+                        com.inmovie.inmovie.Movies movieCandidate = new com.inmovie.inmovie.Movies();
+                        try {
+                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String poster_path = jsonObject.getString("poster_path");
+                            movieCandidate.setPoster(poster_path);
+                            movieCandidate.setId(id);
+                            moviesArrayList.add(movieCandidate);
                         }
-                        imageAdapter.setMoviesList(moviesArrayList, true);
-
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
+                    imageAdapter.setMoviesList(moviesArrayList, true);
+
+                }
 
                 return true;
             }
@@ -124,16 +124,16 @@ public class MoviesSearchResult extends AppCompatActivity {
 
 
 
-
+        /*
         scrollListener = new EndlessScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-
+                getMoviesResultFromRestAdapter(searchToken);
 
             }
         };
 
-        recyclerView.addOnScrollListener(scrollListener);
+        recyclerView.addOnScrollListener(scrollListener);*/
 
     }
 
@@ -143,16 +143,16 @@ public class MoviesSearchResult extends AppCompatActivity {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
-                        request.addEncodedQueryParam("api_key", Keys.TMDB_APIKey);
+                        request.addEncodedQueryParam("api_key", BuildConfig.TMDb_API_key);
                         request.addEncodedQueryParam("query", query);
                     }
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MoviesApiService service = restAdapter.create(MoviesApiService.class);
-        service.getPopularMovies(new Callback<Movies.MovieResult>() {
+        service.getPopularMovies(new Callback<com.inmovie.inmovie.Movies.MovieResult>() {
             @Override
-            public void success(Movies.MovieResult movieResult, Response response) {
+            public void success(com.inmovie.inmovie.Movies.MovieResult movieResult, Response response) {
                 imageAdapter.setMoviesList(movieResult.getResults(), false);
             }
 

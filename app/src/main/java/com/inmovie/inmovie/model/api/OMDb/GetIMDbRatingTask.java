@@ -32,11 +32,12 @@ public class GetIMDbRatingTask{
             }
 
             JSONObject topLevel = new JSONObject(builder.toString());
-
-            res.put("score", Double.parseDouble(topLevel.getString("imdbRating")));
-            String votes = topLevel.getString("imdbVotes");
-            votes = votes.replace(",", "");
-            res.put("votes", Integer.parseInt(votes));
+            if(!topLevel.getString("imdbRating").equals("N/A")) {
+                res.put("score", Double.parseDouble(topLevel.getString("imdbRating")));
+                String votes = topLevel.getString("imdbVotes");
+                //votes = votes.replace(",", "");
+                res.put("votes", votes);
+            }
         }
         catch (JSONException | IOException e) {
             e.printStackTrace();

@@ -57,7 +57,7 @@ public class PopularMovies extends AppCompatActivity {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
-                        request.addEncodedQueryParam("api_key", Keys.TMDB_APIKey);
+                        request.addEncodedQueryParam("api_key", BuildConfig.TMDb_API_key);
                         request.addEncodedQueryParam("page", Integer.toString(page));
                     }
                 })
