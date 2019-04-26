@@ -1,4 +1,6 @@
-package com.inmovie.inmovie.model.api.OMDb;
+package com.inmovie.inmovie.model.api.TMDb.Trending;
+
+import android.os.AsyncTask;
 
 import com.inmovie.inmovie.BuildConfig;
 
@@ -14,12 +16,12 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class GetIMDbRatingTask{
-    public static JSONObject getRating(String imdb) {
-        JSONObject res = new JSONObject();
-
+public class GetTrendingTV extends AsyncTask<Void, Void, JSONObject> {
+    @Override
+    protected JSONObject doInBackground(Void... voids) {
+        JSONObject result = new JSONObject();
         try {
-            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&i=" + imdb);
+            URL url = new URL("https://api.themoviedb.org/3/trending/tv/day?api_key=" + BuildConfig.TMDb_API_key);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
@@ -31,18 +33,12 @@ public class GetIMDbRatingTask{
                 builder.append(input);
             }
 
-            JSONObject topLevel = new JSONObject(builder.toString());
-            if(!topLevel.getString("imdbRating").equals("N/A")) {
-                res.put("score", Double.parseDouble(topLevel.getString("imdbRating")));
-                String votes = topLevel.getString("imdbVotes");
-                //votes = votes.replace(",", "");
-                res.put("votes", votes);
-            }
+            result = new JSONObject(builder.toString());
         }
         catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
-        return res;
+        return result;
     }
 }

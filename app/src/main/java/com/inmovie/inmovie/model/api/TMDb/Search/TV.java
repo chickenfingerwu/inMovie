@@ -1,0 +1,53 @@
+package com.inmovie.inmovie.model.api.TMDb.Search;
+
+import android.os.AsyncTask;
+
+import com.inmovie.inmovie.BuildConfig;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+public class TV extends AsyncTask<String, Void, JSONArray> {
+    @Override
+    protected JSONArray doInBackground(String... strings) {
+        JSONArray result = new JSONArray();
+        int num_of_page = 1;
+        // strings[0]: name to search
+        for (int i = 1; i <= num_of_page; i++) {
+            try {
+                URL url = new URL("https://api.themoviedb.org/3/search/tv?api_key=" + BuildConfig.TMDb_API_key + "&language=en-US&query=" + strings[0] + "&page=" + i);
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+                InputStream stream = new BufferedInputStream(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder response = new StringBuilder();
+
+                String temp;
+                while ((temp = reader.readLine()) != null) {
+                    response.append(temp);
+                }
+
+                JSONObject _temp = new JSONObject(response.toString());
+                num_of_page = _temp.getInt("total_pages");
+                JSONArray searchTemp = _temp.getJSONArray("results");
+                for (int j = 0; j < searchTemp.length(); j++) {
+                    result.put(searchTemp.getJSONObject(j));
+                }
+            }
+            catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+}

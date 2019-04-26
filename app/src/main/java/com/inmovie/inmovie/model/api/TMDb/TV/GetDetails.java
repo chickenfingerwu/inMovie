@@ -1,11 +1,10 @@
-package com.inmovie.inmovie.model.api.TMDb.Movies;
+package com.inmovie.inmovie.model.api.TMDb.TV;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
@@ -21,46 +20,38 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
-    private TextView name = null;
-    private TextView overview = null;
-    private ImageView backdrop = null;
-    private ImageView poster = null;
-    private Bitmap _backdrop = null;
-    private Bitmap _poster = null;
-    private TextView genres = null;
-    private TextView releaseDate = null;
-    private TextView runtime = null;
-    private TextView rating = null;
-    private RatingBar ratingBar = null;
-    private TextView additionalInfo = null;
-    private TextView genres_runtime = null;
+    private TextView name;
+    private TextView overview;
+    private ImageView backdrop;
+    private ImageView poster;
+    private Bitmap _backdrop;
+    private Bitmap _poster;
+    private TextView genres;
+    private TextView first_air_date;
+    private TextView runtime;
+    private TextView rating;
 
-    public GetDetails(List<View> views) {
-        try {
-            name = (TextView) views.get(0);
-            overview = (TextView) views.get(1);
-            backdrop = (ImageView) views.get(2);
-            rating = (TextView) views.get(3);
-            ratingBar = (RatingBar) views.get(4);
-            additionalInfo = (TextView) views.get(5);
-            genres_runtime = (TextView) views.get(6);
-            releaseDate = (TextView) views.get(7);
-        }
-        catch (ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
+    public GetDetails(ArrayList<View> views) {
+        name = views.get(0) == null?null:(TextView) views.get(0);
+        overview = views.get(1) == null?null:(TextView)  views.get(1);
+        backdrop = views.get(2) == null?null:(ImageView) views.get(2);
+        poster = views.get(3) == null?null:(ImageView) views.get(3);
+        genres = views.get(4) == null?null:(TextView) views.get(4);
+        first_air_date = views.get(5) == null?null:(TextView) views.get(5);
+        runtime = views.get(6) == null?null:(TextView) views.get(6);
+        rating = views.get(7) == null?null:(TextView) views.get(7);
     }
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();
         try {
-            URL url = new URL("https://api.themoviedb.org/3/movie/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key + "&language=en-US");
+            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
@@ -79,7 +70,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         try {
-            URL backdrop_url = new URL("https://image.tmdb.org/t/p/original" + result.getString("backdrop_path"));
+            URL backdrop_url = new URL("https://image.tmdb.org/t/p/w500" + result.getString("backdrop_path"));
             HttpsURLConnection connection = (HttpsURLConnection) backdrop_url.openConnection();
 
             connection.connect();
@@ -111,10 +102,11 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
         try {
-            JSONObject rating = GetRating.getRatingByID(result.getString("imdb_id"));
+            JSONObject rating = GetRating.getRatingByName(result.getString("name"));
             result.put("imdbRating", rating.getDouble("score"));
-            result.put("imdbVotes", rating.getString("votes"));
+            result.put("imdbVotes", rating.getInt("votes"));
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -125,10 +117,10 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        // Set movie's title
+        // Set show's title
         String _title = "";
         try {
-            _title = jsonObject.getString("title");
+            _title = jsonObject.getString("name");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -136,7 +128,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         if (name != null)
             name.setText(_title);
 
-        // Set movie's plot overview
+        // Set show's plot overview
         String _overview = "";
         try {
             _overview = jsonObject.getString("overview");
@@ -147,16 +139,16 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         if (overview != null)
             overview.setText(_overview);
 
-        // Set movie's release date
-        String _releaseDate = "";
+        // Set show's first air date
+        String _first_air_date = "";
         try {
-            _releaseDate = jsonObject.getString("release_date");
+            _first_air_date = jsonObject.getString("first_air_date");
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (releaseDate != null)
-            releaseDate.setText("Release Date: " + _releaseDate);
+        if (first_air_date != null)
+            first_air_date.setText("Release Date: " + _first_air_date);
 
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
@@ -173,20 +165,25 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             genres.setText(_genres.toString());
 
         // Set movie's runtime
-        int _runtime = -1;
+        String rt = "";
         try {
-            if (jsonObject.get("runtime") != null) {
-                _runtime = jsonObject.getInt("runtime");
+            if (jsonObject.get("episode_run_time") != null) {
+                JSONArray runtimes = jsonObject.getJSONArray("episode_run_time");
+                StringBuilder runtime = new StringBuilder();
+                for (int i = 0; i < runtimes.length(); i++) {
+                    runtime.append(runtimes.getInt(i) + (i == runtimes.length() - 1?"":", "));
+                }
+                rt = runtime.toString();
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         if (runtime != null) {
-            if (_runtime == -1) {
+            if (rt.equalsIgnoreCase("")) {
                 runtime.setText("Runtime: Unknown");
             } else {
-                runtime.setText("Runtime: " + _runtime + " minutes");
+                runtime.setText("Runtime: " + rt + " minutes");
             }
         }
 
@@ -203,36 +200,5 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 poster.setImageBitmap(_poster);
             }
         }
-
-        // Set movie's rating
-        Double score = null;
-        String votes = null;
-        try{
-            score = jsonObject.getDouble("imdbRating");
-            votes = jsonObject.getString("imdbVotes");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        if(score != null){
-            rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-            ratingBar.setRating(score.floatValue());
-        }
-        else {
-            rating.setText("Not yet rated");
-        }
-
-        if(additionalInfo != null){
-            if(_genres != null && _runtime > 0) {
-                additionalInfo.setText(_genres.toString() + " | Runtime: " + _runtime + " minutes");
-            }
-        }
-
-        if(genres_runtime != null){
-            if(_genres != null && _runtime > 0) {
-                genres_runtime.setText(_genres.toString() + " | Runtime: " + _runtime + " minutes");
-            }
-        }
-
     }
 }
