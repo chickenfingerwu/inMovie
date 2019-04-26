@@ -21,33 +21,29 @@ public class TV extends AsyncTask<String, Void, JSONArray> {
     @Override
     protected JSONArray doInBackground(String... strings) {
         JSONArray result = new JSONArray();
-        int num_of_page = 1;
         // strings[0]: name to search
-        for (int i = 1; i <= num_of_page; i++) {
-            try {
-                URL url = new URL("https://api.themoviedb.org/3/search/tv?api_key=" + BuildConfig.TMDb_API_key + "&language=en-US&query=" + strings[0] + "&page=" + i);
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        // strings[1]: page
 
-                InputStream stream = new BufferedInputStream(connection.getInputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder response = new StringBuilder();
+        try {
+            URL url = new URL("https://api.themoviedb.org/3/search/tv?api_key=" + BuildConfig.TMDb_API_key + "&query=" + strings[0] + "&page=" + strings[1]);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-                String temp;
-                while ((temp = reader.readLine()) != null) {
-                    response.append(temp);
-                }
+            InputStream stream = new BufferedInputStream(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            StringBuilder response = new StringBuilder();
 
-                JSONObject _temp = new JSONObject(response.toString());
-                num_of_page = _temp.getInt("total_pages");
-                JSONArray searchTemp = _temp.getJSONArray("results");
-                for (int j = 0; j < searchTemp.length(); j++) {
-                    result.put(searchTemp.getJSONObject(j));
-                }
+            String temp;
+            while ((temp = reader.readLine()) != null) {
+                response.append(temp);
             }
-            catch (JSONException | IOException e) {
-                e.printStackTrace();
-            }
+
+            JSONObject _temp = new JSONObject(response.toString());
+            result = _temp.getJSONArray("results");
         }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
         return result;
     }
 }
