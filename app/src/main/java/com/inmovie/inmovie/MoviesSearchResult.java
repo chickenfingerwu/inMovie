@@ -7,7 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
 
-import com.inmovie.inmovie.model.api.TMDb.Search.Movies;
+import com.inmovie.inmovie.model.api.TMDb.Search.SearchMovies;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -53,7 +53,7 @@ public class MoviesSearchResult extends AppCompatActivity {
         ArrayList<com.inmovie.inmovie.Movies> movies = new ArrayList<>();
         JSONArray jsonArray = null;
         try {
-            jsonArray = new Movies().execute(searchToken).get();
+            jsonArray = new SearchMovies().execute(searchToken).get();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class MoviesSearchResult extends AppCompatActivity {
                 ArrayList<com.inmovie.inmovie.Movies> moviesArrayList = new ArrayList<>();
                 JSONArray jsonArray1 = null;
                 try {
-                    jsonArray1 = new Movies().execute(query).get();
+                    jsonArray1 = new SearchMovies().execute(query).get();
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -117,9 +117,9 @@ public class MoviesSearchResult extends AppCompatActivity {
         });
 
         /*
-        ArrayList<Movies> movies = new ArrayList<>();
+        ArrayList<SearchMovies> movies = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            movies.add(new Movies());
+            movies.add(new SearchMovies());
         }*/
 
 

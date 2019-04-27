@@ -43,7 +43,7 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
                 }
                 else {
                     JSONObject temp = result.getJSONObject(i);
-                    String youtube_url = "https://www.youtube.com/watch?v=" + temp.getString("key");
+                    String youtube_url = "https://www.youtube.com/embed/" + temp.getString("key");
                     temp.remove("key");
                     temp.put("link", youtube_url);
                 }

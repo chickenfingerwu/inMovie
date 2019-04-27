@@ -17,7 +17,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class TV extends AsyncTask<String, Void, JSONArray> {
+public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
     @Override
     protected JSONArray doInBackground(String... strings) {
         JSONArray result = new JSONArray();
@@ -25,7 +25,7 @@ public class TV extends AsyncTask<String, Void, JSONArray> {
         // strings[1]: page
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/tv?api_key=" + BuildConfig.TMDb_API_key + "&query=" + strings[0] + "&page=" + strings[1]);
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=" + BuildConfig.TMDb_API_key + "&query=" + strings[0] + "&page=" + strings[1]);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(connection.getInputStream());
