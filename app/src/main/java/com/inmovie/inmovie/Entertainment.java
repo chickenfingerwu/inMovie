@@ -1,26 +1,54 @@
 package com.inmovie.inmovie;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
-public class Entertainment {
+public class Entertainment implements Serializable {
 
-    private String name;
-    private String description;
     protected String poster_url;
     protected String banner_url;
-    private int rating;
+    protected float rating;
+    protected String directorName;
+
+    public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
+
+    protected String title;
+
+
+    public static class EntertainmentResult {
+        private List<Entertainment> results;
+
+        public List<Entertainment> getResults() {
+            return results;
+        }
+    }
+
+    @SerializedName("poster_path")
+    protected String poster;
+
+    @SerializedName("overview")
+    protected String description;
+
+    @SerializedName("backdrop_path")
+    protected String backdrop;
+
+    @SerializedName("id")
+    protected Integer id;
 
     public Entertainment() {
     }
 
     public Entertainment(String n){
-        name = n;
+        title = n;
     }
 
     public Entertainment(String n, String p_url, String b_url){
-        name = n;
+        title = n;
         try {
             poster_url = p_url;
             banner_url = b_url;
@@ -32,7 +60,7 @@ public class Entertainment {
 
 
     public Entertainment(String n, String p_url, String b_url, String des){
-        name = n;
+        title = n;
         description = des;
         try {
             poster_url = p_url;
@@ -48,14 +76,17 @@ public class Entertainment {
     }
 
     public String getPoster_url(){
-        return poster_url;
+        return TMDB_IMAGE_PATH + poster_url;
     }
 
     public String getBanner_url(){
         return banner_url;
     }
 
-    public String getName(){
-        return name;
+    public String getTitle(){
+        return title;
     }
+
+    public String getDirectorName() { return directorName;}
 }
+

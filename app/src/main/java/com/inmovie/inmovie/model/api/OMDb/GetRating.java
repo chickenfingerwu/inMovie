@@ -44,5 +44,4 @@ public class GetRating {
 
         return res;
     }
-
 }

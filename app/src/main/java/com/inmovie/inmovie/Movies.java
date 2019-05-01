@@ -8,20 +8,25 @@ import java.util.List;
 public class Movies implements Serializable {
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
-    private String title;
+    @SerializedName("title")
+    protected String title;
 
     @SerializedName("poster_path")
-    private String poster;
+    protected String poster;
 
     @SerializedName("overview")
-    private String description;
+    protected String description;
 
     @SerializedName("backdrop_path")
-    private String backdrop;
+    protected String backdrop = null;
 
     @SerializedName("id")
-    private Integer id;
+    protected Integer id;
 
+    @SerializedName("release_date")
+    protected String releaseDate;
+
+    List<Actor> actors;
 
     public Movies() {}
 
@@ -41,7 +46,7 @@ public class Movies implements Serializable {
         this.poster = poster;
     }
 
-    protected void setId(int i){
+    public void setId(int i){
         this.id = i;
     }
 
@@ -59,6 +64,15 @@ public class Movies implements Serializable {
 
     public void setBackdrop(String backdrop) {
         this.backdrop = backdrop;
+    }
+
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public static class MovieResult {

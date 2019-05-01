@@ -3,6 +3,7 @@
     package="com.inmovie.inmovie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.TvDetails"></activity>
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,27 +22,27 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activities.MoviesSearchResult"
             android:label="Search Results"
-            android:name=".MoviesSearchResult"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".MovieDetails"
-            android:label="Infos">
-        </activity>
+            android:name=".Activities.MoviesActivities.MovieDetails"
+            android:label="Infos"></activity>
         <activity
-            android:name=".PopularMovies"
+            android:name=".Activities.PopularMovies"
             android:label="Popular"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activities.MainActivity" />
         </activity>
     </application>
 

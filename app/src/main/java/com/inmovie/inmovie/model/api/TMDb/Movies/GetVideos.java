@@ -38,13 +38,12 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
             result = new JSONObject(builder.toString()).getJSONArray("results");
 
             for (int i = 0; i < result.length(); i++) {
-                if (!result.getJSONObject(i).getString("site").equalsIgnoreCase("YouTube") ||
-                    !(result.getJSONObject(i).getString("type").equalsIgnoreCase("Trailer") || result.getJSONObject(i).getString("type").equalsIgnoreCase("Teaser"))) {
+                if (!result.getJSONObject(i).getString("site").equalsIgnoreCase("YouTube")) {
                     result.remove(i--);
                 }
                 else {
                     JSONObject temp = result.getJSONObject(i);
-                    String youtube_url = "https://www.youtube.com/embed/" + temp.getString("key");
+                    String youtube_url = "https://www.youtube.com/watch?v=" + temp.getString("key");
                     temp.remove("key");
                     temp.put("link", youtube_url);
                 }

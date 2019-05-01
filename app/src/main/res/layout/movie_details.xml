@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    tools:context=".MovieDetails">
+    tools:context=".Activities.MoviesActivities.MovieDetails">
 
     <FrameLayout
         android:id="@+id/banner"
@@ -44,18 +44,6 @@
                 android:textColor="@android:color/background_light"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/poster_banner" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                app:fontFamily="@font/oswald_light"
-                android:text="Featured"
-                android:textColor="@android:color/background_light"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toTopOf="@+id/content_name"
                 app:layout_constraintStart_toStartOf="@+id/poster_banner" />
 
             <TextView
@@ -233,32 +221,43 @@
                     app:layout_constraintTop_toBottomOf="@+id/castName"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <FrameLayout
+                    <LinearLayout
                         android:id="@+id/name_role"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/castName"
+                        app:layout_constraintStart_toStartOf="parent">
 
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:paddingLeft="16dp"
-                            app:fontFamily="@font/oswald_light"
-                            android:text="Actor" />
+                                <TextView
+                                    android:id="@+id/name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_weight="1"
+                                    android:paddingLeft="16dp"
+                                    android:gravity="left"
+                                    app:fontFamily="@font/oswald_light"
+                                    android:text="Actor" />
 
-                        <TextView
-                            android:id="@+id/role"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:fontFamily="@font/oswald_light"
-                            android:layout_gravity="end"
-                            android:paddingRight="32dp"
-                            android:text="Role" />
+                                <TextView
+                                    android:id="@+id/role"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:layout_height="wrap_content"
+                                    app:fontFamily="@font/oswald_light"
+                                    android:layout_gravity="end"
+                                    android:paddingRight="16dp"
+                                    android:text="Role" />
 
-
-                    </FrameLayout>
-
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/navigation_bar_pushup"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="horizontal"
+                        android:background="#000"/>
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
     </ScrollView>

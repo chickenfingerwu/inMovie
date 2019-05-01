@@ -79,7 +79,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         try {
-            URL backdrop_url = new URL("https://image.tmdb.org/t/p/original" + result.getString("backdrop_path"));
+            URL backdrop_url = new URL("https://image.tmdb.org/t/p/w1280" + result.getString("backdrop_path"));
             HttpsURLConnection connection = (HttpsURLConnection) backdrop_url.openConnection();
 
             connection.connect();
