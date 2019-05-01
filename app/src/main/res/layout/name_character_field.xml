@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/name_character_field"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:gravity="start"
+        android:textSize="13sp"
+        android:textColor="#FFF"
+        app:fontFamily="@font/oswald_light" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:layout_height="wrap_content"
+        app:fontFamily="@font/oswald_light"
+        android:textColor="#FFF"
+        android:textSize="13sp"
+        android:layout_gravity="end"
+        android:paddingEnd="16dp"/>
+
+</LinearLayout>
