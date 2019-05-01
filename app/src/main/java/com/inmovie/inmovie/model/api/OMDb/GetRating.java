@@ -45,33 +45,4 @@ public class GetRating {
         return res;
     }
 
-    public static JSONObject getRatingByName(String name, String year) {
-        JSONObject res = new JSONObject();
-
-        try {
-            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&t=" + name + "&y=" + year);
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-
-            InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder builder = new StringBuilder();
-
-            String input;
-            while ((input = bufferedReader.readLine()) != null) {
-                builder.append(input);
-            }
-
-            JSONObject topLevel = new JSONObject(builder.toString());
-            if(!topLevel.getString("imdbRating").equals("N/A")) {
-                res.put("score", Double.parseDouble(topLevel.getString("imdbRating")));
-                String votes = topLevel.getString("imdbVotes");
-                res.put("votes", votes);
-            }
-        }
-        catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return res;
-    }
 }

@@ -51,7 +51,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();
         try {
-            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key);
+            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key + "&append_to_response=external_ids");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
@@ -104,9 +104,11 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         try {
-            JSONObject rating = GetRating.getRatingByName(result.getString("name"), result.getString("first_air_date").substring(0, 4));
-            result.put("imdbRating", rating.getDouble("score"));
-            result.put("imdbVotes", rating.getString("votes"));
+            if (!result.getString("status").equalsIgnoreCase("In Production")) {
+                JSONObject rating = GetRating.getRatingByID(result.getJSONObject("external_ids").getString("imdb_id"));
+                result.put("imdbRating", rating.getDouble("score"));
+                result.put("imdbVotes", rating.getString("votes"));
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();
