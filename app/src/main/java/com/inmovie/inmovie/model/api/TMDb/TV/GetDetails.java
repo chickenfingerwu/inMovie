@@ -104,7 +104,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         try {
-            JSONObject rating = GetRating.getRatingByName(result.getString("name"));
+            JSONObject rating = GetRating.getRatingByName(result.getString("name"), result.getString("first_air_date").substring(0, 4));
             result.put("imdbRating", rating.getDouble("score"));
             result.put("imdbVotes", rating.getString("votes"));
         }

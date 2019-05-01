@@ -45,11 +45,11 @@ public class GetRating {
         return res;
     }
 
-    public static JSONObject getRatingByName(String name) {
+    public static JSONObject getRatingByName(String name, String year) {
         JSONObject res = new JSONObject();
 
         try {
-            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&t=" + name);
+            URL url = new URL("https://www.omdbapi.com/?apikey=" + BuildConfig.OMDb_API_key + "&t=" + name + "&y=" + year);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
