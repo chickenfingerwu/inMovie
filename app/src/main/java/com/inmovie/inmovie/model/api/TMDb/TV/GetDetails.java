@@ -79,7 +79,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         try {
-            URL backdrop_url = new URL("https://image.tmdb.org/t/p/original" + result.getString("backdrop_path"));
+            URL backdrop_url = new URL("https://image.tmdb.org/t/p/w1280" + result.getString("backdrop_path"));
             HttpsURLConnection connection = (HttpsURLConnection) backdrop_url.openConnection();
 
             connection.connect();
@@ -175,9 +175,11 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (first_air_date != null)
+        if (!_first_air_date.equals(""))
             first_air_date.setText("Release Date: " + _first_air_date);
-
+        else {
+            first_air_date.setText("Release Date: Unknown");
+        }
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
         try {

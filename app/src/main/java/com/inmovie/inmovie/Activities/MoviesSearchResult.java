@@ -20,10 +20,6 @@ public class MoviesSearchResult extends AppCompatActivity {
     private ResultPagerAdapter resultPagerAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private EndlessScrollListener scrollListener;
-    private RecyclerView recyclerView;
-    private MovieSearchResultAdapter movieSearchResultAdapter;
-    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +79,6 @@ public class MoviesSearchResult extends AppCompatActivity {
 
     }
 
-    //Get movies through the API, query is the search token, page is the number of the result page
-    private void getMoreMovie(String query, int page){
-        new SearchMovies(movieSearchResultAdapter, page).execute(query);
-    }
 
     /*
     //No need for this function but just keep it here just in case!

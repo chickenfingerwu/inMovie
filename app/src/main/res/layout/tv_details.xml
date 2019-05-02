@@ -81,7 +81,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Ratings"
                 app:fontFamily="@font/oswald_bold"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textColor="#FFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 app:fontFamily="@font/oswald_light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_textRating" />
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
 
                 android:layout_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +119,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Genres | Runtime"
                 android:textColor="#FFF"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 app:fontFamily="@font/oswald_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ratingBar3" />
@@ -130,9 +130,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:textColor="#FFF"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 app:fontFamily="@font/oswald_light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_genresRuntimeText" />
@@ -143,10 +143,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="Release Date"
                 android:textColor="#FFF"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 app:fontFamily="@font/oswald_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_genres_runtime" />
@@ -157,9 +157,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:textColor="#FFF"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 app:fontFamily="@font/oswald_light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_releaseDateText" />
@@ -174,7 +174,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Plot"
                 android:textColor="#FFF"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 app:fontFamily="@font/oswald_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_release_date" />
@@ -185,13 +185,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:ems="10"
                 android:inputType="textMultiLine"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="5dp"
                 android:textColor="#FFF"
                 app:fontFamily="@font/oswald_light"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,58 +208,53 @@
                 android:layout_marginTop="24dp"
                 android:text="Cast"
                 android:textColor="#FFF"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 app:fontFamily="@font/oswald_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_Description" />
 
-            <LinearLayout
-                android:id="@+id/tv_list"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tv_cast_list"
                 android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="#000"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/tv_castName"/>
+
+            <TextView
+                android:id="@+id/tv_crewText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/tv_castName"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:text="Crew"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:fontFamily="@font/oswald_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cast_list" />
 
-                <LinearLayout
-                    android:id="@+id/tv_name_role"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/castName"
-                    app:layout_constraintStart_toStartOf="parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tv_crew_list"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="#000"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/tv_crewText"/>
 
-                    <TextView
-                        android:id="@+id/actorText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_weight="1"
-                        android:paddingLeft="16dp"
-                        android:gravity="left"
-                        app:fontFamily="@font/oswald_light"
-                        android:text="Actor" />
+            <LinearLayout
+                android:id="@+id/tv_navigation_bar_pushup"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:orientation="horizontal"
+                android:background="#000"
+                app:layout_constraintTop_toBottomOf="@+id/tv_crew_list"/>
 
-                    <TextView
-                        android:id="@+id/roleText"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        app:fontFamily="@font/oswald_light"
-                        android:layout_gravity="end"
-                        android:paddingRight="16dp"
-                        android:text="Role" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/tv_navigation_bar_pushup"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:orientation="horizontal"
-                    android:background="#000"/>
-
-            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

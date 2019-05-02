@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/name_character_field"
-    android:layout_marginEnd="2dp"
+    android:id="@+id/crew_role_field"
+    android:layout_marginEnd="1dp"
     android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
-
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/actor_profile"
+        android:id="@+id/crew_profile"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_weight="2"
@@ -17,7 +16,7 @@
         app:civ_border_color="#FFF"/>
 
     <TextView
-        android:id="@+id/actor_name"
+        android:id="@+id/crew_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -29,7 +28,7 @@
         app:fontFamily="@font/oswald_bold" />
 
     <TextView
-        android:id="@+id/actor_character"
+        android:id="@+id/crew_role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill"
@@ -42,6 +41,5 @@
         app:fontFamily="@font/oswald_light"
         android:textColor="#FFF"
         android:textSize="12sp"/>
-
 
 </LinearLayout>

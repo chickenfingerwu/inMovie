@@ -24,7 +24,7 @@ public class Movies implements Serializable {
     protected Integer id;
 
     @SerializedName("release_date")
-    protected String releaseDate;
+    protected String releaseDate = "";
 
     List<Actor> actors;
 

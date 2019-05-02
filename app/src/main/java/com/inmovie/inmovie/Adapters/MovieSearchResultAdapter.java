@@ -3,6 +3,7 @@ package com.inmovie.inmovie.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,7 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
     }
 
     @Override
-    public MovieSearchResultAdapter.searchResultHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieSearchResultAdapter.searchResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View search = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent, false);
         MovieSearchResultAdapter.searchResultHolder vh = new MovieSearchResultAdapter.searchResultHolder(search);
         return vh;
@@ -97,14 +98,15 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
         holder.setMovieTv(mTV);
         TextView titleY = holder.title_year;
         titleY.setTextColor(Color.WHITE);
-        String[] releaseDate = mTV.getReleaseDate().split("-");
-        String source = mTV.getTitle() + " (" + releaseDate[0] + ")";
-        /*SpannableString s = new SpannableString(source);
-        StyleSpan bold = new StyleSpan(Typeface.BOLD);
-
-        s.setSpan(new RelativeSizeSpan(1.3f), 0, mTV.getTitle().length(), 0);
-        s.setSpan(bold, 0, mTV.getTitle().length(), 0);
-        titleY.setText(s);*/
+        String source = "";
+        source += mTV.getTitle();
+        if(!mTV.getReleaseDate().equals("")) {
+            String[] releaseDate = mTV.getReleaseDate().split("-");
+            source += " (" + releaseDate[0] + ")";
+        }
+        else {
+            source += " (Unknown release date)";
+        }
         titleY.setText(source);
     }
 
