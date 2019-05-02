@@ -19,6 +19,10 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetSimilarMovies extends AsyncTask<Integer, Void, JSONObject> {
     private int page;
 
+    public GetSimilarMovies() {
+        page = 1;
+    }
+
     public GetSimilarMovies(int page) {
         this.page = page;
     }

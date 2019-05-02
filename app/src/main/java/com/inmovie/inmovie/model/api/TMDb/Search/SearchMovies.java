@@ -29,6 +29,10 @@ public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
         page = p;
     }
 
+    public SearchMovies() {
+        page = 1;
+    }
+
     @Override
     protected JSONArray doInBackground(String... strings) {
         JSONArray result = new JSONArray();
@@ -58,35 +62,35 @@ public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute (JSONArray jsonArray){
-        ArrayList<Movies> moviesList = new ArrayList<>();
-        if(jsonArray!=null) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                com.inmovie.inmovie.Movies movieCandidate = new com.inmovie.inmovie.Movies();
+        if (movieSearchResultAdapter != null) {
+            ArrayList<Movies> moviesList = new ArrayList<>();
+            if (jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    com.inmovie.inmovie.Movies movieCandidate = new com.inmovie.inmovie.Movies();
 
-                try {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    int id = jsonObject.getInt("id");
-                    String poster_path = jsonObject.getString("poster_path");
-                    String title = jsonObject.getString("title");
-                    String releaseDate = jsonObject.getString("release_date");
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int id = jsonObject.getInt("id");
+                        String poster_path = jsonObject.getString("poster_path");
+                        String title = jsonObject.getString("title");
+                        String releaseDate = jsonObject.getString("release_date");
 
-                    movieCandidate.setPoster(poster_path);
-                    movieCandidate.setId(id);
-                    movieCandidate.setTitle(title);
-                    movieCandidate.setReleaseDate(releaseDate);
-                    moviesList.add(movieCandidate);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
+                        movieCandidate.setPoster(poster_path);
+                        movieCandidate.setId(id);
+                        movieCandidate.setTitle(title);
+                        movieCandidate.setReleaseDate(releaseDate);
+                        moviesList.add(movieCandidate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
 
-        if (page != 1) {
-            movieSearchResultAdapter.setMoviesList(moviesList, false);
-        }
-        else{
-            movieSearchResultAdapter.setMoviesList(moviesList, true);
+            if (page != 1) {
+                movieSearchResultAdapter.setMoviesList(moviesList, false);
+            } else {
+                movieSearchResultAdapter.setMoviesList(moviesList, true);
+            }
         }
     }
 }

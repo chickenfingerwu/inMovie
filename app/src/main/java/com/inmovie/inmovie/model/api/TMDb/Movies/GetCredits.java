@@ -36,6 +36,8 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
     private LinearLayout cast;
     private Context layoutContext;
 
+    public GetCredits() {}
+
     public GetCredits(LinearLayout c){
         cast = c;
         layoutContext = c.getContext();
