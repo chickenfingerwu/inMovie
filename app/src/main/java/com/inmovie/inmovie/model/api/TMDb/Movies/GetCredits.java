@@ -7,20 +7,13 @@ import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.inmovie.inmovie.Actor;
-import com.inmovie.inmovie.Adapters.CastListAdapters;
-import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Crew;
 import com.inmovie.inmovie.R;
 
 import org.json.JSONArray;
@@ -33,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -41,12 +33,12 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
 
-    private CastListAdapters castListAdapters = null;
-    private CrewListAdapters crewListAdapters = null;
+    private LinearLayout cast;
+    private Context layoutContext;
 
-    public GetCredits(CastListAdapters castListAdapters, CrewListAdapters crewListAdapters){
-        this.castListAdapters = castListAdapters;
-        this.crewListAdapters = crewListAdapters;
+    public GetCredits(LinearLayout c){
+        cast = c;
+        layoutContext = c.getContext();
     }
 
     @Override
@@ -77,41 +69,24 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         try{
-            ArrayList<Actor> actors = new ArrayList<>();
-            ArrayList<Crew> crews = new ArrayList<>();
-            JSONArray castJSON = new JSONArray();
-            JSONArray crewJSON = new JSONArray();
-            if(castListAdapters != null){
-                castJSON = jsonObject.getJSONArray("cast");
-                String name = "";
-                String role = "";
-                String profile = "";
-                for(int i = 0; i < castJSON.length(); i++){
-                    Actor a;
-                    JSONObject actor = castJSON.getJSONObject(i);
-                    name = actor.getString("name");
-                    role = actor.getString("character");
-                    profile = actor.getString("profile_path");
-                    a = new Actor(name, role, profile);
-                    actors.add(a);
-                }
-                castListAdapters.setActor(actors, false);
-            }
-            if(crewListAdapters != null){
-                crewJSON = jsonObject.getJSONArray("crew");
-                String name = "";
-                String role = "";
-                String profile = "";
-                for(int i = 0; i < crewJSON.length(); i++){
-                    Crew c;
-                    JSONObject crew = crewJSON.getJSONObject(i);
-                    name = crew.getString("name");
-                    role = crew.getString("job");
-                    profile = crew.getString("profile_path");
-                    c = new Crew(name, role, profile);
-                    crews.add(c);
-                }
-                crewListAdapters.setCrew(crews, false);
+            LayoutInflater inflater = (LayoutInflater) layoutContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            JSONArray castJSON = jsonObject.getJSONArray("cast");
+            String name = "";
+            String role = "";
+            for(int i = 0; i < castJSON.length(); i++){
+                JSONObject actor = castJSON.getJSONObject(i);
+                name = actor.getString("name");
+                role = actor.getString("character");
+
+                LinearLayout nameRole = (LinearLayout) inflater.inflate(R.layout.name_character_field, null);
+
+                TextView actorN = (TextView) nameRole.getChildAt(0);
+                actorN.setText(name);
+
+                TextView actorR = (TextView) nameRole.getChildAt(1);
+                actorR.setText(role);
+
+                cast.addView(nameRole, cast.getChildCount() - 1);
             }
         }
         catch (Exception e){

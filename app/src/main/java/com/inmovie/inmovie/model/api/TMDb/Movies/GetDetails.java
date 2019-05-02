@@ -40,6 +40,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView additionalInfo = null;
     private TextView genres_runtime = null;
 
+    public GetDetails() {}
+
     public GetDetails(List<View> views) {
         try {
             name = (TextView) views.get(0);
@@ -216,12 +218,14 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (Exception e){
             e.printStackTrace();
         }
-        if(score != null){
-            rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-            ratingBar.setRating(score.floatValue());
-        }
-        else {
-            rating.setText("Not yet rated");
+
+        if (rating != null && ratingBar != null) {
+            if (score != null) {
+                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
+                ratingBar.setRating(score.floatValue());
+            } else {
+                rating.setText("Not yet rated");
+            }
         }
 
         if(additionalInfo != null){
