@@ -11,7 +11,6 @@ public class CheckConnectivity extends AsyncTask<Void, Void, Integer> {
     @Override
     protected Integer doInBackground(Void... voids) {
         int canConnect = 1;
-        // 0: no Internet
         // 1: can't connect to TMDb and OMDb
         // 3: can't connect to OMDb
         // 5: can't connect to TMDb
