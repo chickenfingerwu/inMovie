@@ -53,8 +53,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
-
     }
+    public GetDetails() {}
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
@@ -148,12 +148,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (Exception e){
             e.printStackTrace();
         }
-        if(score != null){
-            rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-            ratingBar.setRating(score.floatValue());
-        }
-        else {
-            rating.setText("Not yet rated");
+        if (rating != null && ratingBar != null) {
+            if (score != null) {
+                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
+                ratingBar.setRating(score.floatValue());
+            } else {
+                rating.setText("Not yet rated");
+            }
         }
 
         // Set show's plot overview
@@ -175,10 +176,12 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!_first_air_date.equals(""))
-            first_air_date.setText("Release Date: " + _first_air_date);
-        else {
-            first_air_date.setText("Release Date: Unknown");
+        if (first_air_date != null) {
+            if (!_first_air_date.equals(""))
+                first_air_date.setText("Release Date: " + _first_air_date);
+            else {
+                first_air_date.setText("Release Date: Unknown");
+            }
         }
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
