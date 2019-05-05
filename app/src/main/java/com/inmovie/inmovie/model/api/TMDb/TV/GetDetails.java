@@ -46,7 +46,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     TvShow show = null;
     HandlingBanner handler = null;
 
-    public GetDetails(TvShow tvShow, HandlingBanner h){
+    public GetDetails(TvShow tvShow, HandlingBanner h) {
         show = tvShow;
         handler = h;
     }
@@ -61,19 +61,20 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             additionalInfo = (TextView) views.get(5);
             genres_runtime = (TextView) views.get(6);
             first_air_date = (TextView) views.get(7);
-        }
-        catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
         this.show = show;
     }
-    public GetDetails() {}
+
+    public GetDetails() {
+    }
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();
         try {
-            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key  + "&append_to_response=external_ids");
+            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key + "&append_to_response=external_ids");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
             InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
@@ -86,8 +87,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
 
             result = new JSONObject(builder.toString());
-        }
-        catch (JSONException | IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
@@ -103,8 +103,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 _backdrop = BitmapFactory.decodeStream(inputStream);
             }
 
-        }
-        catch (IOException | JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -120,8 +119,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 _poster = BitmapFactory.decodeStream(inputStream);
             }
 
-        }
-        catch (IOException | JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -129,8 +127,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             JSONObject rating = GetRating.getRatingByID(result.getJSONObject("external_ids").getString("imdb_id"));
             result.put("imdbRating", rating.getDouble("score"));
             result.put("imdbVotes", rating.getString("votes"));
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -144,11 +141,10 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         String _title = "";
         try {
             _title = jsonObject.getString("name");
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(show != null){
+        if (show != null) {
             show.setTitle(_title);
         }
         if (name != null)
@@ -157,182 +153,175 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         // Set movie's rating
         Double score = null;
         String votes = null;
-        try{
+        try {
             score = jsonObject.getDouble("imdbRating");
             votes = jsonObject.getString("imdbVotes");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(score != null){
-            if(rating!=null && ratingBar!=null) {
+        if (score != null) {
+            if (rating != null && ratingBar != null) {
                 rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
                 ratingBar.setRating(score.floatValue());
             }
-        }
-        else {
+        } else {
             if (rating != null) {
                 rating.setText("Not yet rated");
             }
-        if (rating != null && ratingBar != null) {
-            if (score != null) {
-                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-                ratingBar.setRating(score.floatValue());
+            if (rating != null && ratingBar != null) {
+                if (score != null) {
+                    rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
+                    ratingBar.setRating(score.floatValue());
+                } else {
+                    rating.setText("Not yet rated");
+                }
+            }
+            if (show != null) {
+                show.setRating(score);
+            }
+
+            // Set show's plot overview
+            String _overview = "";
+            try {
+                _overview = jsonObject.getString("overview");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (overview != null)
+                overview.setText(_overview);
+
+
+            if (show != null) {
+                show.setDescription(_overview);
+            }
+
+            // Set show's first air date
+            String _first_air_date = "";
+            try {
+                _first_air_date = jsonObject.getString("first_air_date");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (!_first_air_date.equals("")) {
+                if (first_air_date != null) {
+                    first_air_date.setText("Release Date: " + _first_air_date);
+                }
             } else {
-                rating.setText("Not yet rated");
-            }
-        }
-        if(show != null){
-            show.setRating(score);
-        }
-
-        // Set show's plot overview
-        String _overview = "";
-        try {
-            _overview = jsonObject.getString("overview");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (overview != null)
-            overview.setText(_overview);
-
-
-        if(show != null){
-            show.setDescription(_overview);
-        }
-
-        // Set show's first air date
-        String _first_air_date = "";
-        try {
-            _first_air_date = jsonObject.getString("first_air_date");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (!_first_air_date.equals("")) {
-            if (first_air_date != null) {
-                first_air_date.setText("Release Date: " + _first_air_date);
-            }
-        }
-        else {
-            if (first_air_date != null) {
-                first_air_date.setText("Release Date: Unknown");
-            }
-        if (first_air_date != null) {
-            if (!_first_air_date.equals(""))
-                first_air_date.setText("Release Date: " + _first_air_date);
-            else {
-                first_air_date.setText("Release Date: Unknown");
-            }
-        }
-
-        if(show != null){
-            show.setReleaseDate(_first_air_date);
-        }
-
-        // Set movie's genres
-        StringBuilder _genres = new StringBuilder("Genres: ");
-        try {
-            JSONArray genre = jsonObject.getJSONArray("genres");
-            for (int i = 0; i < genre.length(); i++) {
-                _genres.append(genre.getJSONObject(i).getString("name") + (i == genre.length() - 1?"":", "));
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (genres != null){
-            genres.setText(_genres.toString());
-        }
-
-
-        // Set movie's runtime
-        int rt = 0;
-        try {
-            if (jsonObject.get("episode_run_time") != null) {
-                JSONArray runtimes = jsonObject.getJSONArray("episode_run_time");
-                int min = runtimes.getInt(0);
-                for (int i = 0; i < runtimes.length(); i++) {
-                    if(runtimes.getInt(i) < min){
-                        min = runtimes.getInt(i);
+                if (first_air_date != null) {
+                    first_air_date.setText("Release Date: Unknown");
+                }
+                if (first_air_date != null) {
+                    if (!_first_air_date.equals(""))
+                        first_air_date.setText("Release Date: " + _first_air_date);
+                    else {
+                        first_air_date.setText("Release Date: Unknown");
                     }
                 }
-                rt = min;
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (runtime != null) {
-            if (rt == 0) {
-                runtime.setText("Runtime: Unknown");
-            } else {
-                runtime.setText("Runtime: " + rt + " minutes");
-            }
-        }
+
+                if (show != null) {
+                    show.setReleaseDate(_first_air_date);
+                }
+
+                // Set movie's genres
+                StringBuilder _genres = new StringBuilder("Genres: ");
+                try {
+                    JSONArray genre = jsonObject.getJSONArray("genres");
+                    for (int i = 0; i < genre.length(); i++) {
+                        _genres.append(genre.getJSONObject(i).getString("name") + (i == genre.length() - 1 ? "" : ", "));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (genres != null) {
+                    genres.setText(_genres.toString());
+                }
 
 
-        if(show != null){
-            show.setRuntime(rt);
-        }
+                // Set movie's runtime
+                int rt = 0;
+                try {
+                    if (jsonObject.get("episode_run_time") != null) {
+                        JSONArray runtimes = jsonObject.getJSONArray("episode_run_time");
+                        int min = runtimes.getInt(0);
+                        for (int i = 0; i < runtimes.length(); i++) {
+                            if (runtimes.getInt(i) < min) {
+                                min = runtimes.getInt(i);
+                            }
+                        }
+                        rt = min;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (runtime != null) {
+                    if (rt == 0) {
+                        runtime.setText("Runtime: Unknown");
+                    } else {
+                        runtime.setText("Runtime: " + rt + " minutes");
+                    }
+                }
 
-        // Set movie's backdrop image
-        if (backdrop != null) {
-            if (_backdrop != null) {
-                backdrop.setImageBitmap(_backdrop);
-            }
-        }
+
+                if (show != null) {
+                    show.setRuntime(rt);
+                }
+
+                // Set movie's backdrop image
+                if (backdrop != null) {
+                    if (_backdrop != null) {
+                        backdrop.setImageBitmap(_backdrop);
+                    }
+                }
 
 
-        if(show != null) {
-            try {
-                show.setBackdrop(jsonObject.getString("backdrop_path"));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+                if (show != null) {
+                    try {
+                        show.setBackdrop(jsonObject.getString("backdrop_path"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-        // Set movie's poster
-        if (poster != null) {
-            if (_poster != null) {
-                poster.setImageBitmap(_poster);
-            }
-        }
+                // Set movie's poster
+                if (poster != null) {
+                    if (_poster != null) {
+                        poster.setImageBitmap(_poster);
+                    }
+                }
 
-        if(show != null) {
-            try {
-                show.setPoster(jsonObject.getString("poster_path"));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+                if (show != null) {
+                    try {
+                        show.setPoster(jsonObject.getString("poster_path"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-        if(additionalInfo != null){
-            if(!_genres.toString().equals("")) {
-                additionalInfo.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
-            }
-        }
-        if(show != null){
-            if(!_genres.toString().equals("")) {
-                show.setGenres(_genres.toString());
-            }
-        }
+                if (additionalInfo != null) {
+                    if (!_genres.toString().equals("")) {
+                        additionalInfo.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
+                    }
+                }
+                if (show != null) {
+                    if (!_genres.toString().equals("")) {
+                        show.setGenres(_genres.toString());
+                    }
+                }
 
-        if(genres_runtime != null){
-            if(!_genres.toString().equals("")) {
-                genres_runtime.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
-            }
-        }
+                if (genres_runtime != null) {
+                    if (!_genres.toString().equals("")) {
+                        genres_runtime.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
+                    }
+                }
 
-        if(show != null && handler != null) {
-            Bundle data = new Bundle();
-            data.putSerializable("details", show);
-            Message m = new Message();
-            m.setData(data);
-            handler.sendMessage(m);
+                if (show != null && handler != null) {
+                    Bundle data = new Bundle();
+                    data.putSerializable("details", show);
+                    Message m = new Message();
+                    m.setData(data);
+                    handler.sendMessage(m);
+                }
+            }
         }
     }
 }
