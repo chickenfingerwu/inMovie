@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_episode_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/tv_episode_thumbnail"
+        android:layout_width="150dp"
+        android:layout_height="117dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_episode_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/oswald_light"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textStyle="bold" />
+
+</LinearLayout>

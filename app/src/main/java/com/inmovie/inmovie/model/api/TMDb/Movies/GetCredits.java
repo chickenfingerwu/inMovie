@@ -46,6 +46,8 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
         this.crewListAdapters = crewListAdapters;
     }
 
+    public GetCredits(){};
+
     @Override
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();

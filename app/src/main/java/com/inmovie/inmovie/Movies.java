@@ -6,7 +6,14 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Movies implements Serializable {
-    public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
+    public static final String TMDB_POSTER_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
+    public static final String TMDB_BANNER_IMAGE_PATH = "http://image.tmdb.org/t/p/w1280";
+
+    protected double rating;
+
+    protected String genres;
+
+    protected int runtime;
 
     @SerializedName("title")
     protected String title;
@@ -30,6 +37,22 @@ public class Movies implements Serializable {
 
     public Movies() {}
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -39,7 +62,7 @@ public class Movies implements Serializable {
     }
 
     public String getPoster_url() {
-        return TMDB_IMAGE_PATH + poster;
+        return TMDB_POSTER_IMAGE_PATH + poster;
     }
 
     public void setPoster(String poster) {
@@ -59,7 +82,7 @@ public class Movies implements Serializable {
     }
 
     public String getBackdrop() {
-        return TMDB_IMAGE_PATH  + backdrop;
+        return TMDB_BANNER_IMAGE_PATH + backdrop;
     }
 
     public void setBackdrop(String backdrop) {
@@ -85,6 +108,14 @@ public class Movies implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
 }
 

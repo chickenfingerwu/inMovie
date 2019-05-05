@@ -23,13 +23,14 @@ import java.util.List;
 
 public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchResultAdapter.searchResultHolder> {
     private List<Movies> resultList;
-    private Context context;
-    private LayoutInflater layoutInflater;
+    protected Context context;
+    protected LayoutInflater layoutInflater;
 
     public static class searchResultHolder extends RecyclerView.ViewHolder{
         private ImageView poster;
         private TextView title_year;
         private Movies movieTv;
+
         public searchResultHolder (View searchView){
             super(searchView);
             poster = (ImageView) itemView.findViewById(R.id.search_result_poster);
@@ -42,9 +43,11 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
                     Intent intent = null;
                     if(movieTv instanceof TvShow){
                         intent = new Intent(context, TvDetails.class);
+                        intent.putExtra("tvShow", movieTv);
                     }
                     else if(movieTv instanceof Movies) {
                         intent = new Intent(context, MovieDetails.class);
+                        intent.putExtra("movie", movieTv);
                     }
                     intent.putExtra("serialize_data", movieTv);
                     context.startActivity(intent);

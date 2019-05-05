@@ -3,12 +3,16 @@ package com.inmovie.inmovie.model.api.TMDb.TV;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
+import com.inmovie.inmovie.HandlingBanner;
+import com.inmovie.inmovie.TVclasses.TvShow;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
 import org.json.JSONArray;
@@ -39,7 +43,15 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private RatingBar ratingBar = null;
     private TextView additionalInfo = null;
     private TextView genres_runtime = null;
-    public GetDetails(ArrayList<View> views) {
+    TvShow show = null;
+    HandlingBanner handler = null;
+
+    public GetDetails(TvShow tvShow, HandlingBanner h){
+        show = tvShow;
+        handler = h;
+    }
+
+    public GetDetails(ArrayList<View> views, TvShow show) {
         try {
             name = (TextView) views.get(0);
             overview = (TextView) views.get(1);
@@ -53,7 +65,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
-
+        this.show = show;
     }
 
     @Override
@@ -135,6 +147,9 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
+        if(show != null){
+            show.setTitle(_title);
+        }
         if (name != null)
             name.setText(_title);
 
@@ -149,11 +164,18 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             e.printStackTrace();
         }
         if(score != null){
-            rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-            ratingBar.setRating(score.floatValue());
+            if(rating!=null && ratingBar!=null) {
+                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
+                ratingBar.setRating(score.floatValue());
+            }
         }
         else {
-            rating.setText("Not yet rated");
+            if (rating != null) {
+                rating.setText("Not yet rated");
+            }
+        }
+        if(show != null){
+            show.setRating(score);
         }
 
         // Set show's plot overview
@@ -167,6 +189,11 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         if (overview != null)
             overview.setText(_overview);
 
+
+        if(show != null){
+            show.setDescription(_overview);
+        }
+
         // Set show's first air date
         String _first_air_date = "";
         try {
@@ -175,11 +202,21 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!_first_air_date.equals(""))
-            first_air_date.setText("Release Date: " + _first_air_date);
-        else {
-            first_air_date.setText("Release Date: Unknown");
+        if (!_first_air_date.equals("")) {
+            if (first_air_date != null) {
+                first_air_date.setText("Release Date: " + _first_air_date);
+            }
         }
+        else {
+            if (first_air_date != null) {
+                first_air_date.setText("Release Date: Unknown");
+            }
+        }
+
+        if(show != null){
+            show.setReleaseDate(_first_air_date);
+        }
+
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
         try {
@@ -191,8 +228,10 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (genres != null)
+        if (genres != null){
             genres.setText(_genres.toString());
+        }
+
 
         // Set movie's runtime
         int rt = 0;
@@ -219,10 +258,25 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
         }
 
+
+        if(show != null){
+            show.setRuntime(rt);
+        }
+
         // Set movie's backdrop image
         if (backdrop != null) {
             if (_backdrop != null) {
                 backdrop.setImageBitmap(_backdrop);
+            }
+        }
+
+
+        if(show != null) {
+            try {
+                show.setBackdrop(jsonObject.getString("backdrop_path"));
+            }
+            catch (Exception e){
+                e.printStackTrace();
             }
         }
 
@@ -233,16 +287,38 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
         }
 
+        if(show != null) {
+            try {
+                show.setPoster(jsonObject.getString("poster_path"));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
         if(additionalInfo != null){
-            if(_genres != null) {
+            if(!_genres.toString().equals("")) {
                 additionalInfo.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
+            }
+        }
+        if(show != null){
+            if(!_genres.toString().equals("")) {
+                show.setGenres(_genres.toString());
             }
         }
 
         if(genres_runtime != null){
-            if(_genres != null) {
+            if(!_genres.toString().equals("")) {
                 genres_runtime.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
             }
+        }
+
+        if(show != null && handler != null) {
+            Bundle data = new Bundle();
+            data.putSerializable("details", show);
+            Message m = new Message();
+            m.setData(data);
+            handler.sendMessage(m);
         }
     }
 }

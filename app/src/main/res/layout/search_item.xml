@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_item"
     android:orientation="horizontal"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-
+    <ImageView
+        android:contentDescription="Poster"
         android:id="@+id/search_result_poster"
         android:layout_width="110dp"
         android:layout_height="117dp"
