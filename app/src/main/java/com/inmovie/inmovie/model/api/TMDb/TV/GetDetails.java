@@ -67,6 +67,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         this.show = show;
     }
+    public GetDetails() {}
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
@@ -173,6 +174,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             if (rating != null) {
                 rating.setText("Not yet rated");
             }
+        if (rating != null && ratingBar != null) {
+            if (score != null) {
+                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
+                ratingBar.setRating(score.floatValue());
+            } else {
+                rating.setText("Not yet rated");
+            }
         }
         if(show != null){
             show.setRating(score);
@@ -209,6 +217,12 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         else {
             if (first_air_date != null) {
+                first_air_date.setText("Release Date: Unknown");
+            }
+        if (first_air_date != null) {
+            if (!_first_air_date.equals(""))
+                first_air_date.setText("Release Date: " + _first_air_date);
+            else {
                 first_air_date.setText("Release Date: Unknown");
             }
         }

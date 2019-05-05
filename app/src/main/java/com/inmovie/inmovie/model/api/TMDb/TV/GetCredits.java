@@ -1,23 +1,12 @@
 package com.inmovie.inmovie.model.api.TMDb.TV;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.v4.content.res.ResourcesCompat;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.inmovie.inmovie.Actor;
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.Crew;
-import com.inmovie.inmovie.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +30,9 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
         this.castListAdapters = castListAdapters;
         this.crewListAdapters = crewListAdapters;
     }
+
+    public GetCredits() {}
+
     @Override
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();
@@ -68,46 +60,47 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        try{
-            ArrayList<Actor> actors = new ArrayList<>();
-            ArrayList<Crew> crews = new ArrayList<>();
-            JSONArray castJSON = new JSONArray();
-            JSONArray crewJSON = new JSONArray();
-            if(castListAdapters != null){
-                castJSON = jsonObject.getJSONArray("cast");
-                String name = "";
-                String role = "";
-                String profile = "";
-                for(int i = 0; i < castJSON.length(); i++){
-                    Actor a;
-                    JSONObject actor = castJSON.getJSONObject(i);
-                    name = actor.getString("name");
-                    role = actor.getString("character");
-                    profile = actor.getString("profile_path");
-                    a = new Actor(name, role, profile);
-                    actors.add(a);
+        if (castListAdapters != null && crewListAdapters != null) {
+            try {
+                ArrayList<Actor> actors = new ArrayList<>();
+                ArrayList<Crew> crews = new ArrayList<>();
+                JSONArray castJSON = new JSONArray();
+                JSONArray crewJSON = new JSONArray();
+                if (castListAdapters != null) {
+                    castJSON = jsonObject.getJSONArray("cast");
+                    String name = "";
+                    String role = "";
+                    String profile = "";
+                    for (int i = 0; i < castJSON.length(); i++) {
+                        Actor a;
+                        JSONObject actor = castJSON.getJSONObject(i);
+                        name = actor.getString("name");
+                        role = actor.getString("character");
+                        profile = actor.getString("profile_path");
+                        a = new Actor(name, role, profile);
+                        actors.add(a);
+                    }
+                    castListAdapters.setActor(actors, false);
                 }
-                castListAdapters.setActor(actors, false);
-            }
-            if(crewListAdapters != null){
-                crewJSON = jsonObject.getJSONArray("crew");
-                String name = "";
-                String role = "";
-                String profile = "";
-                for(int i = 0; i < crewJSON.length(); i++){
-                    Crew c;
-                    JSONObject crew = crewJSON.getJSONObject(i);
-                    name = crew.getString("name");
-                    role = crew.getString("job");
-                    profile = crew.getString("profile_path");
-                    c = new Crew(name, role, profile);
-                    crews.add(c);
+                if (crewListAdapters != null) {
+                    crewJSON = jsonObject.getJSONArray("crew");
+                    String name = "";
+                    String role = "";
+                    String profile = "";
+                    for (int i = 0; i < crewJSON.length(); i++) {
+                        Crew c;
+                        JSONObject crew = crewJSON.getJSONObject(i);
+                        name = crew.getString("name");
+                        role = crew.getString("job");
+                        profile = crew.getString("profile_path");
+                        c = new Crew(name, role, profile);
+                        crews.add(c);
+                    }
+                    crewListAdapters.setCrew(crews, false);
                 }
-                crewListAdapters.setCrew(crews, false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
-        catch (Exception e){
-            e.printStackTrace();
         }
     }
 }

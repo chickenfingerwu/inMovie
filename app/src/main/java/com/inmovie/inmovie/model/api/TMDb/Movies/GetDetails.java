@@ -157,10 +157,12 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!_releaseDate.equals(""))
-            releaseDate.setText("Release Date: " + _releaseDate);
-        else {
-            releaseDate.setText("Release Date: Unknown");
+        if (releaseDate != null) {
+            if (!_releaseDate.equals(""))
+                releaseDate.setText("Release Date: " + _releaseDate);
+            else {
+                releaseDate.setText("Release Date: Unknown");
+            }
         }
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
