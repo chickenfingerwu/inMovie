@@ -13,9 +13,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
@@ -36,11 +38,12 @@ import java.util.ArrayList;
 
 public class TvDetails extends AppCompatActivity {
     private TvShow tvShow;
-    ImageView banner;
-    TextView title;
-    TextView additionalInfo;
-    HandlingBanner handler;
+    private ImageView banner;
+    private TextView title;
+    private TextView additionalInfo;
+    private HandlingBanner handler;
 
+    private TabLayout.OnTabSelectedListener listener;
     private TvDetailsPagerAdapter tvDetailsPagerAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -77,6 +80,38 @@ public class TvDetails extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("Basic Info");
         tabLayout.getTabAt(1).setText("Seasons");
+        listener = new TabLayout.OnTabSelectedListener() {
+            private ScrollView v;
+            private int scrollX = 0;
+            private int scrollY = 0;
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getText().equals("Basic Info")){
+                    v.post(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            v.scrollTo(scrollX, scrollY);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if(tab.getText().equals("Basic Info")){
+                    v = (ScrollView) findViewById(R.id.tv_basic_info_scrollview);
+                    scrollX = v.getScrollX();
+                    scrollY = v.getScrollY();
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        };
+        tabLayout.addOnTabSelectedListener(listener);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TestFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvBasicInfoFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvSeasonFragment;
 
@@ -31,7 +32,6 @@ public class TvDetailsPagerAdapter extends FragmentStatePagerAdapter {
                 savedInstance.putInt("tv_seasons", numbOfSeasons);
                 basicInfoFragment.setArguments(savedInstance);
                 return basicInfoFragment;
-
             case 1:
                 TvSeasonFragment seasonFragment = new TvSeasonFragment();
                 Bundle savedInstance1 = new Bundle();

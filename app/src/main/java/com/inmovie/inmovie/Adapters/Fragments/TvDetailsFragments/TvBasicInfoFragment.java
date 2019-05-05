@@ -1,5 +1,6 @@
 package com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class TvBasicInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstance){
         //get id
+        System.out.println("view created");
         Bundle args = getArguments();
         id = args.getInt("tv_id");
 
@@ -71,14 +73,6 @@ public class TvBasicInfoFragment extends Fragment {
         views.add(releseDate);
 
 
-        //get datas to populate views
-        new GetDetails(views, null).execute(id);
-
-        scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
-
-        System.out.println(scrollView.getY());
-
-
         //make lists and adapters for cast and crew displays
         castAdapter = new CastListAdapters(view.getContext());
         crewAdapter = new CrewListAdapters(view.getContext());
@@ -94,9 +88,20 @@ public class TvBasicInfoFragment extends Fragment {
         crewList.setAdapter(crewAdapter);
         crewList.setLayoutManager(crewLayoutManager);
 
+        //get datas to populate views
+        new GetDetails(views, null).execute(id);
         //get datas to populate cast and crew lists
         new GetCredits(castAdapter, crewAdapter).execute(id);
+
+        scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, 0);
+            }
+        });
     }
+
 
     public void setCastList(RecyclerView castList) {
         this.castList = castList;

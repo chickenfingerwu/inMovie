@@ -4,6 +4,8 @@
     android:id="@+id/tv_basic_info_scrollview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable ="true"
+    android:focusableInTouchMode="true"
     android:background="#000">
 
         <LinearLayout
@@ -20,9 +22,7 @@
                     android:text="Ratings"
                     app:fontFamily="@font/oswald_bold"
                     android:textSize="15sp"
-                    android:textColor="#FFF"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColor="#FFF" />
 
                 <TextView
                     android:id="@+id/tv_numberRating"

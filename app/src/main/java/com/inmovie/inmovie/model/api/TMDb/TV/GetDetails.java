@@ -68,6 +68,14 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         this.handler = handler;
     }
 
+    public void setShow(TvShow s){
+        show = s;
+    }
+
+    public void setHandler(HandlingBanner h){
+        handler = h;
+    }
+
     @Override
     protected JSONObject doInBackground(Integer... integers) {
         JSONObject result = new JSONObject();
@@ -139,6 +147,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         // Set show's title
+        System.out.println("onPostExecute");
         String _title = "";
         try {
             _title = jsonObject.getString("name");
@@ -204,7 +213,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             if(show!=null){
                 show.setReleaseDate(_first_air_date);
             }
-        else if(first_air_date!=null){
+        else if(first_air_date!=null && _first_air_date.equals("")){
             first_air_date.setText("Release Date: Unknown");
                 if(show!=null){
                     show.setReleaseDate("Unknown");
