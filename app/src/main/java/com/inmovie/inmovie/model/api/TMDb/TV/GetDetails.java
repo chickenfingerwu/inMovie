@@ -68,6 +68,10 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         this.handler = handler;
     }
 
+    public GetDetails() {
+
+    }
+
     public void setShow(TvShow s){
         show = s;
     }
@@ -178,6 +182,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
         }
         else {
+            if (rating != null)
             rating.setText("Not yet rated");
         }
         if(show!=null){

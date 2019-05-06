@@ -25,4 +25,15 @@ public class GetCreditsTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testInvalid() {
+        try {
+            JSONObject result = new GetCredits().execute(-1).get();
+            assertTrue("true", !result.has("id"));
+        }
+        catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 }
