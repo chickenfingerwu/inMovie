@@ -26,4 +26,15 @@ public class GetDetailsTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testInvalid() {
+        try {
+            JSONObject result = new GetDetails().execute(-1).get();
+            assertTrue(!result.has("id"));
+        }
+        catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 }
