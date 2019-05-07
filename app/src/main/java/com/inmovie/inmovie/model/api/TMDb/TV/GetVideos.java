@@ -1,8 +1,12 @@
 package com.inmovie.inmovie.model.api.TMDb.TV;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Message;
 
 import com.inmovie.inmovie.BuildConfig;
+import com.inmovie.inmovie.HandlingTvShow;
+import com.inmovie.inmovie.TVclasses.TvShow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +22,15 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
+
+    private TvShow show;
+    private HandlingTvShow handler;
+
+    public GetVideos(TvShow show, HandlingTvShow handler){
+        this.show = show;
+        this.handler = handler;
+    }
+
     @Override
     protected JSONArray doInBackground(Integer... integers) {
         JSONArray result = new JSONArray();
@@ -54,5 +67,29 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
         }
 
         return result;
+    }
+
+    @Override
+    protected void onPostExecute(JSONArray jsonArray){
+        if(show != null){
+            String link = "";
+            if(jsonArray.length() > 0){
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    link = jsonObject.getString("link");
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            show.setTrailerUrl(link);
+            if(handler != null){
+                Bundle data = new Bundle();
+                data.putSerializable("details", show);
+                Message message = new Message();
+                message.setData(data);
+                handler.sendMessage(message);
+            }
+        }
     }
 }

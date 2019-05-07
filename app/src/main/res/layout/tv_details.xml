@@ -29,39 +29,74 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/tv_content_and_trailer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="24dp"
-                app:fontFamily="@font/oswald_light"
-                android:shadowDx="+5"
-                android:shadowDy="+5"
-                android:shadowRadius="10"
-                android:shadowColor="#000"
-                android:textColor="@android:color/background_light"
-                android:textSize="25sp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_poster_banner" />
+                app:layout_constraintStart_toStartOf="@+id/poster_banner">
 
-            <TextView
-                android:id="@+id/tv_additionalInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textSize="10sp"
-                app:fontFamily="@font/oswald_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:shadowColor="#000"
+                        android:shadowDx="+5"
+                        android:shadowDy="+5"
+                        android:shadowRadius="10"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="25sp"
+                        app:fontFamily="@font/oswald_light" />
+
+                    <TextView
+                        android:id="@+id/tv_additionalInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#C0C0C0"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/oswald_light"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_weight="0.3" />
+
+                <TextView
+                    android:id="@+id/tv_trailer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|bottom"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/oswald_bold"
+                    android:onClick="playTrailerThroughWebBrowser"
+                    android:shadowColor="#000"
+                    android:shadowDx="+5"
+                    android:shadowDy="+5"
+                    android:shadowRadius="10"
+                    android:text="TRAILER"
+                    android:textAlignment="center"
+                    android:textColor="@color/transparent"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
 
-    <com.inmovie.inmovie.ScrollingDisableViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/tv_info_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -77,5 +112,5 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    </com.inmovie.inmovie.ScrollingDisableViewPager>
+    </android.support.v4.view.ViewPager>
 </android.support.constraint.ConstraintLayout>

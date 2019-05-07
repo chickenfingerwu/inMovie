@@ -13,7 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.TvDetails"></activity>
+        <activity android:name=".Activities.TvDetails">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <!-- Include the host attribute if you want your app to respond
+                     only to URLs with your app's domain. -->
+                <data android:scheme="http" android:host="www.example.com" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- The BROWSABLE category is required to get links from web pages. -->
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +45,18 @@
                 android:value=".Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.MoviesActivities.MovieDetails"></activity>
+            android:name=".Activities.MoviesActivities.MovieDetails">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <!-- Include the host attribute if you want your app to respond
+                     only to URLs with your app's domain. -->
+                <data android:scheme="http" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- The BROWSABLE category is required to get links from web pages. -->
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".Activities.PopularMovies"
             android:label="Popular"

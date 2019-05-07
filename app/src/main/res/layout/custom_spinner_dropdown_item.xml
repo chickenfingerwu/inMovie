@@ -2,7 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/custome_spinner_dropdown_item"
     android:singleLine="true"
-    android:textSize="18sp"
+    android:textSize="15sp"
     android:paddingTop="7dp"
     android:paddingBottom="7dp"
     android:paddingStart="11dp"

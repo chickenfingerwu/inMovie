@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#000"
     android:theme="@style/Theme.AppCompat"
     tools:context=".Activities.MainActivity">
@@ -12,8 +12,6 @@
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/searchSect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,7 +38,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -71,64 +70,107 @@
         </FrameLayout>
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/searchSect"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/main_body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#000"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slider">
 
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:fontFamily="@font/oswald_regular"
-            android:gravity="center"
-            android:text="So, what movies/series are you looking for?"
-            android:textColor="@android:color/background_light"
-            android:textSize="20dp"
+        <LinearLayout
+            android:id="@+id/searchSect"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
-            android:id="@+id/searchBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:background="#000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:fontFamily="@font/oswald_regular"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/checkPopular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:fontFamily="@font/oswald_light"
-            android:gravity="center"
-            android:onClick="startPopularView"
-            android:text="@string/checkPop"
-            android:textColor="@android:color/background_light"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
-    </android.support.constraint.ConstraintLayout>
+            <SearchView
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
+                android:background="#000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
+            <TextView
+                android:id="@+id/movie_trending_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/oswald_regular"
+                android:onClick="startPopularView"
+                android:text="@string/trending_movies"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/movie_trending"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_trending_Text" />
+
+            <TextView
+                android:id="@+id/tv_trending_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/oswald_regular"
+                android:text="@string/trending_shows"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_trending" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tv_trending"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_trending_Text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>

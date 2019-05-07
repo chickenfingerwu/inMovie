@@ -33,6 +33,8 @@ public class Movies implements Serializable {
     @SerializedName("release_date")
     protected String releaseDate = "";
 
+    protected String trailerUrl = "";
+
     List<Actor> actors;
 
     public Movies() {}
@@ -89,6 +91,11 @@ public class Movies implements Serializable {
         this.backdrop = backdrop;
     }
 
+    public String getTrailerUrl(){ return trailerUrl;}
+
+    public void setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
+    }
 
     public String getReleaseDate() {
         return releaseDate;

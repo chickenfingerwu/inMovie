@@ -71,10 +71,12 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 JSONObject ep = seasonEp.getJSONObject(i);
                 String thumbnail = ep.getString("still_path");
                 String name = ep.getString("name");
+                String overview = ep.getString("overview");
 
                 Episode e = new Episode();
                 e.setTitle(name);
                 e.setPoster(thumbnail);
+                e.setDescription(overview);
                 episodes.add(e);
             }
             episodeResultAdapter.setEpisodesList(episodes, true);

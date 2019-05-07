@@ -9,7 +9,7 @@ import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvBasicInfoFrag
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvSeasonFragment;
 
 /**
- * Manages fragment, will be hooked up with TabLayout to implement
+ * Manages fragment, will be hooked up with TabLayout
  */
 
 public class TvDetailsPagerAdapter extends FragmentStatePagerAdapter {

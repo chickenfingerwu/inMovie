@@ -25,9 +25,11 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import at.blogc.android.views.ExpandableTextView;
+
 public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView name = null;
-    private TextView overview = null;
+    private ExpandableTextView overview = null;
     private ImageView backdrop = null;
     private ImageView poster = null;
     private Bitmap _backdrop = null;
@@ -45,7 +47,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     public GetDetails(List<View> views) {
         try {
             name = (TextView) views.get(0);
-            overview = (TextView) views.get(1);
+            overview = (ExpandableTextView) views.get(1);
             backdrop = (ImageView) views.get(2);
             rating = (TextView) views.get(3);
             ratingBar = (RatingBar) views.get(4);

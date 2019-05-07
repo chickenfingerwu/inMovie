@@ -20,6 +20,7 @@ public class HandlingTvShow extends Handler {
         if(show!=null) {
             tvDetails.setShowBanner(show);
             tvDetails.setTabs(show);
+            tvDetails.setTrailerTextColor(show);
         }
     }
 

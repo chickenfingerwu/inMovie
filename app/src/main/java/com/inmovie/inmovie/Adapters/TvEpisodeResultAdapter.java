@@ -29,12 +29,14 @@ public class TvEpisodeResultAdapter extends RecyclerView.Adapter<TvEpisodeResult
     public static class tvEpisodeHolder extends RecyclerView.ViewHolder{
         private ImageView thumbnail;
         private TextView episodeName;
+        private TextView episodeOverview;
         private Episode episode;
 
         private tvEpisodeHolder (View epView){
             super(epView);
             thumbnail = (ImageView) itemView.findViewById(R.id.tv_episode_thumbnail);
             episodeName = (TextView) itemView.findViewById(R.id.tv_episode_name);
+            episodeOverview = (TextView) itemView.findViewById(R.id.tv_episode_overview);
         }
 
         public void setTvEp(Episode e){
@@ -67,8 +69,10 @@ public class TvEpisodeResultAdapter extends RecyclerView.Adapter<TvEpisodeResult
 
         holder.setTvEp(ep);
         TextView name = holder.episodeName;
+        TextView overView = holder.episodeOverview;
         String source = "";
         source = ep.getTitle();
+        overView.setText(ep.getDescription());
         name.setText(source);
     }
 

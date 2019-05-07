@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -21,6 +22,8 @@ import com.inmovie.inmovie.model.api.TMDb.TV.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetDetails;
 
 import java.util.ArrayList;
+
+import at.blogc.android.views.ExpandableTextView;
 
 /**
  *This class implements the "Basic Info" tab from TvDetailsPagerAdapter,
@@ -61,7 +64,24 @@ public class TvBasicInfoFragment extends Fragment {
         scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
 
         //get views for layout
-        TextView overview = (TextView) view.findViewById(R.id.tv_Description);
+
+        //Expandable plot view
+        ExpandableTextView overview = (ExpandableTextView) view.findViewById(R.id.tv_Description);
+        //max line is 4
+        overview.setMaxLines(4);
+
+        //toggle button to see more of plot
+        TextView toggle = view.findViewById(R.id.tv_button_toggle);
+        toggle.setText(R.string.expand);
+
+        overview.setInterpolator(new OvershootInterpolator());
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle.setText(overview.isExpanded() ? R.string.expand : R.string.collapse);
+                overview.toggle();
+            }
+        });
 
         ImageView banner = (ImageView) view.findViewById(R.id.tv_poster_banner);
 
