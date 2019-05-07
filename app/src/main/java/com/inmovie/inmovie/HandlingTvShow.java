@@ -7,17 +7,20 @@ import android.widget.ImageView;
 import com.inmovie.inmovie.Activities.TvDetails;
 import com.inmovie.inmovie.TVclasses.TvShow;
 
-public class HandlingBanner extends Handler {
+public class HandlingTvShow extends Handler {
     private TvDetails tvDetails;
 
-    public HandlingBanner(TvDetails activity){
+    public HandlingTvShow(TvDetails activity){
         tvDetails = activity;
     }
 
     @Override
     public void handleMessage(Message message){
         TvShow show = (TvShow) message.getData().get("details");
-        tvDetails.setShowBanner(show);
+        if(show!=null) {
+            tvDetails.setShowBanner(show);
+            tvDetails.setTabs(show);
+        }
     }
 
 }

@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+//This class implements the endless scrolling functionality
+
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
     RecyclerView.LayoutManager mLayoutManager;

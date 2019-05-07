@@ -11,7 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingBanner;
+import com.inmovie.inmovie.HandlingTvShow;
 import com.inmovie.inmovie.TVclasses.TvShow;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
@@ -45,7 +45,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView genres_runtime = null;
 
     TvShow show;
-    HandlingBanner handler;
+    HandlingTvShow handler;
     public GetDetails(ArrayList<View> views, TvShow show) {
         try {
             name = (TextView) views.get(0);
@@ -63,7 +63,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         this.show = show;
     }
 
-    public GetDetails(TvShow show, HandlingBanner handler){
+    public GetDetails(TvShow show, HandlingTvShow handler){
         this.show = show;
         this.handler = handler;
     }
@@ -72,7 +72,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         show = s;
     }
 
-    public void setHandler(HandlingBanner h){
+    public void setHandler(HandlingTvShow h){
         handler = h;
     }
 
@@ -147,7 +147,6 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         // Set show's title
-        System.out.println("onPostExecute");
         String _title = "";
         try {
             _title = jsonObject.getString("name");
@@ -178,10 +177,25 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
         }
         else {
-            rating.setText("Not yet rated");
+            if(rating != null)
+                rating.setText("Not yet rated");
         }
         if(show!=null){
-            show.setRating(score);
+            if(score!=null) {
+                show.setRating(score);
+            }
+        }
+
+        //Set show's number of seasons
+        int seasons = 0;
+        try{
+            seasons = jsonObject.getInt("number_of_seasons");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        if(show != null && seasons > 0){
+            show.setNumbofSeason(seasons);
         }
 
         // Set show's plot overview
@@ -301,11 +315,14 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
         if(handler!= null && show!=null){
             Bundle data = new Bundle();
-            data.putSerializable("details", show);
             Message m = new Message();
+            data.putSerializable("details", show);
+            data.putSerializable("seasons", show);
             m.setData(data);
             handler.sendMessage(m);
+;
         }
+
 
     }
 }

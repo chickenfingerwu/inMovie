@@ -1,7 +1,5 @@
 package com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,18 +17,32 @@ import android.widget.TextView;
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.TVclasses.TvShow;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetDetails;
 
 import java.util.ArrayList;
 
+/**
+ *This class implements the "Basic Info" tab from TvDetailsPagerAdapter,
+ * it manages the data to be display on the tab "Basic Info" from the TvDetails activity,
+ * data will be received from the TvDetails activity, also get additional data for adapters
+ * using models from model.api
+ */
+
 public class TvBasicInfoFragment extends Fragment {
+
+    //tv show id
     private int id;
+
+    //adapters for crew list and cast list
     private CastListAdapters castAdapter;
     private CrewListAdapters crewAdapter;
+
+    //RecyclerView for crew list and cast list
     private RecyclerView castList;
     private RecyclerView crewList;
+
+    //layout managers manages how the item will be arranged
     private RecyclerView.LayoutManager castLayoutManager;
     private RecyclerView.LayoutManager crewLayoutManager;
 
@@ -43,18 +55,19 @@ public class TvBasicInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstance){
         //get id
-        System.out.println("view created");
+        LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
         Bundle args = getArguments();
         id = args.getInt("tv_id");
+        scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
 
-        //create views for layout
-        TextView overview = view.findViewById(R.id.tv_Description);
+        //get views for layout
+        TextView overview = (TextView) view.findViewById(R.id.tv_Description);
 
-        ImageView banner = view.findViewById(R.id.tv_poster_banner);
+        ImageView banner = (ImageView) view.findViewById(R.id.tv_poster_banner);
 
-        TextView numberRating = view.findViewById(R.id.tv_numberRating);
+        TextView numberRating = (TextView) view.findViewById(R.id.tv_numberRating);
 
-        RatingBar ratingBar = view.findViewById(R.id.tv_ratingBar3);
+        RatingBar ratingBar = (RatingBar) view.findViewById(R.id.tv_ratingBar3);
         ratingBar.setNumStars(10);
 
         TextView additionalInfo = (TextView) view.findViewById(R.id.tv_additionalInfo);
@@ -62,6 +75,7 @@ public class TvBasicInfoFragment extends Fragment {
 
         TextView releseDate = (TextView) view.findViewById(R.id.tv_release_date);
 
+        //views list to send to Tv.GetDetails task
         ArrayList<View> views = new ArrayList<>();
         views.add(null);
         views.add(overview);
@@ -71,7 +85,6 @@ public class TvBasicInfoFragment extends Fragment {
         views.add(additionalInfo);
         views.add(genres_runtime);
         views.add(releseDate);
-
 
         //make lists and adapters for cast and crew displays
         castAdapter = new CastListAdapters(view.getContext());
@@ -88,12 +101,12 @@ public class TvBasicInfoFragment extends Fragment {
         crewList.setAdapter(crewAdapter);
         crewList.setLayoutManager(crewLayoutManager);
 
-        //get datas to populate views
+        //get data to populate views
         new GetDetails(views, null).execute(id);
-        //get datas to populate cast and crew lists
+        //get data to populate cast and crew lists
         new GetCredits(castAdapter, crewAdapter).execute(id);
 
-        scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
+        //set scroll position to top
         scrollView.post(new Runnable() {
             @Override
             public void run() {

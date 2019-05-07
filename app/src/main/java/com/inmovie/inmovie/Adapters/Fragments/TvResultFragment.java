@@ -15,6 +15,13 @@ import com.inmovie.inmovie.DividerItemDecoration;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.model.api.TMDb.Search.SearchTV;
 
+/**
+ *This class implements the "TV Shows" tab from ResultPagerAdapter,
+ * it manages the data to be display on the tab "TV Shows" from the MoviesSearchResult activity,
+ * the data will be received from the MoviesSearchResult activity, will also get additional data for adapters
+ * using models from model.api
+ */
+
 public class TvResultFragment extends Fragment {
 
     private EndlessScrollListener scrollListener;

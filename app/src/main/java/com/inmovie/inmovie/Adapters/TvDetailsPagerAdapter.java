@@ -9,6 +9,10 @@ import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TestFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvBasicInfoFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvSeasonFragment;
 
+/**
+ * Manages fragment, will be hooked up with TabLayout to implement
+ */
+
 public class TvDetailsPagerAdapter extends FragmentStatePagerAdapter {
 
     protected int numbOfSeasons;

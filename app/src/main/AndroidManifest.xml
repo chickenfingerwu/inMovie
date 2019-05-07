@@ -34,8 +34,7 @@
                 android:value=".Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.MoviesActivities.MovieDetails"
-            android:label="Infos"></activity>
+            android:name=".Activities.MoviesActivities.MovieDetails"></activity>
         <activity
             android:name=".Activities.PopularMovies"
             android:label="Popular"

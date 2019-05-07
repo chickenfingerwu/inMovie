@@ -5,15 +5,15 @@ import com.inmovie.inmovie.Movies;
 import java.util.List;
 
 public class TvShow extends Movies {
-    TvSeason seasons;
-    int numbofSeason = 3;
+    protected TvSeason seasons;
+    int numbofSeason = 0;
 
-    public static class TvResult {
-        private List<TvShow> results;
+    public TvSeason getSeasons() {
+        return seasons;
+    }
 
-        public List<TvShow> getResults() {
-            return results;
-        }
+    public void setSeasons(TvSeason seasons) {
+        this.seasons = seasons;
     }
 
     public int getNumbofSeason() {

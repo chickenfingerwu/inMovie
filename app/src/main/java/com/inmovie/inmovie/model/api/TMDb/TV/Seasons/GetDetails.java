@@ -6,6 +6,7 @@ import android.view.View;
 import com.inmovie.inmovie.Adapters.TvEpisodeResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.TVclasses.Episode;
+import com.inmovie.inmovie.TVclasses.TvShow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
      * @return Details
      */
     private TvEpisodeResultAdapter episodeResultAdapter;
+    private TvShow tvShow;
 
     public GetDetails(TvEpisodeResultAdapter a){
         episodeResultAdapter = a;
@@ -75,7 +77,8 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 e.setPoster(thumbnail);
                 episodes.add(e);
             }
-            episodeResultAdapter.setEpisodesList(episodes, false);
+            episodeResultAdapter.setEpisodesList(episodes, true);
+            episodeResultAdapter.notifyDataSetChanged();
         }
         catch (Exception e){
             e.printStackTrace();

@@ -16,14 +16,29 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Used in the PopularMovies activity, use to
+ * manages the data to be display of the item
+ * in the popular movie's RecyclerView
+ */
+
+
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHolder> {
 
+    //data (which is a movies list)
     private List<Movies> moviesList;
     private Context context;
     private LayoutInflater mInflater;
 
+
+    //This class represents an item on the RecyclerView (e.g: in this case...
+    //...a movie's poster make up an item)
     public static class posterViewHolder extends RecyclerView.ViewHolder {
+
+        //Hold the poster image
         public ImageView imageView;
+
+        //the item's data
         public Movies movies;
         public posterViewHolder (View imgView){
             super(imgView);
@@ -42,6 +57,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
             return movies;
         }
 
+        //listen to user's activity, if user presses on a poster, it will launch the MovieDetails activity
         public void setListener(){
 
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +74,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
 
     public ImageAdapter(Context context) {
         this.context = context;
-        //this.bitmapList = bitmapList;
         this.mInflater = LayoutInflater.from(context);
         this.moviesList = new ArrayList<>();
     }
 
+    //inflate the layout for the ViewHolder
     @Override
     public posterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View img = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
@@ -70,23 +86,37 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
         return vh;
     }
 
+    /**Bind the data to a ViewHolder
+     *
+     * @param holder item on RecyclerView
+     * @param position position of item
+     */
     @Override
     public void onBindViewHolder(posterViewHolder holder, int position) {
-        //holder.imageView.setImageResource(R.drawable.annihilation_poster);
+
+        //get data from index 'position' from the movies list
         Movies movie = moviesList.get(position);
+
+        //draw movies poster
         Picasso.with(context)
                 .load(movie.getPoster_url())
                 .placeholder(R.color.colorAccent)
                 .into(holder.imageView);
         holder.setMovies(movie);
+
+        //set the listener to the item
         holder.setListener();
     }
 
+    //return how many items there need to be
     @Override
     public int getItemCount(){
         return moviesList.size();
     }
 
+
+    //use to add to the movies list, 'clear' is true if we want to delete the old list,
+    // false if we want to keep the old list
     public void setMoviesList(List<Movies> movieList, boolean clear)
     {
         if(clear) {
@@ -97,6 +127,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
         notifyDataSetChanged();
     }
 
+    //ignore this function
     public void getMoreMovies(){
         for(int i = 0; i < 25; i++) {
             this.moviesList.add(new Movies());

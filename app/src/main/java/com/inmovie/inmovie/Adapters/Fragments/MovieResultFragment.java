@@ -15,10 +15,23 @@ import com.inmovie.inmovie.DividerItemDecoration;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.model.api.TMDb.Search.SearchMovies;
 
+/**
+ *This class implements the "Movies" tab from ResultPagerAdapter,
+ * it manages the data to be display on the tab "Movies" from the MoviesSearchResult activity,
+ * the data will be received from the MoviesSearchResult activity, also get additional data for adapters
+ * using models from model.api
+ */
+
+
 public class MovieResultFragment extends Fragment {
 
+    //endless scrolling functionality
     private EndlessScrollListener scrollListener;
+
+    //recyclerView for search results
     private RecyclerView recyclerView;
+
+    //adapters for movie results
     private MovieSearchResultAdapter movieSearchResultAdapter;
     private LinearLayoutManager layoutManager;
     protected int page;
@@ -38,6 +51,8 @@ public class MovieResultFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.movie_tab);
         recyclerView.setHasFixedSize(true);
+
+        //we want
         layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
 

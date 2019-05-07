@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custome_spinner_dropdown_item"
+    android:singleLine="true"
+    android:textSize="18sp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:paddingStart="11dp"
+    android:paddingEnd="11dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:ellipsize="marquee"/>
+
