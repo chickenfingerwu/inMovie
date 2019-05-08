@@ -2,9 +2,8 @@ package com.inmovie.inmovie;
 
 import android.os.Handler;
 import android.os.Message;
-import android.widget.ImageView;
 
-import com.inmovie.inmovie.Activities.TvDetails;
+import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
 import com.inmovie.inmovie.TVclasses.TvShow;
 
 public class HandlingTvShow extends Handler {

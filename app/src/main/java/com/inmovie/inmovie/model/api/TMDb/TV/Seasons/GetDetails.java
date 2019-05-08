@@ -30,9 +30,10 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
      * @return Details
      */
     private TvEpisodeResultAdapter episodeResultAdapter;
-    private TvShow tvShow;
+    private int showId;
 
-    public GetDetails(TvEpisodeResultAdapter a){
+    public GetDetails(TvEpisodeResultAdapter a, int id){
+        showId = id;
         episodeResultAdapter = a;
     }
 
@@ -72,8 +73,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 String thumbnail = ep.getString("still_path");
                 String name = ep.getString("name");
                 String overview = ep.getString("overview");
+                int seasonNumber = ep.getInt("season_number");
+                int epNumber = ep.getInt("episode_number");
 
                 Episode e = new Episode();
+                e.setTvID(showId);
+                e.setSeasonNumber(seasonNumber);
+                e.setEpisodeNumber(epNumber);
                 e.setTitle(name);
                 e.setPoster(thumbnail);
                 e.setDescription(overview);

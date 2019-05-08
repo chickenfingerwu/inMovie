@@ -128,8 +128,7 @@ public class TvSeasonFragment extends Fragment{
         Integer[] inputs = new Integer[2];
         inputs[0] = id;
         inputs[1] = ssNumber;
-        episodeList.removeAllViews();
-        new GetDetails(episodeAdapter).execute(inputs);
+        new GetDetails(episodeAdapter, id).execute(inputs);
         episodeList.setAdapter(episodeAdapter);
     }
 }

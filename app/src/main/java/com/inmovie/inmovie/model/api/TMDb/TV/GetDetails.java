@@ -1,5 +1,6 @@
 package com.inmovie.inmovie.model.api.TMDb.TV;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -151,7 +152,6 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         // Set show's title
-        System.out.println("onPostExecute");
         String _title = "";
         try {
             _title = jsonObject.getString("name");
@@ -164,6 +164,18 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         if(show!=null){
             show.setTitle(_title);
+        }
+
+        //Set show's id
+        Integer id = null;
+        try{
+            id = jsonObject.getInt("id");
+            if(show!=null && id!=null) {
+                show.setId(id);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
         // Set movie's rating
         Double score = null;

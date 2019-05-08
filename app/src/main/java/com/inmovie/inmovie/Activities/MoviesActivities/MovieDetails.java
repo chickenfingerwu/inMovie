@@ -66,6 +66,7 @@ public class MovieDetails extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         //Get Intent that started this activity and extract selected data (a movie in this case) from previous activity
         Intent intent = getIntent();
         movie = (Movies) intent.getSerializableExtra("serialize_data");

@@ -1,4 +1,4 @@
-package com.inmovie.inmovie.Activities;
+package com.inmovie.inmovie.Activities.TvActivities;
 
 import android.content.Intent;
 import android.graphics.Color;
