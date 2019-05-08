@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context=".Activities.MoviesActivities.MovieDetails">
+    <FrameLayout
+        android:id="@+id/episode_banner"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/episode_poster_banner"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/episode_poster_banner">
+
+                <TextView
+                    android:id="@+id/episode_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:shadowColor="#000"
+                    android:shadowDx="+5"
+                    android:shadowDy="+5"
+                    android:shadowRadius="10"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="25sp"
+                    app:fontFamily="@font/oswald_light" />
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/episode_banner">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/episode_banner">
+
+
+            <TextView
+                android:id="@+id/episode_season"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:fontFamily="@font/oswald_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/episode_releaseDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Release Date"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:fontFamily="@font/oswald_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/episode_season" />
+
+            <TextView
+                android:id="@+id/episode_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#FFF"
+                android:textSize="13sp"
+                app:fontFamily="@font/oswald_light"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/episode_releaseDateText" />
+
+
+            <TextView
+                android:id="@+id/episode_plot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Plot"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:fontFamily="@font/oswald_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/episode_release_date" />
+
+
+            <at.blogc.android.views.ExpandableTextView
+                android:id="@+id/episode_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:ems="10"
+                android:paddingStart="7dp"
+                android:paddingEnd="5dp"
+                android:textColor="#FFF"
+                app:fontFamily="@font/oswald_light"
+                android:maxLines="4"
+                android:ellipsize="end"
+                app:animation_duration="750"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/episode_plot" />
+
+            <TextView
+                android:id="@+id/episode_button_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_corner"
+                android:fontFamily="@font/oswald_light"
+                android:textAlignment="center"
+                android:textColor="#FFF"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/episode_Description" />
+
+            <TextView
+                android:id="@+id/episode_castName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="Cast"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:fontFamily="@font/oswald_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/episode_button_toggle" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/episode_cast_list"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#000"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/episode_castName"/>
+
+            <TextView
+                android:id="@+id/episode_crewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:text="Crew"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:fontFamily="@font/oswald_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/episode_cast_list" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/episode_crew_list"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#000"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/episode_crewText"/>
+            <LinearLayout
+                android:id="@+id/episode_navigation_bar_pushup"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="horizontal"
+                android:background="#000"
+                app:layout_constraintTop_toBottomOf="@+id/episode_crew_list"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -10,7 +10,7 @@
     <string name="checkPop"><u>"See what's popular"</u></string>
     <string name="expand">See more</string>
     <string name="collapse">See less</string>
-    <string name="trending_movies">Trending movies</string>
-    <string name="trending_shows">Trending shows</string>
+    <string name="trending_movies">Trending movies this week</string>
+    <string name="trending_shows">Trending shows this week</string>
     <string name="welcome">So, what movies/series are you looking for?</string>
 </resources>
