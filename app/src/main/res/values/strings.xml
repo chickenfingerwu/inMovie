@@ -15,4 +15,6 @@
     <string name="welcome">So, what movies/series are you looking for?</string>
     <string name="featured">Hottest this week</string>
     <string name="trailer">TRAILER</string>
+    <string name="similar_movies">Similar movies</string>
+    <string name="similar_shows">Similar shows</string>
 </resources>

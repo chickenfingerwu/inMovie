@@ -100,17 +100,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/banner">
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/banner">
+            android:orientation="vertical">
 
 
             <TextView
                 android:id="@+id/textRating"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -118,9 +117,7 @@
                 android:text="Ratings"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:fontFamily="@font/oswald_bold" />
 
             <TextView
                 android:id="@+id/numberRating"
@@ -130,9 +127,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="5dp"
                 android:textColor="#C0C0C0"
-                app:fontFamily="@font/oswald_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textRating" />
+                app:fontFamily="@font/oswald_light" />
 
             <RatingBar
                 android:id="@+id/ratingBar3"
@@ -141,9 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/numberRating" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:id="@+id/genresRuntimeText"
@@ -155,9 +148,7 @@
                 android:text="Genres | Runtime"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ratingBar3" />
+                app:fontFamily="@font/oswald_bold" />
 
             <TextView
                 android:id="@+id/genres_runtime"
@@ -168,9 +159,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#FFF"
                 android:textSize="13sp"
-                app:fontFamily="@font/oswald_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/genresRuntimeText" />
+                app:fontFamily="@font/oswald_light"/>
 
             <TextView
                 android:id="@+id/releaseDateText"
@@ -182,9 +171,7 @@
                 android:text="Release Date"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/genres_runtime" />
+                app:fontFamily="@font/oswald_bold"/>
 
             <TextView
                 android:id="@+id/release_date"
@@ -195,9 +182,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#FFF"
                 android:textSize="13sp"
-                app:fontFamily="@font/oswald_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/releaseDateText" />
+                app:fontFamily="@font/oswald_light" />
 
 
             <TextView
@@ -210,9 +195,7 @@
                 android:text="Plot"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/release_date" />
+                app:fontFamily="@font/oswald_bold" />
 
 
             <at.blogc.android.views.ExpandableTextView
@@ -229,10 +212,7 @@
                 app:fontFamily="@font/oswald_light"
                 android:maxLines="4"
                 android:ellipsize="end"
-                app:animation_duration="750"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/plot" />
+                app:animation_duration="750"/>
 
             <TextView
                 android:id="@+id/movie_button_toggle"
@@ -242,13 +222,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_corner"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/oswald_light"
                 android:textAlignment="center"
                 android:textColor="#FFF"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movieDescription" />
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/castName"
@@ -261,9 +239,7 @@
                 android:text="Cast"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movie_button_toggle" />
+                app:fontFamily="@font/oswald_bold"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cast_list"
@@ -273,8 +249,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="8dp"
-                android:scrollbars="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/castName"/>
+                android:scrollbars="horizontal"/>
 
             <TextView
                 android:id="@+id/crewText"
@@ -287,9 +262,7 @@
                 android:text="Crew"
                 android:textColor="#FFF"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cast_list" />
+                app:fontFamily="@font/oswald_bold"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/crew_list"
@@ -299,17 +272,35 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="8dp"
-                android:scrollbars="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/crewText"/>
+                android:scrollbars="horizontal"/>
+
+            <TextView
+                android:id="@+id/movie_suggestion_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/oswald_regular"
+                android:text="@string/similar_movies"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/suggest_movie_list"
+                android:layout_width="match_parent"
+                android:layout_height="171dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/similar_movies"/>
+
             <LinearLayout
                 android:id="@+id/navigation_bar_pushup"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="270dp"
                 android:orientation="horizontal"
-                android:background="#000"
-                app:layout_constraintTop_toBottomOf="@+id/crew_list"/>
+                android:background="#000"/>
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

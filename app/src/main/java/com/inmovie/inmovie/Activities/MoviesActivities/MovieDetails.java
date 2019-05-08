@@ -23,11 +23,14 @@ import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
+import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.HandlingMovie;
 import com.inmovie.inmovie.Movies;
 import com.inmovie.inmovie.R;
+import com.inmovie.inmovie.SideSpaceItemDecoration;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetDetails;
+import com.inmovie.inmovie.model.api.TMDb.Movies.GetSimilarMovies;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetVideos;
 
 
@@ -48,14 +51,17 @@ public class MovieDetails extends AppCompatActivity {
     //Adapters to display data of cast and crew
     private CastListAdapters castAdapter;
     private CrewListAdapters crewAdapter;
+    private TrendingsAdapter similarMoviesAdapter;
 
     //RecyclerView is where Adapters will display data onto
     private RecyclerView castList;
     private RecyclerView crewList;
+    private RecyclerView similarMovies;
 
     //LayoutManager to determine the layout of the RecyclerView
     private RecyclerView.LayoutManager castLayoutManager;
     private RecyclerView.LayoutManager crewLayoutManager;
+    private RecyclerView.LayoutManager similarMovieLayoutManager;
 
     //this Movie instance holds the selected movie data
     private Movies movie;
@@ -89,6 +95,17 @@ public class MovieDetails extends AppCompatActivity {
         crewList.setHasFixedSize(true);
         crewList.setAdapter(crewAdapter);
         crewList.setLayoutManager(crewLayoutManager);
+
+        similarMovies = (RecyclerView) findViewById(R.id.suggest_movie_list);
+        similarMovieLayoutManager = new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false);
+        similarMoviesAdapter = new TrendingsAdapter(this);
+
+
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing2);
+        similarMovies.setHasFixedSize(true);
+        similarMovies.setAdapter(similarMoviesAdapter);
+        similarMovies.setLayoutManager(similarMovieLayoutManager);
+        similarMovies.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels));
 
         TextView toggle = findViewById(R.id.movie_button_toggle);
         toggle.setText(R.string.expand);
@@ -141,8 +158,8 @@ public class MovieDetails extends AppCompatActivity {
         new GetCredits(castAdapter, crewAdapter).execute(movie.getId());
 
         new GetVideos(movie, handlingMovie).execute(movie.getId());
-        //float numRating = Float.parseFloat(numberRating.getText().toString());
-        //ratingBar.setRating(numRating);
+
+        new GetSimilarMovies(similarMoviesAdapter).execute(movie.getId());
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

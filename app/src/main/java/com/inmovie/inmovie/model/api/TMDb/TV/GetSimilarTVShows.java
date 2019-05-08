@@ -2,7 +2,9 @@ package com.inmovie.inmovie.model.api.TMDb.TV;
 
 import android.os.AsyncTask;
 
+import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.BuildConfig;
+import com.inmovie.inmovie.model.api.TMDb.Movies.GetSimilarMovies;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +20,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class GetSimilarTVShows extends AsyncTask<Integer, Void, JSONObject> {
     private int page;
+    private TrendingsAdapter adapter;
+
 
     public GetSimilarTVShows(int page) {
         this.page = page;

@@ -82,6 +82,13 @@ public class TvBasicInfoFragment extends Fragment {
                 overview.toggle();
             }
         });
+        overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle.setText(overview.isExpanded() ? R.string.expand : R.string.collapse);
+                overview.toggle();
+            }
+        });
 
         ImageView banner = (ImageView) view.findViewById(R.id.tv_poster_banner);
 
