@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="240dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -86,7 +86,7 @@
                     android:shadowDx="+5"
                     android:shadowDy="+5"
                     android:shadowRadius="10"
-                    android:text="TRAILER"
+                    android:text="@string/trailer"
                     android:textAlignment="center"
                     android:textColor="@color/grey"
                     android:textSize="17sp" />

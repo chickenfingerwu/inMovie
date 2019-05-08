@@ -8,6 +8,14 @@ public class TvShow extends Movies {
     protected TvSeason seasons;
     int numbofSeason = 0;
 
+    public static class TvShowResult {
+        private List<TvShow> results;
+
+        public List<TvShow> getResults() {
+            return results;
+        }
+    }
+
     public TvSeason getSeasons() {
         return seasons;
     }
@@ -23,4 +31,6 @@ public class TvShow extends Movies {
     public void setNumbofSeason(int numbofSeason) {
         this.numbofSeason = numbofSeason;
     }
+
+
 }

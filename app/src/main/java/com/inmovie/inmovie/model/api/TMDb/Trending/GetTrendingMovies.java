@@ -1,6 +1,7 @@
 package com.inmovie.inmovie.model.api.TMDb.Trending;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Message;
 
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
@@ -24,9 +25,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class GetTrendingMovies extends AsyncTask<Void, Void, JSONObject> {
     private TrendingsAdapter adapter;
+    private HandlingTrending handlingTrending;
 
-    public GetTrendingMovies(TrendingsAdapter adapter){
+    public GetTrendingMovies(TrendingsAdapter adapter, HandlingTrending handler){
         this.adapter = adapter;
+        this.handlingTrending = handler;
     }
 
     @Override
@@ -64,16 +67,25 @@ public class GetTrendingMovies extends AsyncTask<Void, Void, JSONObject> {
                 movieJSON = jsonArray.getJSONObject(i);
                 Movies movies = new Movies();
                 String poster_url = movieJSON.getString("poster_path");
+                String backdrop_url = movieJSON.getString("backdrop_path");
                 String name = movieJSON.getString("title");
                 String releaseDate = movieJSON.getString("release_date");
                 int id = movieJSON.getInt("id");
+
                 movies.setId(id);
                 movies.setPoster(poster_url);
+                movies.setBackdrop(backdrop_url);
                 movies.setTitle(name);
                 movies.setReleaseDate(releaseDate);
                 moviesArrayList.add(movies);
             }
             adapter.setMoviesList(moviesArrayList, true);
+
+            Bundle hottestData = new Bundle();
+            hottestData.putSerializable("hottest", moviesArrayList.get(0));
+            Message message = new Message();
+            message.setData(hottestData);
+            handlingTrending.sendMessage(message);
         }
         catch (Exception e){
             e.printStackTrace();

@@ -13,4 +13,6 @@
     <string name="trending_movies">Trending movies this week</string>
     <string name="trending_shows">Trending shows this week</string>
     <string name="welcome">So, what movies/series are you looking for?</string>
+    <string name="featured">Hottest this week</string>
+    <string name="trailer">TRAILER</string>
 </resources>

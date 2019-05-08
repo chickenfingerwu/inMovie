@@ -1,97 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_view"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="#000"
     android:theme="@style/Theme.AppCompat"
     tools:context=".Activities.MainActivity">
 
     <LinearLayout
-        android:id="@+id/slider"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:id="@+id/homepage_banner"
+        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="220dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.constraint.ConstraintLayout
+            <FrameLayout
+                android:id="@+id/homepage_banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/image_banner"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/us_still"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:text="Us (2019)"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="25dp"
-                    app:fontFamily="@font/oswald_light"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/image_banner" />
+                    <ImageView
+                        android:id="@+id/image_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:text="Featured"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="17dp"
-                    app:fontFamily="@font/oswald_light"
-                    app:layout_constraintBottom_toTopOf="@+id/textView"
-                    app:layout_constraintStart_toStartOf="@+id/image_banner" />
-            </android.support.constraint.ConstraintLayout>
-        </FrameLayout>
-    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="120dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/image_banner"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/main_body"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#000"
-        android:descendantFocusability="blocksDescendants"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/featured"
+                            android:shadowColor="#000"
+                            android:shadowDx="+5"
+                            android:shadowDy="+5"
+                            android:shadowRadius="10"
+                            android:textColor="@android:color/background_light"
+                            android:textSize="17sp"
+                            app:fontFamily="@font/oswald_light" />
+
+                        <TextView
+                            android:id="@+id/featured_movie_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="#000"
+                            android:shadowDx="+5"
+                            android:shadowDy="+5"
+                            android:shadowRadius="10"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:autoSizeMinTextSize="13sp"
+                            android:textColor="@android:color/background_light"
+                            android:textSize="25sp"
+                            app:fontFamily="@font/oswald_light" />
+
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+            </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/searchSect"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:focusable="false"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/welcomeText"
@@ -116,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:focusable="false"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:background="#000"
@@ -132,15 +148,15 @@
                 android:fontFamily="@font/oswald_regular"
                 android:onClick="startPopularView"
                 android:text="@string/trending_movies"
-                android:textSize="18sp"
                 android:textColor="@color/white"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_trending"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="171dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -152,9 +168,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/white"
                 android:fontFamily="@font/oswald_regular"
+                android:onClick="startPopularShow"
                 android:text="@string/trending_shows"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_trending" />
@@ -162,7 +179,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/tv_trending"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="171dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +187,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"/>
+                android:layout_height="40dp" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

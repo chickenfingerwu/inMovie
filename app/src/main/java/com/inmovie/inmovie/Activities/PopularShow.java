@@ -1,17 +1,18 @@
 package com.inmovie.inmovie.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.Adapters.EndlessScrollListener;
 import com.inmovie.inmovie.Adapters.PopularMovieAdapter;
-import com.inmovie.inmovie.Movies;
-import com.inmovie.inmovie.model.api.MoviesApiService;
+import com.inmovie.inmovie.Adapters.PopularShowAdapter;
+import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.SpacesItemDecoration;
+import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.model.api.MoviesApiService;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -19,29 +20,28 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class PopularMovies extends AppCompatActivity {
-
+public class PopularShow extends AppCompatActivity {
     private EndlessScrollListener scrollListener;
     private RecyclerView recyclerView;
-    private PopularMovieAdapter popularMovieAdapter;
+    private PopularShowAdapter popularShowAdapter;
     private GridLayoutManager layoutManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.popular_movies);
+        setContentView(R.layout.popular_show);
         //Toolbar myToolbar = (Toolbar) findViewById(R.id.homepage_toolbar);
         //setSupportActionBar(myToolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.show_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(this, 3);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recyclerView.setLayoutManager(layoutManager);
 
-        popularMovieAdapter = new PopularMovieAdapter(this);
-        recyclerView.setAdapter(popularMovieAdapter);
+        popularShowAdapter = new PopularShowAdapter(this);
+        recyclerView.setAdapter(popularShowAdapter);
 
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
@@ -72,10 +72,10 @@ public class PopularMovies extends AppCompatActivity {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MoviesApiService service = restAdapter.create(MoviesApiService.class);
-        service.getPopularMovies(new Callback<Movies.MovieResult>() {
+        service.getTrendingShow(new Callback<TvShow.TvShowResult>() {
             @Override
-            public void success(Movies.MovieResult movieResult, Response response) {
-                popularMovieAdapter.setMoviesList(movieResult.getResults(), false);
+            public void success(TvShow.TvShowResult movieResult, Response response) {
+                popularShowAdapter.setShowList(movieResult.getResults(), false);
             }
 
             @Override
@@ -84,5 +84,4 @@ public class PopularMovies extends AppCompatActivity {
             }
         });
     }
-
 }

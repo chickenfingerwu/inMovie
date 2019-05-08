@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
+import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
 import com.inmovie.inmovie.Movies;
 import com.inmovie.inmovie.R;
+import com.inmovie.inmovie.TVclasses.TvShow;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHolder> {
+public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapter.posterViewHolder> {
 
     //data (which is a movies list)
     private List<Movies> moviesList;
@@ -72,7 +74,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
         }
     }
 
-    public ImageAdapter(Context context) {
+    public PopularMovieAdapter(Context context) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.moviesList = new ArrayList<>();
@@ -126,14 +128,5 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.posterViewHo
         // The adapter needs to know that the data has changed. If we don't call this, app will crash.
         notifyDataSetChanged();
     }
-
-    //ignore this function
-    public void getMoreMovies(){
-        for(int i = 0; i < 25; i++) {
-            this.moviesList.add(new Movies());
-        }
-        notifyDataSetChanged();
-    }
-
 
 }

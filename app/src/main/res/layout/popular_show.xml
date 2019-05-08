@@ -9,7 +9,7 @@
     tools:context=".Activities.PopularMovies">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/show_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="715dp"
         android:scrollbars="vertical"
@@ -17,8 +17,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-       <!-- app:layout_constraintTop_toBottomOf="@+id/homepage_toolbar">
-        -->
+        <!-- app:layout_constraintTop_toBottomOf="@+id/homepage_toolbar">
+         -->
 
     </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

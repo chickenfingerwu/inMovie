@@ -72,7 +72,15 @@
         </activity>
         <activity
             android:name=".Activities.PopularMovies"
-            android:label="Popular"
+            android:label="Popular Movies"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.PopularShow"
+            android:label="Popular Shows"
             android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

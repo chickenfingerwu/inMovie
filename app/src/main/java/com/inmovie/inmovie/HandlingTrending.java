@@ -1,6 +1,7 @@
 package com.inmovie.inmovie;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -15,6 +16,9 @@ public class HandlingTrending extends Handler {
 
     @Override
     public void handleMessage(Message message){
+        Bundle data = message.getData();
+        Movies hottest = (Movies) data.getSerializable("hottest");
+        main.setHottestTrendingMovieBanner(hottest);
     }
 
 }

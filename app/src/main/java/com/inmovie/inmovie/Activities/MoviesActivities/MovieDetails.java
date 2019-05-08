@@ -102,6 +102,13 @@ public class MovieDetails extends AppCompatActivity {
                 overview.toggle();
             }
         });
+        overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle.setText(overview.isExpanded() ? R.string.expand : R.string.collapse);
+                overview.toggle();
+            }
+        });
 
         ImageView banner = findViewById(R.id.poster_banner);
 
