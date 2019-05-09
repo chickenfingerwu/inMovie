@@ -26,6 +26,9 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
 
     protected Movies movie = null;
     protected HandlingMovie handler = null;
+
+    public GetVideos() {}
+
     public GetVideos(Movies movie, HandlingMovie handler){
         this.movie = movie;
         this.handler = handler;

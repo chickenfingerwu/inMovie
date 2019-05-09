@@ -32,6 +32,8 @@ public class GetTrendingMovies extends AsyncTask<Void, Void, JSONObject> {
         this.handlingTrending = handler;
     }
 
+    public GetTrendingMovies() {}
+
     @Override
     protected JSONObject doInBackground(Void... voids) {
         JSONObject result = new JSONObject();

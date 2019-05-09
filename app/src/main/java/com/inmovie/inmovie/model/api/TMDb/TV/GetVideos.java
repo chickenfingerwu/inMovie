@@ -31,6 +31,8 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
         this.handler = handler;
     }
 
+    public GetVideos() {}
+
     @Override
     protected JSONArray doInBackground(Integer... integers) {
         JSONArray result = new JSONArray();

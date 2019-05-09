@@ -31,6 +31,8 @@ public class GetTrendingTV extends AsyncTask<Void, Void, JSONObject> {
         this.adapter = adapter;
     }
 
+    public GetTrendingTV() {}
+
     @Override
     protected JSONObject doInBackground(Void... voids) {
         JSONObject result = new JSONObject();
