@@ -128,6 +128,16 @@ public class TrendingsAdapter extends RecyclerView.Adapter<TrendingsAdapter.tren
         notifyDataSetChanged();
     }
 
+    public void setShowsList(List<TvShow> showList, boolean clear)
+    {
+        if(clear) {
+            this.moviesList.clear();
+        }
+        this.moviesList.addAll(showList);
+        // The adapter needs to know that the data has changed. If we don't call this, app will crash.
+        notifyDataSetChanged();
+    }
+
     //ignore this function
     public void getMoreMovies(){
         for(int i = 0; i < 25; i++) {

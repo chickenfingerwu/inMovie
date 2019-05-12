@@ -85,7 +85,7 @@ public class TvDetails extends AppCompatActivity {
     }
 
     public void setTabs(TvShow show){
-        tvDetailsPagerAdapter = new TvDetailsPagerAdapter(getSupportFragmentManager(), show.getId(), show.getNumbofSeason(), 2);
+        tvDetailsPagerAdapter = new TvDetailsPagerAdapter(tvShow, getSupportFragmentManager(), show.getId(), show.getNumbofSeason(), 2);
         viewPager = (ViewPager) findViewById(R.id.tv_info_pager);
         viewPager.setAdapter(tvDetailsPagerAdapter);
 

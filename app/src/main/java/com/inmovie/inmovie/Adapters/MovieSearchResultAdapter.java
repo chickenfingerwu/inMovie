@@ -70,11 +70,10 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
                         intent = new Intent(context, TvDetails.class);
                         intent.putExtra("tvShow", movieTv);
                     }
-                    else if(movieTv instanceof Movies) {
+                    else{
                         intent = new Intent(context, MovieDetails.class);
-                        intent.putExtra("movie", movieTv);
+                        intent.putExtra("serialize_data", movieTv);
                     }
-                    intent.putExtra("serialize_data", movieTv);
                     context.startActivity(intent);
                 }
             });

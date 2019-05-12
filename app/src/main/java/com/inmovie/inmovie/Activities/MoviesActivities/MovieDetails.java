@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,6 +79,23 @@ public class MovieDetails extends AppCompatActivity {
         movie = (Movies) intent.getSerializableExtra("serialize_data");
 
         handlingMovie = new HandlingMovie(this);
+
+        /*AppBarLayout bannerLayout = (AppBarLayout) findViewById(R.id.movie_banner);
+        bannerLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    isShow = true;
+                } else if (isShow) {
+                    isShow = false;
+                }
+            }
+        });*/
 
         castList = (RecyclerView) findViewById(R.id.cast_list);
         //Create a horizontal layout for the RecyclerView

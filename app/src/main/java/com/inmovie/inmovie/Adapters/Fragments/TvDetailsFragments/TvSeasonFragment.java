@@ -77,34 +77,35 @@ public class TvSeasonFragment extends Fragment{
         //data for the Spinner
         ArrayList<String> dataForSpinner = new ArrayList<>();
 
+        //set layout and data to the adapter
+        dataAdapter = new ArrayAdapter<String>(c, R.layout.custom_spinner_item, dataForSpinner);
+        dataAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
+
         //Add seasons to seasonList
         if(numberOfSeasons > 0) {
             for (int i = 1; i <= numberOfSeasons; i++) {
                 seasonsList.add(i);
                 dataForSpinner.add("Season " + i);
             }
+            //set adapter for spinner
+            seasonSpinner.setAdapter(dataAdapter);
+            seasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                    if(numberOfSeasons > 0) {
+                        getEpisodes(position + 1);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent){
+
+                }
+            });
         }
         else {
             dataForSpinner.add("No seasons yet");
         }
-        //set layout and data to the adapter
-        dataAdapter = new ArrayAdapter<String>(c, R.layout.custom_spinner_item, dataForSpinner);
-        dataAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
-        //set adapter for spinner
-        seasonSpinner.setAdapter(dataAdapter);
-        seasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                if(numberOfSeasons > 0) {
-                    getEpisodes(position + 1);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent){
-
-            }
-        });
 
         episodeList = view.findViewById(R.id.tv_episodes_recyclerview);
 

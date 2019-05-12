@@ -182,5 +182,23 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="8dp"
             android:scrollbars="horizontal"/>
+        <TextView
+            android:id="@+id/show_suggestion_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/oswald_bold"
+            android:text="@string/similar_shows"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/suggest_show_list"
+            android:layout_width="match_parent"
+            android:layout_height="171dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"/>
     </LinearLayout>
 </ScrollView>

@@ -17,9 +17,13 @@ import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
+import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.R;
+import com.inmovie.inmovie.SideSpaceItemDecoration;
+import com.inmovie.inmovie.TVclasses.TvShow;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetDetails;
+import com.inmovie.inmovie.model.api.TMDb.TV.GetSimilarTVShows;
 
 import java.util.ArrayList;
 
@@ -40,16 +44,20 @@ public class TvBasicInfoFragment extends Fragment {
     //adapters for crew list and cast list
     private CastListAdapters castAdapter;
     private CrewListAdapters crewAdapter;
+    private TrendingsAdapter similarShowAdapter;
 
     //RecyclerView for crew list and cast list
     private RecyclerView castList;
     private RecyclerView crewList;
+    private RecyclerView similarShow;
 
     //layout managers manages how the item will be arranged
     private RecyclerView.LayoutManager castLayoutManager;
     private RecyclerView.LayoutManager crewLayoutManager;
+    private RecyclerView.LayoutManager similarShowManager;
 
     private ScrollView scrollView;
+    private TvShow tvShow;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         return inflater.inflate(R.layout.tv_basic_info_tab, container, false);
@@ -61,6 +69,7 @@ public class TvBasicInfoFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
         Bundle args = getArguments();
         id = args.getInt("tv_id");
+        tvShow = (TvShow) args.getSerializable("tvShow");
         scrollView = (ScrollView) view.findViewById(R.id.tv_basic_info_scrollview);
 
         //get views for layout
@@ -116,11 +125,17 @@ public class TvBasicInfoFragment extends Fragment {
         //make lists and adapters for cast and crew displays
         castAdapter = new CastListAdapters(view.getContext());
         crewAdapter = new CrewListAdapters(view.getContext());
+        similarShowAdapter = new TrendingsAdapter(view.getContext());
         castList = (RecyclerView) view.findViewById(R.id.tv_cast_list);
         crewList = (RecyclerView) view.findViewById(R.id.tv_crew_list);
+        similarShow = (RecyclerView) view.findViewById(R.id.suggest_show_list);
+        similarShowManager = new LinearLayoutManager(view.getContext(), LinearLayout.HORIZONTAL, false);
         castLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayout.HORIZONTAL, false);
         crewLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayout.HORIZONTAL, false);
 
+        similarShow.setHasFixedSize(true);
+        similarShow.setLayoutManager(similarShowManager);
+        similarShow.setAdapter(similarShowAdapter);
         crewList.setHasFixedSize(true);
         castList.setHasFixedSize(true);
         castList.setLayoutManager(castLayoutManager);
@@ -128,11 +143,15 @@ public class TvBasicInfoFragment extends Fragment {
         crewList.setAdapter(crewAdapter);
         crewList.setLayoutManager(crewLayoutManager);
 
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing2);
+        similarShow.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels));
+
         //get data to populate views
         new GetDetails(views, null).execute(id);
         //get data to populate cast and crew lists
         new GetCredits(castAdapter, crewAdapter).execute(id);
-
+        //get data to populate similar show list
+        new GetSimilarTVShows(similarShowAdapter).execute(id);
         //set scroll position to top
         scrollView.post(new Runnable() {
             @Override

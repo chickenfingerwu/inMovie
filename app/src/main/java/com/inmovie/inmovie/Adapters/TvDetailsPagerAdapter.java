@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvBasicInfoFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvSeasonFragment;
+import com.inmovie.inmovie.TVclasses.TvShow;
 
 /**
  * Manages fragment, will be hooked up with TabLayout
@@ -17,12 +18,14 @@ public class TvDetailsPagerAdapter extends FragmentStatePagerAdapter {
     protected int numbOfSeasons;
     protected int numbOfTabs;
     protected int id;
+    protected TvShow tvShow;
 
-    public TvDetailsPagerAdapter(FragmentManager fm, int id, int numbOfSeasons, int numbOfTabs){
+    public TvDetailsPagerAdapter(TvShow tvShow, FragmentManager fm, int id, int numbOfSeasons, int numbOfTabs){
         super(fm);
         this.id = id;
         this.numbOfTabs = numbOfTabs;
         this.numbOfSeasons = numbOfSeasons;
+        this.tvShow = tvShow;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class TvDetailsPagerAdapter extends FragmentStatePagerAdapter {
                 Bundle savedInstance = new Bundle();
                 savedInstance.putInt("tv_id", id);
                 savedInstance.putInt("tv_seasons", numbOfSeasons);
+                savedInstance.putSerializable("tvShow", tvShow);
                 basicInfoFragment.setArguments(savedInstance);
                 return basicInfoFragment;
             case 1:

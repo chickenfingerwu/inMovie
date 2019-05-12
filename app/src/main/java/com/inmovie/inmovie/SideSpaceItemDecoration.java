@@ -17,7 +17,7 @@ public class SideSpaceItemDecoration extends RecyclerView.ItemDecoration {
         outRect.left = space/2;
         outRect.right = space/2;
         if(parent.getChildLayoutPosition(view) == 0) {
-            outRect.left = space;
+            outRect.left = 0;
         }
         else {
             outRect.left = space/2;
