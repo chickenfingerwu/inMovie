@@ -7,19 +7,11 @@ import android.os.Message;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.HandlingTvShow;
 import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
 
@@ -38,19 +30,7 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
         JSONArray result = new JSONArray();
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "/videos?api_key=" + BuildConfig.TMDb_API_key + "&language=en-US");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-
-            InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder builder = new StringBuilder();
-
-            String input;
-            while ((input = bufferedReader.readLine()) != null) {
-                builder.append(input);
-            }
-
-            result = new JSONObject(builder.toString()).getJSONArray("results");
+            result = Network.getJSONObject("https://api.themoviedb.org/3/tv/" + integers[0] + "/videos?api_key=" + BuildConfig.TMDb_API_key + "&language=en-US").getJSONArray("results");
 
             for (int i = 0; i < result.length(); i++) {
                 if (!result.getJSONObject(i).getString("site").equalsIgnoreCase("YouTube")) {
@@ -64,7 +44,7 @@ public class GetVideos extends AsyncTask<Integer, Void, JSONArray> {
                 }
             }
         }
-        catch (JSONException | IOException e) {
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
