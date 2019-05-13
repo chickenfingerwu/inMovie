@@ -17,4 +17,5 @@
     <string name="trailer">TRAILER</string>
     <string name="similar_movies">Similar movies</string>
     <string name="similar_shows">Similar shows</string>
+    <string name="load_more_review">See more reviews</string>
 </resources>

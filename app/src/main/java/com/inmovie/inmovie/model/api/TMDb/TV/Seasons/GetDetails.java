@@ -1,27 +1,16 @@
 package com.inmovie.inmovie.model.api.TMDb.TV.Seasons;
 
 import android.os.AsyncTask;
-import android.view.View;
 
 import com.inmovie.inmovie.Adapters.TvEpisodeResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.TVclasses.Episode;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     /**
@@ -39,26 +28,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
-        JSONObject result = new JSONObject();
-
-        try {
-            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "/season/" + integers[1] + "?api_key=" + BuildConfig.TMDb_API_key);
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-
-            InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder builder = new StringBuilder();
-
-            String input;
-            while ((input = bufferedReader.readLine()) != null) {
-                builder.append(input);
-            }
-
-            result = new JSONObject(builder.toString());
-        }
-        catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
+        JSONObject result = Network.getJSONObject("https://api.themoviedb.org/3/tv/" + integers[0] + "/season/" + integers[1] + "?api_key=" + BuildConfig.TMDb_API_key);
 
         return result;
     }

@@ -5,20 +5,13 @@ import android.os.AsyncTask;
 import com.inmovie.inmovie.Adapters.MovieSearchResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
     private MovieSearchResultAdapter movieSearchResultAdapter;
@@ -37,23 +30,9 @@ public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
     protected JSONArray doInBackground(String... strings) {
         JSONArray result = new JSONArray();
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=" + BuildConfig.TMDb_API_key + "&query=" + strings[0] + "&page=" + page);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-
-            InputStream stream = new BufferedInputStream(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder response = new StringBuilder();
-
-            String temp;
-            while ((temp = reader.readLine()) != null) {
-                response.append(temp);
-            }
-
-            JSONObject _temp = new JSONObject(response.toString());
-            result = _temp.getJSONArray("results");
-            stream.close();
+            result = Network.getJSONObject("https://api.themoviedb.org/3/search/movie?api_key=" + BuildConfig.TMDb_API_key + "&query=" + strings[0] + "&page=" + page).getJSONArray("results");
         }
-        catch (JSONException | IOException e) {
+        catch (JSONException e) {
             e.printStackTrace();
         }
 

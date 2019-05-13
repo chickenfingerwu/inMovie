@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,8 +32,10 @@ import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.SideSpaceItemDecoration;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetDetails;
+import com.inmovie.inmovie.model.api.TMDb.Movies.GetReviews;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetSimilarMovies;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetVideos;
+import com.victor.loading.rotate.RotateLoading;
 
 
 import java.util.ArrayList;
@@ -47,8 +50,12 @@ user will see this when choosing a movie
 
 public class MovieDetails extends AppCompatActivity {
 
-    private HandlingMovie handlingMovie;
+    protected int reviewPage = 1;
 
+    private ProgressBar rotateLoading;
+
+    private HandlingMovie handlingMovie;
+    private LinearLayout reviewsList;
     //Adapters to display data of cast and crew
     private CastListAdapters castAdapter;
     private CrewListAdapters crewAdapter;
@@ -70,6 +77,7 @@ public class MovieDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
+        reviewsList = (LinearLayout) findViewById(R.id.movie_reviews);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -125,6 +133,10 @@ public class MovieDetails extends AppCompatActivity {
         similarMovies.setLayoutManager(similarMovieLayoutManager);
         similarMovies.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels));
 
+        int spacingInPixels1 = getResources().getDimensionPixelSize(R.dimen.spacingCast);
+        castList.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels1));
+        crewList.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels1));
+
         TextView toggle = findViewById(R.id.movie_button_toggle);
         toggle.setText(R.string.expand);
 
@@ -143,6 +155,17 @@ public class MovieDetails extends AppCompatActivity {
                 toggle.setText(overview.isExpanded() ? R.string.expand : R.string.collapse);
                 overview.toggle();
             }
+        });
+
+        TextView seeMoreReviews = (TextView) findViewById(R.id.loadMoreButton);
+        rotateLoading = (ProgressBar) findViewById(R.id.rotateLoading);
+        seeMoreReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateLoading.setVisibility(View.VISIBLE);
+                getMoreReview();
+            }
+
         });
 
         ImageView banner = findViewById(R.id.poster_banner);
@@ -178,6 +201,8 @@ public class MovieDetails extends AppCompatActivity {
         new GetVideos(movie, handlingMovie).execute(movie.getId());
 
         new GetSimilarMovies(similarMoviesAdapter).execute(movie.getId());
+
+        new GetReviews(reviewsList, reviewPage).execute(movie.getId());
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -206,7 +231,8 @@ public class MovieDetails extends AppCompatActivity {
 
     }
 
-    public void setViewsForMovie(Movies movie){
-
+    public void getMoreReview(){
+        new GetReviews(reviewsList, ++reviewPage, rotateLoading).execute(movie.getId());
     }
+
 }

@@ -8,4 +8,5 @@
     <color name="Black">#000</color>
     <color name="transparent">#00F0F8FF</color>
     <color name="silver">#C0C0C0</color>
+    <color name="light_yellow">#FFFF33</color>
 </resources>

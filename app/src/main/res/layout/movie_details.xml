@@ -115,174 +115,326 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/textRating"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="2"
-                android:text="Ratings"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold" />
-
-            <TextView
-                android:id="@+id/numberRating"
+            <LinearLayout
+                android:id="@+id/movie_ratingSection"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="5dp"
-                android:textColor="#C0C0C0"
-                app:fontFamily="@font/oswald_light" />
-
-            <RatingBar
-                android:id="@+id/ratingBar3"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="5dp" />
-
-            <TextView
-                android:id="@+id/genresRuntimeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Genres | Runtime"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold" />
-
-            <TextView
-                android:id="@+id/genres_runtime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="5dp"
-                android:textColor="#FFF"
-                android:textSize="13sp"
-                app:fontFamily="@font/oswald_light"/>
-
-            <TextView
-                android:id="@+id/releaseDateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Release Date"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"/>
-
-            <TextView
-                android:id="@+id/release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="5dp"
-                android:textColor="#FFF"
-                android:textSize="13sp"
-                app:fontFamily="@font/oswald_light" />
+                android:background="@drawable/bottom_borders">
+                <TextView
+                    android:id="@+id/textRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="2"
+                    android:text="Ratings"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold" />
 
 
-            <TextView
-                android:id="@+id/plot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Plot"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold" />
+                <!-- Doughnut chart starts here -->
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent">
 
+                    <!-- ProgressBar that represents a total of 100% -->
+                    <ProgressBar
+                        android:id="@+id/background_progressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/stat_full"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <at.blogc.android.views.ExpandableTextView
-                android:id="@+id/movieDescription"
+                    <!-- ProgressBar that represents a chart slice, where "android:progress" is the % value of the slice -->
+                    <ProgressBar
+                        android:id="@+id/stats_progressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="75"
+                        android:progressDrawable="@drawable/stat_progress"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- The text that goes in a center of the chart -->
+                    <TextView
+                        android:id="@+id/number_of_calories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1500/2000"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+                <!-- Doughnut chart ends here -->
+
+                <TextView
+                    android:id="@+id/numberRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#C0C0C0"
+                    app:fontFamily="@font/oswald_light" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar3"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/movie_genresRuntime_Section"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:ems="10"
-                android:paddingStart="7dp"
-                android:paddingEnd="5dp"
-                android:textColor="#FFF"
-                app:fontFamily="@font/oswald_light"
-                android:maxLines="4"
-                android:ellipsize="end"
-                app:animation_duration="750"/>
+                android:background="@drawable/bottom_borders">
+                <TextView
+                    android:id="@+id/genresRuntimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Genres | Runtime"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold" />
 
-            <TextView
-                android:id="@+id/movie_button_toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_corner"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/oswald_light"
-                android:textAlignment="center"
-                android:textColor="#FFF"
-                android:textSize="13sp"/>
-
-            <TextView
-                android:id="@+id/castName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="10dp"
-                android:text="Cast"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/cast_list"
+                <TextView
+                    android:id="@+id/genres_runtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="#FFF"
+                    android:textSize="13sp"
+                    app:fontFamily="@font/oswald_light"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/movie_releaseDate_section"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="#000"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="8dp"
-                android:scrollbars="horizontal"/>
-
-            <TextView
-                android:id="@+id/crewText"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="10dp"
-                android:text="Crew"
-                android:textColor="#FFF"
-                android:textSize="15sp"
-                app:fontFamily="@font/oswald_bold"/>
+                android:background="@drawable/bottom_borders">
+                <TextView
+                    android:id="@+id/releaseDateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Release Date"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/crew_list"
+                <TextView
+                    android:id="@+id/release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="#FFF"
+                    android:textSize="13sp"
+                    app:fontFamily="@font/oswald_light" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/movie_plot_section"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="#000"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="8dp"
-                android:scrollbars="horizontal"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_borders">
+                <TextView
+                    android:id="@+id/plot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Plot"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold" />
+
+
+                <at.blogc.android.views.ExpandableTextView
+                    android:id="@+id/movieDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:ems="10"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="#FFF"
+                    app:fontFamily="@font/oswald_light"
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    app:animation_duration="750"/>
+                <TextView
+                    android:id="@+id/movie_button_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/oswald_light"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/movie_cast_section"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_borders">
+                <TextView
+                    android:id="@+id/castName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Cast"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/cast_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="#000"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scrollbars="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/movie_crew_section"
+                android:orientation="vertical"
+                android:background="@drawable/bottom_borders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/crewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Crew"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/crew_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="#000"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scrollbars="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/movie_review_section"
+                android:orientation="vertical"
+                android:background="@drawable/bottom_borders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/reviewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Reviews"
+                    android:textColor="#FFF"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/oswald_bold"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/movie_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scrollbars="vertical"/>
+
+                <ProgressBar
+                    android:id="@+id/rotateLoading"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/loadMoreButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="13sp"
+                    android:text="@string/load_more_review"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/movie_suggestion_text"

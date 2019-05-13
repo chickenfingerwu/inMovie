@@ -3,5 +3,6 @@
     <dimen name="spacing">3dp</dimen>
     <dimen name="spacing1">5dp</dimen>
     <dimen name="spacing2">8dp</dimen>
+    <dimen name="spacingCast">7dp</dimen>
     <dimen name="linearVerticalHeight">0dp</dimen>
 </resources>

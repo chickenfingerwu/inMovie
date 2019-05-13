@@ -146,6 +146,9 @@ public class TvBasicInfoFragment extends Fragment {
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing2);
         similarShow.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels));
 
+        int spacingInPixels1 = getResources().getDimensionPixelSize(R.dimen.spacingCast);
+        castList.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels1));
+        crewList.addItemDecoration(new SideSpaceItemDecoration(spacingInPixels1));
         //get data to populate views
         new GetDetails(views, null).execute(id);
         //get data to populate cast and crew lists

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/crew_role_field"
     android:layout_marginEnd="1dp"
-    android:layout_width="110dp"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/crew_profile"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_weight="2"
         app:civ_border_width="0.8dp"
         app:civ_border_color="#A9A9A9"/>
@@ -23,9 +23,9 @@
         android:layout_gravity="fill"
         android:paddingTop="3dp"
         android:gravity="center_horizontal"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textColor="#FFF"
-        app:fontFamily="@font/oswald_bold" />
+        app:fontFamily="@font/oswald_regular" />
 
     <TextView
         android:id="@+id/crew_role"
@@ -40,6 +40,6 @@
         android:paddingTop="3dp"
         app:fontFamily="@font/oswald_light"
         android:textColor="#FFF"
-        android:textSize="12sp"/>
+        android:textSize="11sp"/>
 
 </LinearLayout>

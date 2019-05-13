@@ -1,6 +1,5 @@
 package com.inmovie.inmovie.model.api.TMDb.TV;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.HandlingTvShow;
 import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.model.api.Network;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
 import org.json.JSONArray;
@@ -83,25 +83,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
     @Override
     protected JSONObject doInBackground(Integer... integers) {
-        JSONObject result = new JSONObject();
-        try {
-            URL url = new URL("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key  + "&append_to_response=external_ids");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-
-            InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder builder = new StringBuilder();
-
-            String input;
-            while ((input = bufferedReader.readLine()) != null) {
-                builder.append(input);
-            }
-
-            result = new JSONObject(builder.toString());
-        }
-        catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
+        JSONObject result = Network.getJSONObject("https://api.themoviedb.org/3/tv/" + integers[0] + "?api_key=" + BuildConfig.TMDb_API_key  + "&append_to_response=external_ids");
 
         try {
             URL backdrop_url = new URL("https://image.tmdb.org/t/p/w1280" + result.getString("backdrop_path"));
