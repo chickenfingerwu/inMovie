@@ -4,5 +4,9 @@
     <dimen name="spacing1">5dp</dimen>
     <dimen name="spacing2">8dp</dimen>
     <dimen name="spacingCast">7dp</dimen>
+    <dimen name="progress_full_size">30dp</dimen>
+    <dimen name="progress_full_thick">10dp</dimen>
+    <dimen name="progress_size">30dp</dimen>
+    <dimen name="progress_thick">10dp</dimen>
     <dimen name="linearVerticalHeight">0dp</dimen>
 </resources>

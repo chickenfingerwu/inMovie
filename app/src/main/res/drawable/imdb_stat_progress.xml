@@ -3,9 +3,9 @@
     android:fromDegrees="270"
     android:toDegrees="270">
     <shape
-        android:innerRadius="20dp"
+        android:innerRadius="@dimen/progress_size"
         android:shape="ring"
-        android:thickness="10dp"
+        android:thickness="@dimen/progress_thick"
         android:useLevel="true">
         <solid android:color="@color/light_yellow" />
     </shape>

@@ -3,12 +3,16 @@ package com.inmovie.inmovie.model.api.TMDb.Movies;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
+import com.inmovie.inmovie.HandlingMovie;
+import com.inmovie.inmovie.HandlingMovieRating;
 import com.inmovie.inmovie.model.api.Network;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
@@ -35,27 +39,26 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView genres = null;
     private TextView releaseDate = null;
     private TextView runtime = null;
-    private TextView rating = null;
-    private RatingBar ratingBar = null;
     private TextView additionalInfo = null;
     private TextView genres_runtime = null;
 
+    private HandlingMovieRating handler;
+
     public GetDetails() {}
 
-    public GetDetails(List<View> views) {
+    public GetDetails(List<View> views, HandlingMovieRating handler) {
         try {
             name = (TextView) views.get(0);
             overview = (ExpandableTextView) views.get(1);
             backdrop = (ImageView) views.get(2);
-            rating = (TextView) views.get(3);
-            ratingBar = (RatingBar) views.get(4);
-            additionalInfo = (TextView) views.get(5);
-            genres_runtime = (TextView) views.get(6);
-            releaseDate = (TextView) views.get(7);
+            additionalInfo = (TextView) views.get(3);
+            genres_runtime = (TextView) views.get(4);
+            releaseDate = (TextView) views.get(5);
         }
         catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
+        this.handler = handler;
     }
 
     @Override
@@ -193,29 +196,37 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
 
         // Set movie's rating
-        Double score = null;
-        String votes = null;
+        Double imdb_score = null;
+        String imdb_votes = null;
+        Double tmdb_score = null;
+        Integer tmdb_votes = null;
         try{
-            score = jsonObject.getDouble("imdbRating");
-            votes = jsonObject.getString("imdbVotes");
+            imdb_score = jsonObject.getDouble("imdbRating");
+            imdb_votes = jsonObject.getString("imdbVotes");
+            tmdb_score = jsonObject.getDouble("vote_average");
+            tmdb_votes = jsonObject.getInt("vote_count");
+            Bundle ratingData = new Bundle();
+            ratingData.putDouble("imdbRating", imdb_score);
+            ratingData.putDouble("tmdbRating", tmdb_score);
+            ratingData.putString("imdbVotes", imdb_votes);
+            ratingData.putInt("tmdbVotes", tmdb_votes);
+            Message m = new Message();
+            m.setData(ratingData);
+            handler.sendMessage(m);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-        if (rating != null && ratingBar != null) {
-            if (score != null) {
-                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-                ratingBar.setRating(score.floatValue());
-            } else {
-                rating.setText("Not yet rated");
+        String tagline = null;
+        try {
+            tagline = jsonObject.getString("tagline");
+            if (additionalInfo != null) {
+                additionalInfo.setText(tagline);
             }
         }
-
-        if(additionalInfo != null){
-            if(_genres != null && _runtime > 0) {
-                additionalInfo.setText(_genres.toString() + " | Runtime: " + _runtime + " minutes");
-            }
+        catch (Exception e){
+            e.printStackTrace();
         }
 
         if(genres_runtime != null){

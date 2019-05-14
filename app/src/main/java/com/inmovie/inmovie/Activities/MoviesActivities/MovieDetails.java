@@ -4,29 +4,24 @@ package com.inmovie.inmovie.Activities.MoviesActivities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.ActionBar;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.HandlingMovie;
+import com.inmovie.inmovie.HandlingMovieRating;
 import com.inmovie.inmovie.Movies;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.SideSpaceItemDecoration;
@@ -35,7 +30,6 @@ import com.inmovie.inmovie.model.api.TMDb.Movies.GetDetails;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetReviews;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetSimilarMovies;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetVideos;
-import com.victor.loading.rotate.RotateLoading;
 
 
 import java.util.ArrayList;
@@ -55,6 +49,8 @@ public class MovieDetails extends AppCompatActivity {
     private ProgressBar rotateLoading;
 
     private HandlingMovie handlingMovie;
+    private HandlingMovieRating ratingHandler;
+
     private LinearLayout reviewsList;
     //Adapters to display data of cast and crew
     private CastListAdapters castAdapter;
@@ -86,6 +82,7 @@ public class MovieDetails extends AppCompatActivity {
         Intent intent = getIntent();
         movie = (Movies) intent.getSerializableExtra("serialize_data");
 
+        ratingHandler = new HandlingMovieRating(this);
         handlingMovie = new HandlingMovie(this);
 
         /*AppBarLayout bannerLayout = (AppBarLayout) findViewById(R.id.movie_banner);
@@ -172,11 +169,6 @@ public class MovieDetails extends AppCompatActivity {
 
         TextView contentName = findViewById(R.id.content_name);
 
-        TextView numberRating = findViewById(R.id.numberRating);
-
-        RatingBar ratingBar = findViewById(R.id.ratingBar3);
-        ratingBar.setNumStars(10);
-
         TextView additionalInfo = (TextView) findViewById(R.id.additionalInfo);
         TextView genres_runtime = (TextView) findViewById(R.id.genres_runtime);
 
@@ -186,15 +178,13 @@ public class MovieDetails extends AppCompatActivity {
         views.add(contentName);
         views.add(overview);
         views.add(banner);
-        views.add(numberRating);
-        views.add(ratingBar);
         views.add(additionalInfo);
         views.add(genres_runtime);
         views.add(releseDate);
 
         contentName.setTextColor(Color.WHITE);
 
-        new GetDetails(views).execute(movie.getId());
+        new GetDetails(views, ratingHandler).execute(movie.getId());
 
         new GetCredits(castAdapter, crewAdapter).execute(movie.getId());
 
@@ -235,4 +225,32 @@ public class MovieDetails extends AppCompatActivity {
         new GetReviews(reviewsList, ++reviewPage, rotateLoading).execute(movie.getId());
     }
 
+    public void setRatingSection(Bundle ratingData){
+        ConstraintLayout outerImdbRating = findViewById(R.id.imdb_rating);
+        ProgressBar imdbRoundRating = (ProgressBar) outerImdbRating.findViewById(R.id.stats_progressbar);
+        ConstraintLayout outerTmdbRating = findViewById(R.id.tmdb_rating);
+        ProgressBar tmdbRoundRating = (ProgressBar) outerTmdbRating.findViewById(R.id.stats_progressbar);
+
+        TextView imdbText = findViewById(R.id.imdbText);
+        TextView tmdbText = findViewById(R.id.tmdbText);
+        TextView imdbScoreText = (TextView) outerImdbRating.findViewById(R.id.imdb_score_center_round);
+        TextView tmdbScoreText = (TextView) outerTmdbRating.findViewById(R.id.tmdb_score_center_round);
+
+        if(ratingData!=null){
+            Double imdb_score = ratingData.getDouble("imdbRating");
+            String imdb_votes = ratingData.getString("imdbVotes");
+            Double tmdb_score = ratingData.getDouble("tmdbRating");
+            Integer tmdb_votes = ratingData.getInt("tmdbVotes");
+
+            imdbRoundRating.setProgress(imdb_score.intValue());
+            tmdbRoundRating.setProgress(tmdb_score.intValue());
+            imdbText.append(" (" + imdb_votes + " votes)");
+            tmdbText.append(" (" + tmdb_votes + " votes)");
+
+            imdbScoreText.setText(imdb_score + "/10");
+            tmdbScoreText.setText(tmdb_score + "/10");
+        }
+
+    }
 }
+

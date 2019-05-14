@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Doughnut chart starts here -->
+<android.support.constraint.ConstraintLayout android:id="@+id/doughnutRating"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintHorizontal_bias="0.5"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ProgressBar that represents a total of 100% -->
+    <ProgressBar
+        android:id="@+id/background_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminate="false"
+        android:max="10"
+        android:progress="10"
+        android:progressDrawable="@drawable/imdb_stat_full"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ProgressBar that represents a chart slice, where "android:progress" is the % value of the slice -->
+    <ProgressBar
+        android:id="@+id/stats_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminate="false"
+        android:max="10"
+        android:progress="0"
+        android:progressDrawable="@drawable/imdb_stat_progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- The text that goes in a center of the chart -->
+    <TextView
+        android:id="@+id/imdb_score_center_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.0/10"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
+    <!-- Doughnut chart ends here -->
