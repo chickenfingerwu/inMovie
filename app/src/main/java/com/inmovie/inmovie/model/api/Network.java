@@ -16,7 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Network {
     public static JSONObject getJSONObject(String _url) {
-        JSONObject result = null;
+        JSONObject result = new JSONObject();
         try {
             URL url = new URL(_url);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
