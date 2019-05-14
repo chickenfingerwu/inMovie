@@ -1,20 +1,24 @@
 package com.inmovie.inmovie.Activities.MoviesActivities;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
@@ -165,34 +169,52 @@ public class MovieDetails extends AppCompatActivity {
 
         });
 
+        ImageView poster = findViewById(R.id.movie_poster);
+        TextView director = findViewById(R.id.director);
+        TextView releaseYear = findViewById(R.id.movie_releaseYear);
+        TextView runtime = findViewById(R.id.movie_runtime);
+
+
         ImageView banner = findViewById(R.id.poster_banner);
 
         TextView contentName = findViewById(R.id.content_name);
 
         TextView additionalInfo = (TextView) findViewById(R.id.additionalInfo);
-        TextView genres_runtime = (TextView) findViewById(R.id.genres_runtime);
+        TextView genres = (TextView) findViewById(R.id.genres);
 
         TextView releseDate = (TextView) findViewById(R.id.release_date);
 
         ArrayList<View> views = new ArrayList<>();
+        views.add(poster);
+        views.add(releaseYear);
+        views.add(runtime);
         views.add(contentName);
         views.add(overview);
         views.add(banner);
         views.add(additionalInfo);
-        views.add(genres_runtime);
+        views.add(genres);
         views.add(releseDate);
 
         contentName.setTextColor(Color.WHITE);
 
         new GetDetails(views, ratingHandler).execute(movie.getId());
 
-        new GetCredits(castAdapter, crewAdapter).execute(movie.getId());
+        new GetCredits(castAdapter, crewAdapter, director).execute(movie.getId());
 
         new GetVideos(movie, handlingMovie).execute(movie.getId());
 
         new GetSimilarMovies(similarMoviesAdapter).execute(movie.getId());
 
         new GetReviews(reviewsList, reviewPage).execute(movie.getId());
+
+        NestedScrollView scrollView = findViewById(R.id.body);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, 0);
+            }
+        });
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -249,6 +271,7 @@ public class MovieDetails extends AppCompatActivity {
 
             imdbScoreText.setText(imdb_score + "/10");
             tmdbScoreText.setText(tmdb_score + "/10");
+
         }
 
     }

@@ -36,11 +36,11 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private ImageView poster = null;
     private Bitmap _backdrop = null;
     private Bitmap _poster = null;
+    private TextView releaseYear = null;
     private TextView genres = null;
     private TextView releaseDate = null;
     private TextView runtime = null;
     private TextView additionalInfo = null;
-    private TextView genres_runtime = null;
 
     private HandlingMovieRating handler;
 
@@ -48,12 +48,15 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
 
     public GetDetails(List<View> views, HandlingMovieRating handler) {
         try {
-            name = (TextView) views.get(0);
-            overview = (ExpandableTextView) views.get(1);
-            backdrop = (ImageView) views.get(2);
-            additionalInfo = (TextView) views.get(3);
-            genres_runtime = (TextView) views.get(4);
-            releaseDate = (TextView) views.get(5);
+            poster = (ImageView) views.get(0);
+            releaseYear = (TextView) views.get(1);
+            runtime = (TextView) views.get(2);
+            name = (TextView) views.get(3);
+            overview = (ExpandableTextView) views.get(4);
+            backdrop = (ImageView) views.get(5);
+            additionalInfo = (TextView) views.get(6);
+            genres = (TextView) views.get(7);
+            releaseDate = (TextView) views.get(8);
         }
         catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
@@ -149,6 +152,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
                 releaseDate.setText("Release Date: Unknown");
             }
         }
+        if(releaseYear != null){
+            if (!_releaseDate.equals(""))
+                releaseYear.setText(_releaseDate.split("-")[0]);
+            else {
+                releaseYear.setText("Release Date: Unknown");
+            }
+        }
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
         try {
@@ -229,9 +239,15 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             e.printStackTrace();
         }
 
-        if(genres_runtime != null){
-            if(_genres != null && _runtime > 0) {
-                genres_runtime.setText(_genres.toString() + " | Runtime: " + _runtime + " minutes");
+        if(genres != null){
+            if(_genres != null) {
+                genres.setText(_genres.toString());
+            }
+        }
+
+        if(runtime != null){
+            if(_runtime > 0){
+                runtime.setText(_runtime + " mins");
             }
         }
 

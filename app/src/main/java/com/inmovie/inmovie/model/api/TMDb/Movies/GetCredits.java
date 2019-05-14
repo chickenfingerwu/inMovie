@@ -1,6 +1,7 @@
 package com.inmovie.inmovie.model.api.TMDb.Movies;
 
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 import com.inmovie.inmovie.Actor;
 import com.inmovie.inmovie.Adapters.CastListAdapters;
@@ -16,12 +17,15 @@ import java.util.ArrayList;
 
 public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
 
+    private TextView director = null;
+
     private CastListAdapters castListAdapters = null;
     private CrewListAdapters crewListAdapters = null;
 
-    public GetCredits(CastListAdapters castListAdapters, CrewListAdapters crewListAdapters){
+    public GetCredits(CastListAdapters castListAdapters, CrewListAdapters crewListAdapters, TextView director){
         this.castListAdapters = castListAdapters;
         this.crewListAdapters = crewListAdapters;
+        this.director = director;
     }
 
     public GetCredits(){}
@@ -68,6 +72,18 @@ public class GetCredits extends AsyncTask<Integer, Void, JSONObject> {
                         JSONObject crew = crewJSON.getJSONObject(i);
                         name = crew.getString("name");
                         role = crew.getString("job");
+
+                        if(director!=null){
+                            if(role.equals("Director")){
+                                if(director.getText().equals("")) {
+                                    director.setText(name);
+                                }
+                                else {
+                                    director.append(", " + name);
+                                }
+                            }
+                        }
+
                         profile = crew.getString("profile_path");
                         c = new Crew(name, role, profile);
                         crews.add(c);
