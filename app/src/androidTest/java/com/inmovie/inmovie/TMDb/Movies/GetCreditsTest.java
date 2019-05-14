@@ -19,7 +19,7 @@ public class GetCreditsTest {
     public void testGetCredits() {
         try {
             JSONObject result = new GetCredits().execute(24428).get();
-            assertTrue("true", result.getInt("id") == 24428 && result.has("cast") && result.has("crew"));
+            assertTrue(result.getInt("id") == 24428 && result.has("cast") && result.has("crew"));
         }
         catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
@@ -30,7 +30,7 @@ public class GetCreditsTest {
     public void testInvalid() {
         try {
             JSONObject result = new GetCredits().execute(-1).get();
-            assertTrue("true", !result.has("id"));
+            assertTrue(!result.has("id"));
         }
         catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
