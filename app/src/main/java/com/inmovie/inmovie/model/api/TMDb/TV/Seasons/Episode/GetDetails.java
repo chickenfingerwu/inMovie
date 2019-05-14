@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingEpisode;
-import com.inmovie.inmovie.TVclasses.Episode;
+import com.inmovie.inmovie.Handlers.HandlingEpisode;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.Episode;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONObject;

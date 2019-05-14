@@ -1,7 +1,7 @@
 package com.inmovie.inmovie.model.api;
 
-import com.inmovie.inmovie.Movies;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 
 import retrofit.Callback;
 import retrofit.http.GET;

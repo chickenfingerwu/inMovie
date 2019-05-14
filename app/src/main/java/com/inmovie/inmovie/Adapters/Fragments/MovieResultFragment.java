@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.inmovie.inmovie.Adapters.EndlessScrollListener;
 import com.inmovie.inmovie.Adapters.MovieSearchResultAdapter;
-import com.inmovie.inmovie.DividerItemDecoration;
+import com.inmovie.inmovie.Decorations.DividerItemDecoration;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.model.api.TMDb.Search.SearchMovies;
+import com.inmovie.inmovie.model.api.TMDb.Search.SearchTV;
 
 /**
  *This class implements the "Movies" tab from ResultPagerAdapter,
@@ -24,7 +26,7 @@ import com.inmovie.inmovie.model.api.TMDb.Search.SearchMovies;
 
 
 public class MovieResultFragment extends Fragment {
-
+    private ShimmerFrameLayout mShimmer;
     //endless scrolling functionality
     private EndlessScrollListener scrollListener;
 
@@ -49,6 +51,9 @@ public class MovieResultFragment extends Fragment {
         query = args.getString("query");
         page = args.getInt("page");
 
+        mShimmer = view.findViewById(R.id.shimmer_view_container);
+        mShimmer.startShimmerAnimation();
+
         recyclerView = view.findViewById(R.id.movie_tab);
         recyclerView.setHasFixedSize(true);
 
@@ -59,7 +64,7 @@ public class MovieResultFragment extends Fragment {
         movieSearchResultAdapter = new MovieSearchResultAdapter(view.getContext());
         recyclerView.setAdapter(movieSearchResultAdapter);
 
-        getMoreMovie(query, page);
+        new SearchTV(movieSearchResultAdapter, page, recyclerView, mShimmer).execute(query);
 
         scrollListener = new EndlessScrollListener(layoutManager) {
             @Override

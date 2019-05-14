@@ -1,7 +1,6 @@
 package com.inmovie.inmovie.Activities.MoviesActivities;
 
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,22 +12,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
-import com.inmovie.inmovie.HandlingMovie;
-import com.inmovie.inmovie.HandlingMovieRating;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.Handlers.HandlingMovie;
+import com.inmovie.inmovie.Handlers.HandlingMovieRating;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.SideSpaceItemDecoration;
+import com.inmovie.inmovie.Decorations.SideSpaceItemDecoration;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetDetails;
 import com.inmovie.inmovie.model.api.TMDb.Movies.GetReviews;

@@ -8,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.Adapters.EndlessScrollListener;
 import com.inmovie.inmovie.Adapters.PopularMovieAdapter;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.model.api.MoviesApiService;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.SpacesItemDecoration;
+import com.inmovie.inmovie.Decorations.SpacesItemDecoration;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;

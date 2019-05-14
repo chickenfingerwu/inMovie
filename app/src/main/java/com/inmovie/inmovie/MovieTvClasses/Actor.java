@@ -1,46 +1,46 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.MovieTvClasses;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Crew {
+public class Actor {
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
     private String profilePic;
     private String role;
-    private String crewName;
+    private String actorName;
     private int age;
-    private ArrayList<Movies> filmography;
+    private ArrayList<Entertainment> filmography;
 
-    public Crew(String name){
-        crewName = name;
+    public Actor(String name){
+        actorName = name;
     }
 
-    public Crew(String name, int a){
-        crewName = name;
+    public Actor(String name, int a){
+        actorName = name;
         age = a;
     }
 
-    public Crew(String name, String role, String profilePic){
-        this.crewName = name;
+    public Actor(String name, String role, String profilePic){
+        this.actorName = name;
         this.role = role;
         this.profilePic = profilePic;
     }
 
-    public static class CrewResult {
-        private List<Crew> results;
+    public static class ActorResult {
+        private List<Actor> results;
 
-        public List<Crew> getResults() {
+        public List<Actor> getResults() {
             return results;
         }
     }
 
     //add to his/her filmography
-    public void addFilmography(Movies m){
+    public void addFilmography(Entertainment m){
         filmography.add(m);
     }
 
-    public void setCrewName(String crewName) {
-        this.crewName = crewName;
+    public void setActorName(String actorName) {
+        this.actorName = actorName;
     }
 
     public void setAge(int age) {
@@ -51,11 +51,11 @@ public class Crew {
         this.profilePic = profilePic;
     }
 
-    public void setFilmography(ArrayList<Movies> filmography) {
+    public void setFilmography(ArrayList<Entertainment> filmography) {
         this.filmography = filmography;
     }
 
-    public ArrayList<Movies> getFilmography() {
+    public ArrayList<Entertainment> getFilmography() {
         return filmography;
     }
 
@@ -71,7 +71,9 @@ public class Crew {
         return age;
     }
 
-    public String getCrewName() {
-        return crewName;
+    public String getActorName() {
+        return actorName;
     }
+
+
 }

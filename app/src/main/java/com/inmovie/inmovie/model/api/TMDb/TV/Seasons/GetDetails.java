@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.inmovie.inmovie.Adapters.TvEpisodeResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.TVclasses.Episode;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.Episode;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;

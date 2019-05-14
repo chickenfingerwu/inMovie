@@ -1,10 +1,13 @@
 package com.inmovie.inmovie.model.api.TMDb.Search;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.inmovie.inmovie.Adapters.MovieSearchResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
@@ -16,6 +19,15 @@ import java.util.ArrayList;
 public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
     private MovieSearchResultAdapter movieSearchResultAdapter;
     private int page;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private RecyclerView movieView;
+
+    public SearchMovies(MovieSearchResultAdapter adapter, int p, ShimmerFrameLayout shimmerFrameLayout, RecyclerView movieList){
+        movieSearchResultAdapter = adapter;
+        page = p;
+        this.shimmerFrameLayout = shimmerFrameLayout;
+        this.movieView = movieList;
+    }
 
     public SearchMovies(MovieSearchResultAdapter adapter, int p){
         movieSearchResultAdapter = adapter;
@@ -45,7 +57,7 @@ public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
             ArrayList<Movies> moviesList = new ArrayList<>();
             if (jsonArray != null) {
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    com.inmovie.inmovie.Movies movieCandidate = new com.inmovie.inmovie.Movies();
+                    Movies movieCandidate = new Movies();
 
                     try {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -64,7 +76,18 @@ public class SearchMovies extends AsyncTask<String, Void, JSONArray> {
                     }
                 }
             }
-
+            if(shimmerFrameLayout != null) {
+                if (shimmerFrameLayout.isAnimationStarted()) {
+                    shimmerFrameLayout.stopShimmerAnimation();
+                    if (movieView != null) {
+                        if (moviesList.size() > 0) {
+                            movieView.setVisibility(View.VISIBLE);
+                        } else {
+                            movieView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
             if (page != 1) {
                 movieSearchResultAdapter.setMoviesList(moviesList, false);
             } else {

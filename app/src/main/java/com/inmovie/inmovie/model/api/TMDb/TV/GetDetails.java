@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingTvShow;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.Handlers.HandlingTvRating;
+import com.inmovie.inmovie.Handlers.HandlingTvShow;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.inmovie.inmovie.model.api.Network;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
@@ -20,11 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -37,31 +34,41 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private ImageView poster = null;
     private Bitmap _backdrop = null;
     private Bitmap _poster = null;
+    private TextView director = null;
+    private TextView releaseYear = null;
     private TextView genres = null;
     private TextView first_air_date = null;
     private TextView runtime = null;
-    private TextView rating = null;
-    private RatingBar ratingBar = null;
     private TextView additionalInfo = null;
-    private TextView genres_runtime = null;
 
-    TvShow show;
-    HandlingTvShow handler;
-    public GetDetails(ArrayList<View> views, TvShow show) {
+    private TvShow show;
+    private HandlingTvShow handler;
+    private HandlingTvRating ratingHandler;
+
+    public GetDetails(ArrayList<View> views, TvShow show, HandlingTvRating ratingHandler, HandlingTvShow handler) {
         try {
-            name = (TextView) views.get(0);
-            overview = (TextView) views.get(1);
-            backdrop = (ImageView) views.get(2);
-            rating = (TextView) views.get(3);
-            ratingBar = (RatingBar) views.get(4);
-            additionalInfo = (TextView) views.get(5);
-            genres_runtime = (TextView) views.get(6);
-            first_air_date = (TextView) views.get(7);
+            director = (TextView) views.get(0);
+            releaseYear = (TextView) views.get(1);
+            runtime = (TextView) views.get(2);
+            poster = (ImageView) views.get(3);
+            overview = (TextView) views.get(4);
+            backdrop = (ImageView) views.get(5);
+            additionalInfo = (TextView) views.get(6);
+            genres = (TextView) views.get(7);
+            first_air_date = (TextView) views.get(8);
         }
         catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
         this.show = show;
+        this.ratingHandler = ratingHandler;
+        this.handler = handler;
+    }
+
+    public GetDetails(TvShow show, HandlingTvShow handler, HandlingTvRating ratingHandler){
+        this.show = show;
+        this.handler = handler;
+        this.ratingHandler = ratingHandler;
     }
 
     public GetDetails(TvShow show, HandlingTvShow handler){
@@ -148,6 +155,13 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             show.setTitle(_title);
         }
 
+        //Set show's poster
+        if(poster != null) {
+            if (_poster != null) {
+                poster.setImageBitmap(_poster);
+            }
+        }
+
         //Set show's id
         Integer id = null;
         try{
@@ -158,31 +172,6 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         catch (Exception e){
             e.printStackTrace();
-        }
-        // Set movie's rating
-        Double score = null;
-        String votes = null;
-        try{
-            score = jsonObject.getDouble("imdbRating");
-            votes = jsonObject.getString("imdbVotes");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        if(score != null){
-            if(ratingBar != null && rating!=null) {
-                rating.setText(Double.toString(score) + " IMDb (" + votes + " votes)");
-                ratingBar.setRating(score.floatValue());
-            }
-        }
-        else {
-            if (rating != null)
-                rating.setText("Not yet rated");
-        }
-        if(show!=null){
-            if(score!=null) {
-                show.setRating(score);
-            }
         }
 
         //Set show's number of seasons
@@ -219,19 +208,48 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!_first_air_date.equals(""))
-            if(first_air_date!=null) {
+        if (!_first_air_date.equals("")) {
+            if (first_air_date != null) {
                 first_air_date.setText("Release Date: " + _first_air_date);
             }
-            if(show!=null){
+            if (show != null) {
                 show.setReleaseDate(_first_air_date);
             }
-        else if(first_air_date!=null && _first_air_date.equals("")){
-            first_air_date.setText("Release Date: Unknown");
-                if(show!=null){
-                    show.setReleaseDate("Unknown");
-                }
+
+            if(releaseYear != null){
+                releaseYear.setText(_first_air_date.split("-")[0]);
+            }
         }
+        else if(first_air_date!=null){
+            first_air_date.setText("Release Date: Unknown");
+            if(show!=null){
+                show.setReleaseDate("Unknown");
+            }
+            if(releaseYear != null){
+                releaseYear.setText("Year Unknown");
+            }
+        }
+
+        //Set show's creators
+        try {
+            JSONArray creators = jsonObject.getJSONArray("created_by");
+            JSONObject c = null;
+            if(director != null) {
+                for (int i = 0; i < creators.length(); i++) {
+                    c = creators.getJSONObject(i);
+                    String cName = c.getString("name");
+                    if (director.getText().equals("")) {
+                        director.setText(cName);
+                    } else {
+                        director.append(", " + cName);
+                    }
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
         // Set movie's genres
         StringBuilder _genres = new StringBuilder("Genres: ");
         try {
@@ -265,9 +283,9 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         if (runtime != null) {
             if (rt == 0) {
-                runtime.setText("Runtime: Unknown");
+                runtime.setText("Unknown");
             } else {
-                runtime.setText("Runtime: " + rt + " minutes");
+                runtime.setText(rt + " mins");
             }
         }
         if(show!=null){
@@ -288,17 +306,17 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
         }
 
-        if(additionalInfo != null){
-            if(_genres != null) {
-                additionalInfo.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
-            }
+        String status = "";
+        try {
+            status = jsonObject.getString("status");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        if(additionalInfo != null && !status.equals("")){
+            additionalInfo.setText(status);
         }
 
-        if(genres_runtime != null){
-            if(_genres != null) {
-                genres_runtime.setText(_genres.toString() + " | Runtime: " + rt + " minutes");
-            }
-        }
         if(show!=null){
             show.setGenres(_genres.toString());
         }
@@ -309,6 +327,35 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             }
             catch (Exception e){
                 e.printStackTrace();
+            }
+        }
+
+        // Set movie's rating
+        Double imdb_score = null;
+        String imdb_votes = null;
+        Double tmdb_score = null;
+        Integer tmdb_votes = null;
+        if(ratingHandler != null) {
+            try {
+                imdb_score = jsonObject.getDouble("imdbRating");
+                imdb_votes = jsonObject.getString("imdbVotes");
+                tmdb_score = jsonObject.getDouble("vote_average");
+                tmdb_votes = jsonObject.getInt("vote_count");
+                Bundle ratingData = new Bundle();
+                ratingData.putDouble("imdbRating", imdb_score);
+                ratingData.putDouble("tmdbRating", tmdb_score);
+                ratingData.putString("imdbVotes", imdb_votes);
+                ratingData.putInt("tmdbVotes", tmdb_votes);
+                Message m = new Message();
+                m.setData(ratingData);
+                ratingHandler.sendMessage(m);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(show!=null){
+            if(imdb_score!=null) {
+                show.setRating(imdb_score);
             }
         }
 

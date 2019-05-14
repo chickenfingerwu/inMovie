@@ -2,7 +2,6 @@ package com.inmovie.inmovie.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,10 +12,9 @@ import android.widget.TextView;
 
 import com.inmovie.inmovie.Activities.TvActivities.EpisodeDetails;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.TVclasses.Episode;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.Episode;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

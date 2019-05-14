@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingMovie;
-import com.inmovie.inmovie.HandlingMovieRating;
+import com.inmovie.inmovie.Handlers.HandlingMovieRating;
 import com.inmovie.inmovie.model.api.Network;
 import com.inmovie.inmovie.model.api.OMDb.GetRating;
 
@@ -43,6 +41,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
     private TextView additionalInfo = null;
 
     private HandlingMovieRating handler;
+
 
     public GetDetails() {}
 
@@ -156,7 +155,7 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
             if (!_releaseDate.equals(""))
                 releaseYear.setText(_releaseDate.split("-")[0]);
             else {
-                releaseYear.setText("Release Date: Unknown");
+                releaseYear.setText("Unknown Year");
             }
         }
         // Set movie's genres
@@ -182,13 +181,6 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         }
         catch (JSONException e) {
             e.printStackTrace();
-        }
-        if (runtime != null) {
-            if (_runtime == -1) {
-                runtime.setText("Runtime: Unknown");
-            } else {
-                runtime.setText("Runtime: " + _runtime + " minutes");
-            }
         }
 
         // Set movie's backdrop image
@@ -248,6 +240,9 @@ public class GetDetails extends AsyncTask<Integer, Void, JSONObject> {
         if(runtime != null){
             if(_runtime > 0){
                 runtime.setText(_runtime + " mins");
+            }
+            else {
+                runtime.setText("Unknown");
             }
         }
 

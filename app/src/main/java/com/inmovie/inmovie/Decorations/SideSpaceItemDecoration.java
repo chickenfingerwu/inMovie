@@ -1,13 +1,13 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.Decorations;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+public class SideSpaceItemDecoration extends RecyclerView.ItemDecoration {
     private int space;
 
-    public SpacesItemDecoration(int s){
+    public SideSpaceItemDecoration(int s){
         space = s;
     }
 
@@ -16,12 +16,11 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
         outRect.left = space/2;
         outRect.right = space/2;
-        outRect.bottom = space/2;
-        if(parent.getChildLayoutPosition(view) == 0 || parent.getChildLayoutPosition(view) == 1) {
-            outRect.top = space;
+        if(parent.getChildLayoutPosition(view) == 0) {
+            outRect.left = 0;
         }
         else {
-            outRect.top = space/2;
+            outRect.left = space/2;
         }
     }
 }

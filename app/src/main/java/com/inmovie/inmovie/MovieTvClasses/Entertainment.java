@@ -1,11 +1,8 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.MovieTvClasses;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 public class Entertainment implements Serializable {

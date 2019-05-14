@@ -1,4 +1,4 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.MovieTvClasses;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,11 +1,14 @@
 package com.inmovie.inmovie.model.api.TMDb.Search;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.inmovie.inmovie.Adapters.MovieSearchResultAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Movies;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
@@ -17,10 +20,19 @@ import java.util.ArrayList;
 public class SearchTV extends AsyncTask<String, Void, JSONArray> {
     private MovieSearchResultAdapter movieSearchResultAdapter;
     private int page;
+    private ShimmerFrameLayout mShimmer;
+    private RecyclerView showView;
 
     public SearchTV(MovieSearchResultAdapter tvAdapter, int page){
         movieSearchResultAdapter = tvAdapter;
         this.page = page;
+    }
+
+    public SearchTV(MovieSearchResultAdapter tvAdapter, int page, RecyclerView showView, ShimmerFrameLayout mShimmer){
+        movieSearchResultAdapter = tvAdapter;
+        this.page = page;
+        this.showView = showView;
+        this.mShimmer = mShimmer;
     }
 
     public SearchTV() {
@@ -68,7 +80,18 @@ public class SearchTV extends AsyncTask<String, Void, JSONArray> {
                     }
                 }
             }
-
+            if(mShimmer != null) {
+                if (mShimmer.isAnimationStarted()) {
+                    mShimmer.stopShimmerAnimation();
+                    if (showView != null) {
+                        if (tvList.size() > 0) {
+                            showView.setVisibility(View.VISIBLE);
+                        } else {
+                            showView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            }
             if (page != 1) {
                 movieSearchResultAdapter.setMoviesList(tvList, false);
             } else {

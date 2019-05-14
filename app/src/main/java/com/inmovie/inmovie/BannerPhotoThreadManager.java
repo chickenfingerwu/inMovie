@@ -1,10 +1,9 @@
 package com.inmovie.inmovie;
 
-import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 
 import org.json.JSONObject;
 

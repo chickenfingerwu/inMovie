@@ -6,12 +6,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.inmovie.inmovie.Adapters.EndlessScrollListener;
-import com.inmovie.inmovie.Adapters.PopularMovieAdapter;
 import com.inmovie.inmovie.Adapters.PopularShowAdapter;
 import com.inmovie.inmovie.BuildConfig;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.SpacesItemDecoration;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.Decorations.SpacesItemDecoration;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.inmovie.inmovie.model.api.MoviesApiService;
 
 import retrofit.Callback;

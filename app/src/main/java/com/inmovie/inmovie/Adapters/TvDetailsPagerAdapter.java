@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvBasicInfoFragment;
 import com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments.TvSeasonFragment;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 
 /**
  * Manages fragment, will be hooked up with TabLayout

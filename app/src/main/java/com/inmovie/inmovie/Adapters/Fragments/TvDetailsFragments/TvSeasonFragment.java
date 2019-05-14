@@ -1,7 +1,6 @@
 package com.inmovie.inmovie.Adapters.Fragments.TvDetailsFragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.inmovie.inmovie.Adapters.TvEpisodeResultAdapter;
-import com.inmovie.inmovie.DividerItemDecoration;
+import com.inmovie.inmovie.Decorations.DividerItemDecoration;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.model.api.TMDb.TV.Seasons.GetDetails;
 

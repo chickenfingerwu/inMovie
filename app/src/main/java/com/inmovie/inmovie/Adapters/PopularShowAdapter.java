@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
 import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
-import com.inmovie.inmovie.Movies;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

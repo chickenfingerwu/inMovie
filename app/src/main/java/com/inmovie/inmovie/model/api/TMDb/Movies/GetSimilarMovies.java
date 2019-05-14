@@ -4,22 +4,13 @@ import android.os.AsyncTask;
 
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class GetSimilarMovies extends AsyncTask<Integer, Void, JSONObject> {
     private int page;

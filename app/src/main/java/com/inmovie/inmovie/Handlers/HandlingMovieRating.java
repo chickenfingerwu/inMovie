@@ -1,4 +1,4 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.Handlers;
 
 import android.os.Bundle;
 import android.os.Handler;

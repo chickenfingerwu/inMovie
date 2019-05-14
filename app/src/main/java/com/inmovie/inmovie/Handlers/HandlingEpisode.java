@@ -1,10 +1,10 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.Handlers;
 
 import android.os.Handler;
 import android.os.Message;
 
 import com.inmovie.inmovie.Activities.TvActivities.EpisodeDetails;
-import com.inmovie.inmovie.TVclasses.Episode;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.Episode;
 
 public class HandlingEpisode extends Handler {
     private EpisodeDetails episodeDetails;

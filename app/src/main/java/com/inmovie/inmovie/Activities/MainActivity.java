@@ -15,11 +15,10 @@ import android.widget.TextView;
 
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
-import com.inmovie.inmovie.HandlingTrending;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.Handlers.HandlingTrending;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.SideSpaceItemDecoration;
-import com.inmovie.inmovie.SpacesItemDecoration;
+import com.inmovie.inmovie.Decorations.SideSpaceItemDecoration;
 import com.inmovie.inmovie.model.api.TMDb.Trending.GetTrendingMovies;
 import com.inmovie.inmovie.model.api.TMDb.Trending.GetTrendingTV;
 import com.squareup.picasso.Picasso;

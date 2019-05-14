@@ -2,7 +2,6 @@ package com.inmovie.inmovie.Activities.TvActivities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +12,14 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
-import com.inmovie.inmovie.HandlingEpisode;
-import com.inmovie.inmovie.HandlingMovie;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.Handlers.HandlingEpisode;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.TVclasses.Episode;
-import com.inmovie.inmovie.model.api.TMDb.Movies.GetVideos;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.Episode;
 import com.inmovie.inmovie.model.api.TMDb.TV.Seasons.Episode.GetCredits;
 import com.inmovie.inmovie.model.api.TMDb.TV.Seasons.Episode.GetDetails;
 import com.squareup.picasso.Picasso;

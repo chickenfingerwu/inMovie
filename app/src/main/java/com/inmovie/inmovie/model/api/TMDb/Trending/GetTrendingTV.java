@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Movies;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;

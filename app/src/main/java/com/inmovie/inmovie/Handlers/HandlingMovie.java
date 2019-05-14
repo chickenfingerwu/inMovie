@@ -1,10 +1,10 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.Handlers;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 
 public class HandlingMovie extends Handler {
     private MovieDetails movieDetails;

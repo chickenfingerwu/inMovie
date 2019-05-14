@@ -6,8 +6,8 @@ import android.os.Message;
 
 import com.inmovie.inmovie.Adapters.TrendingsAdapter;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingTrending;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.Handlers.HandlingTrending;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;

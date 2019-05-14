@@ -2,11 +2,11 @@ package com.inmovie.inmovie.model.api.TMDb.TV.Seasons.Episode;
 
 import android.os.AsyncTask;
 
-import com.inmovie.inmovie.Actor;
+import com.inmovie.inmovie.MovieTvClasses.Actor;
 import com.inmovie.inmovie.Adapters.CastListAdapters;
 import com.inmovie.inmovie.Adapters.CrewListAdapters;
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.Crew;
+import com.inmovie.inmovie.MovieTvClasses.Crew;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;

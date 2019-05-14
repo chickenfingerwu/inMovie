@@ -1,4 +1,4 @@
-package com.inmovie.inmovie;
+package com.inmovie.inmovie.Decorations;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

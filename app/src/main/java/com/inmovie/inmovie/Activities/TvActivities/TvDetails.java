@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inmovie.inmovie.Adapters.TvDetailsPagerAdapter;
-import com.inmovie.inmovie.HandlingTvShow;
+import com.inmovie.inmovie.Handlers.HandlingTvShow;
 import com.inmovie.inmovie.R;
-import com.inmovie.inmovie.TVclasses.TvShow;
+import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetDetails;
 import com.inmovie.inmovie.model.api.TMDb.TV.GetVideos;
 import com.squareup.picasso.Picasso;
@@ -25,7 +25,6 @@ public class TvDetails extends AppCompatActivity {
     private TvShow tvShow;
     private ImageView banner;
     private TextView title;
-    private TextView additionalInfo;
     private HandlingTvShow handler;
 
     private TabLayout.OnTabSelectedListener listener;
@@ -52,11 +51,8 @@ public class TvDetails extends AppCompatActivity {
         title = (TextView) findViewById(R.id.tv_name);
         title.setTextColor(Color.WHITE);
 
-        additionalInfo = (TextView) findViewById(R.id.tv_additionalInfo);
-
         try {
             new GetDetails(tvShow, handler).execute(tvShow.getId());
-            new GetVideos(tvShow, handler).execute(tvShow.getId());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -80,7 +76,6 @@ public class TvDetails extends AppCompatActivity {
                     .placeholder(R.color.grey)
                     .into(banner);
             title.setText(show.getTitle());
-            additionalInfo.setText("Genres: " + show.getGenres() + " | Runtime: " + show.getRuntime() + " minutes");
         }
     }
 
@@ -95,22 +90,5 @@ public class TvDetails extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Seasons");
     }
 
-    public void playTrailerThroughWebBrowser( View view){
-        Uri webpage = Uri.parse(tvShow.getTrailerUrl());
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(getPackageManager()) != null && tvShow.getTrailerUrl()!=null) {
-            startActivity(intent);
-        }
 
-    }
-
-    public void setTrailerTextColor(TvShow show){
-        TextView trailerText = findViewById(R.id.tv_trailer);
-        if(!show.getTrailerUrl().equals("")) {
-            trailerText.setTextColor(getResources().getColor(R.color.white));
-        }
-        else {
-            trailerText.setTextColor(getResources().getColor(R.color.grey));
-        }
-    }
 }

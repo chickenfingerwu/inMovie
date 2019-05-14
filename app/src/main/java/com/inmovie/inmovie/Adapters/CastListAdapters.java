@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.inmovie.inmovie.Actor;
+import com.inmovie.inmovie.MovieTvClasses.Actor;
 import com.inmovie.inmovie.R;
 import com.squareup.picasso.Picasso;
 

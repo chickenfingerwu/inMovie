@@ -34,8 +34,8 @@
             android:layout_height="wrap_content" />
         <at.blogc.android.views.ExpandableTextView
             android:layout_weight="1"
-            android:textSize="12.4sp"
-            android:fontFamily="@font/oswald_light"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat_regular"
             android:id="@+id/review_content"
             android:textColor="@color/white"
             android:background="@drawable/bottom_borders"

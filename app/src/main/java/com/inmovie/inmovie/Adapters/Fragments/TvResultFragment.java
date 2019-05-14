@@ -9,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.inmovie.inmovie.Adapters.EndlessScrollListener;
 import com.inmovie.inmovie.Adapters.MovieSearchResultAdapter;
-import com.inmovie.inmovie.DividerItemDecoration;
+import com.inmovie.inmovie.Decorations.DividerItemDecoration;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.model.api.TMDb.Search.SearchTV;
 
@@ -24,6 +25,7 @@ import com.inmovie.inmovie.model.api.TMDb.Search.SearchTV;
 
 public class TvResultFragment extends Fragment {
 
+    private ShimmerFrameLayout mShimmer;
     private EndlessScrollListener scrollListener;
     private RecyclerView recyclerView;
     private MovieSearchResultAdapter movieSearchResultAdapter;
@@ -51,7 +53,9 @@ public class TvResultFragment extends Fragment {
         movieSearchResultAdapter = new MovieSearchResultAdapter(view.getContext());
         recyclerView.setAdapter(movieSearchResultAdapter);
 
-        getMoreMovie(query, page);
+        mShimmer = view.findViewById(R.id.tv_shimmer_view_container);
+        mShimmer.startShimmerAnimation();
+        new SearchTV(movieSearchResultAdapter, page, recyclerView, mShimmer).execute(query);
 
         scrollListener = new EndlessScrollListener(layoutManager) {
             @Override
@@ -69,6 +73,6 @@ public class TvResultFragment extends Fragment {
     }
 
     private void getMoreMovie(String query, int page){
-        new SearchTV(movieSearchResultAdapter, page).execute(query);
+        new SearchTV(movieSearchResultAdapter, page, recyclerView, mShimmer).execute(query);
     }
 }

@@ -9,4 +9,12 @@
     <color name="transparent">#00F0F8FF</color>
     <color name="silver">#C0C0C0</color>
     <color name="light_yellow">#FFFF33</color>
+    <color name="light_orange">#f19b2d</color>
+    <color name="medium_orange">#f88139</color>
+    <color name="bold_orange">#fa6749</color>
+    <color name="bold_blue">#8d45d3</color>
+    <color name="medium_blue">#6a54cc</color>
+    <color name="light_blue">#4c5dbf</color>
+    <color name="background">#1f1f1f</color>
+
 </resources>

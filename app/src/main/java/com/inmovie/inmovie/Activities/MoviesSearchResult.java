@@ -96,9 +96,9 @@ public class MoviesSearchResult extends AppCompatActivity {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MoviesApiService service = restAdapter.create(MoviesApiService.class);
-        service.searchMovie(new Callback<com.inmovie.inmovie.Movies.MovieResult>() {
+        service.searchMovie(new Callback<com.inmovie.inmovie.MovieTvClasses.Movies.MovieResult>() {
             @Override
-            public void success(com.inmovie.inmovie.Movies.MovieResult movieResult, Response response) {
+            public void success(com.inmovie.inmovie.MovieTvClasses.Movies.MovieResult movieResult, Response response) {
                 if (page != 1) {
                     movieSearchResultAdapter.setMoviesList(movieResult.getResults(), false);
                 }

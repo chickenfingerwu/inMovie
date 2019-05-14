@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.inmovie.inmovie.BuildConfig;
-import com.inmovie.inmovie.HandlingMovie;
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.Handlers.HandlingMovie;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.model.api.Network;
 
 import org.json.JSONArray;

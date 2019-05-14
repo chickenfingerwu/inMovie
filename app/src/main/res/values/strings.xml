@@ -15,10 +15,19 @@
     <string name="welcome">So, what movies/series are you looking for?</string>
     <string name="featured">Hottest this week</string>
     <string name="trailer">TRAILER</string>
-    <string name="similar_movies">Similar movies</string>
-    <string name="similar_shows">Similar shows</string>
+    <string name="similar_movies">SIMILAR MOVIES</string>
+    <string name="similar_shows">SIMILAR SHOWS</string>
     <string name="load_more_review">See more reviews</string>
     <string name="imdb">IMDb</string>
     <string name="tmdb">TMDb</string>
     <string name="directed_by">DIRECTED BY</string>
+    <string name="created_by">CREATED BY</string>
+    <string name="dot">•</string>
+    <string name="Rating">RATINGS</string>
+    <string name="Genres">GENRES</string>
+    <string name="Release_date">Release date</string>
+    <string name="Cast">CAST</string>
+    <string name="Crew">CREW</string>
+    <string name="Air_date">AIR DATE</string>
+    <string name="Reviews">REVIEWS</string>
 </resources>
