@@ -64,7 +64,7 @@ public class MovieResultFragment extends Fragment {
         movieSearchResultAdapter = new MovieSearchResultAdapter(view.getContext());
         recyclerView.setAdapter(movieSearchResultAdapter);
 
-        new SearchTV(movieSearchResultAdapter, page, recyclerView, mShimmer).execute(query);
+        new SearchMovies(movieSearchResultAdapter, page, mShimmer, recyclerView).execute(query);
 
         scrollListener = new EndlessScrollListener(layoutManager) {
             @Override

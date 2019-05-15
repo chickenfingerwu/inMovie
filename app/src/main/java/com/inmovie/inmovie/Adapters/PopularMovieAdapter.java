@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
 import com.inmovie.inmovie.MovieTvClasses.Movies;
 import com.inmovie.inmovie.R;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +103,7 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
         //draw movies poster
         Picasso.with(context)
                 .load(movie.getPoster_url())
-                .placeholder(R.color.colorAccent)
+                .placeholder(R.color.grey)
                 .into(holder.imageView);
         holder.setMovies(movie);
 

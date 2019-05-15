@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.inmovie.inmovie.MovieTvClasses.Crew;
 import com.inmovie.inmovie.R;
 import com.squareup.picasso.Picasso;
@@ -101,12 +102,16 @@ public class CrewListAdapters extends RecyclerView.Adapter<CrewListAdapters.crew
         Crew crew1 = crews.get(position);
 
         //Draw crew member's profile pic if it's not null
-        if(crew1.getProfilePic() != null) {
+        if(!crew1.getProfilePic().equals("")) {
             Picasso.with(c)
                     .load(crew1.getProfilePic())
                     .noFade()
                     .placeholder(R.color.grey)
                     .into(vh.crewProfile);
+        }
+        else {
+            TextDrawable placeholder = TextDrawable.builder().buildRound(crew1.getCrewName(), R.color.grey);
+            vh.crewProfile.setImageDrawable(placeholder);
         }
 
         //set crew member's display name and role

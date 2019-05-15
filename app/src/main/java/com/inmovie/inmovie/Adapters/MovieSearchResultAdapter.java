@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
 import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
 import com.inmovie.inmovie.MovieTvClasses.Movies;
@@ -116,7 +117,7 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
 
         //get data from index 'postion' in resultsList
         Movies mTV = resultList.get(position);
-        if(mTV.getBackdrop() != null) {
+        if(mTV.getPoster_url() != null) {
             Picasso.with(context)
                     .load(mTV.getPoster_url())
                     .resize(240, 360)

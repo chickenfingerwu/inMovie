@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
 import com.inmovie.inmovie.R;
 import com.inmovie.inmovie.MovieTvClasses.TvClasses.TvShow;
@@ -93,7 +94,7 @@ public class PopularShowAdapter extends RecyclerView.Adapter<PopularShowAdapter.
         //draw movies poster
         Picasso.with(context)
                 .load(show.getPoster_url())
-                .placeholder(R.color.colorAccent)
+                .placeholder(R.color.grey)
                 .into(holder.imageView);
         holder.setMovies(show);
 

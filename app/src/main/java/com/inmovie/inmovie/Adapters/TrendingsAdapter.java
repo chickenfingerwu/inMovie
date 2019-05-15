@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.inmovie.inmovie.Activities.MoviesActivities.MovieDetails;
 import com.inmovie.inmovie.Activities.TvActivities.TvDetails;
 import com.inmovie.inmovie.MovieTvClasses.Movies;
@@ -97,7 +98,6 @@ public class TrendingsAdapter extends RecyclerView.Adapter<TrendingsAdapter.tren
 
         //get data from index 'position' from the movies list
         Movies movie = moviesList.get(position);
-
         //draw movies poster
         Picasso.with(context)
                 .load(movie.getPoster_url())
