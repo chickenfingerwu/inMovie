@@ -147,7 +147,7 @@
                     android:textSize="15sp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    app:fontFamily="@font/montserrat_regular" />
+                    app:fontFamily="@font/oswald_light" />
 
                 <at.blogc.android.views.ExpandableTextView
                     android:id="@+id/tv_Description"
@@ -160,7 +160,6 @@
                     android:textColor="#FFF"
                     android:maxLines="4"
                     android:ellipsize="end"
-                    android:fontFamily="@font/montserrat_regular"
                     app:animation_duration="550"/>
             </LinearLayout>
             <TextView

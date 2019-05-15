@@ -22,7 +22,7 @@
         android:layout_marginStart="20dp">
         <TextView
             android:id="@+id/reviewer_name"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:fontFamily="@font/oswald_bold"
             android:layout_weight="1"
             android:textColor="@color/white"
@@ -35,7 +35,6 @@
         <at.blogc.android.views.ExpandableTextView
             android:layout_weight="1"
             android:textSize="14sp"
-            android:fontFamily="@font/montserrat_regular"
             android:id="@+id/review_content"
             android:textColor="@color/white"
             android:background="@drawable/bottom_borders"

@@ -161,6 +161,7 @@
                             android:layout_weight="2.3"
                             android:id="@+id/movie_trailer"
                             android:layout_width="0dp"
+                            android:background="@drawable/borders"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:fontFamily="@font/oswald_light"
@@ -358,10 +359,10 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
-                    android:text="Release Date"
+                    android:text="@string/Release_date"
                     android:textColor="#FFF"
                     android:textSize="15sp"
-                    app:fontFamily="@font/oswald_bold"/>
+                    app:fontFamily="@font/oswald_regular"/>
 
                 <TextView
                     android:id="@+id/release_date"
@@ -391,10 +392,10 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Cast"
+                    android:text="@string/Cast"
                     android:textColor="#FFF"
                     android:textSize="15sp"
-                    app:fontFamily="@font/oswald_bold"/>
+                    app:fontFamily="@font/oswald_regular"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/cast_list"
@@ -423,10 +424,10 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Crew"
+                    android:text="@string/Crew"
                     android:textColor="#FFF"
                     android:textSize="15sp"
-                    app:fontFamily="@font/oswald_bold"/>
+                    app:fontFamily="@font/oswald_regular"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/crew_list"
@@ -455,10 +456,10 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Reviews"
+                    android:text="@string/Reviews"
                     android:textColor="#FFF"
                     android:textSize="15sp"
-                    app:fontFamily="@font/oswald_bold"/>
+                    app:fontFamily="@font/oswald_regular"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -497,7 +498,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/oswald_bold"
+                android:fontFamily="@font/oswald_regular"
                 android:text="@string/similar_movies"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
