@@ -7,3 +7,7 @@ For precompiled APK, go to Releases page. Link: [here](https://github.com/vinhtq
 
 ## System requirements
 * Android 6.0 or later
+
+## Unit testing
+Unit testing is done with JUnit. Tests are included in java/com.inmovie.inmovie (androidTest).
+To run test, right-click com.inmovie.inmovie (androidTest) package and click Run 'Tests' in ...
