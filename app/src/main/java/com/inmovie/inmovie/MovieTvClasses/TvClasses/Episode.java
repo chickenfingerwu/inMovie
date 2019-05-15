@@ -1,8 +1,6 @@
-package com.inmovie.inmovie.TVclasses;
+package com.inmovie.inmovie.MovieTvClasses.TvClasses;
 
-import com.inmovie.inmovie.Movies;
-
-import java.io.Serializable;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 
 //Subclass to Movies since every episode is like a small movie
 public class Episode extends Movies {

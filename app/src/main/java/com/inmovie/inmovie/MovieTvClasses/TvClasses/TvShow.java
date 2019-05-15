@@ -1,6 +1,6 @@
-package com.inmovie.inmovie.TVclasses;
+package com.inmovie.inmovie.MovieTvClasses.TvClasses;
 
-import com.inmovie.inmovie.Movies;
+import com.inmovie.inmovie.MovieTvClasses.Movies;
 
 import java.util.List;
 

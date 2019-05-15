@@ -1,4 +1,4 @@
-package com.inmovie.inmovie.TVclasses;
+package com.inmovie.inmovie.MovieTvClasses.TvClasses;
 
 import java.util.ArrayList;
 import java.util.List;
